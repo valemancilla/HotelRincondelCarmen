@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas - Hotel el Rincón del Carmen</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Hotel el Rincón del Carmen</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="reservas.html" class="nav-link active">Reservas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contacto.html" class="nav-link">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <h1>Buscar Disponibilidad</h1>
+            <div class="search-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkIn">Fecha de Entrada:</label>
+                        <input type="date" id="checkIn" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkOut">Fecha de Salida:</label>
+                        <input type="date" id="checkOut" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Número de Huéspedes:</label>
+                        <select id="guests" required>
+                            <option value="1">1 Huésped</option>
+                            <option value="2">2 Huéspedes</option>
+                            <option value="3">3 Huéspedes</option>
+                            <option value="4">4 Huéspedes</option>
+                            <option value="5">5 Huéspedes</option>
+                            <option value="6">6 Huéspedes</option>
+                        </select>
+                    </div>
+                    <button type="button" id="searchBtn" class="btn-primary">Buscar Habitaciones</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="container">
+            <h2>Habitaciones Disponibles</h2>
+            <div class="rooms-grid" id="availableRooms">
+                <!-- Available rooms will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- My Reservations Section -->
+    <section class="my-reservations" id="myReservations" style="display: none;">
+        <div class="container">
+            <h2>Mis Reservas</h2>
+            <div class="reservations-list" id="reservationsList">
+                <!-- User reservations will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Details Modal -->
+    <div id="roomDetailsModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <div class="room-details" id="roomDetailsContent">
+                <!-- Room details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Confirmar Reserva</h2>
+            <div class="reservation-summary" id="reservationSummary">
+                <!-- Reservation summary will be loaded here -->
+            </div>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="reservationNotes">Notas especiales (opcional):</label>
+                    <textarea id="reservationNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Confirmar Reserva</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regId">Número de Identificación:</label>
+                    <input type="text" id="regId" required>
+                </div>
+                <div class="form-group">
+                    <label for="regName">Nombre Completo:</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regNationality">Nacionalidad:</label>
+                    <input type="text" id="regNationality" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Teléfono:</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña:</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/rooms.js"></script>
+    <script src="../js/reservations.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

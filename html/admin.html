@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Hotel el Rincón del Carmen</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Hotel el Rincón del Carmen - Admin</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="../index.html" class="nav-link">Sitio Web</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <section class="admin-dashboard">
+        <div class="container">
+            <h1>Panel de Administración</h1>
+            
+            <!-- Admin Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="rooms">Gestión de Habitaciones</button>
+                <button class="tab-btn" data-tab="reservations">Gestión de Reservas</button>
+                <button class="tab-btn" data-tab="users">Usuarios Registrados</button>
+            </div>
+
+            <!-- Rooms Management Tab -->
+            <div id="roomsTab" class="tab-content active">
+                <div class="admin-section">
+                    <h2>Gestión de Habitaciones</h2>
+                    <button class="btn-primary" id="addRoomBtn">Agregar Nueva Habitación</button>
+                    
+                    <div class="rooms-admin-grid" id="roomsAdminGrid">
+                        <!-- Rooms will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservations Management Tab -->
+            <div id="reservationsTab" class="tab-content">
+                <div class="admin-section">
+                    <h2>Gestión de Reservas</h2>
+                    <div class="filters">
+                        <select id="reservationFilter">
+                            <option value="all">Todas las Reservas</option>
+                            <option value="active">Reservas Activas</option>
+                            <option value="cancelled">Reservas Canceladas</option>
+                        </select>
+                    </div>
+                    
+                    <div class="reservations-admin-list" id="reservationsAdminList">
+                        <!-- Reservations will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Management Tab -->
+            <div id="usersTab" class="tab-content">
+                <div class="admin-section">
+                    <h2>Usuarios Registrados</h2>
+                    <div class="users-admin-list" id="usersAdminList">
+                        <!-- Users will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Form Modal -->
+    <div id="roomFormModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <h2 id="roomFormTitle">Agregar Habitación</h2>
+            <form id="roomForm">
+                <input type="hidden" id="roomId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="roomNumber">Número de Habitación:</label>
+                        <input type="text" id="roomNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType">Tipo de Habitación:</label>
+                        <select id="roomType" required>
+                            <option value="standard">Estándar</option>
+                            <option value="deluxe">Deluxe</option>
+                            <option value="suite">Suite</option>
+                            <option value="presidential">Presidencial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="maxGuests">Máximo de Huéspedes:</label>
+                        <input type="number" id="maxGuests" min="1" max="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="beds">Número de Camas:</label>
+                        <input type="number" id="beds" min="1" max="4" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pricePerNight">Precio por Noche:</label>
+                        <input type="number" id="pricePerNight" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomImage">URL de Imagen:</label>
+                        <input type="url" id="roomImage" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Servicios Incluidos:</label>
+                    <div class="services-checkboxes">
+                        <label><input type="checkbox" value="wifi"> WiFi Gratuito</label>
+                        <label><input type="checkbox" value="minibar"> Minibar</label>
+                        <label><input type="checkbox" value="jacuzzi"> Jacuzzi</label>
+                        <label><input type="checkbox" value="tv"> TV por Cable</label>
+                        <label><input type="checkbox" value="ac"> Aire Acondicionado</label>
+                        <label><input type="checkbox" value="balcony"> Balcón</label>
+                        <label><input type="checkbox" value="roomservice"> Room Service</label>
+                        <label><input type="checkbox" value="safe"> Caja Fuerte</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="roomDescription">Descripción:</label>
+                    <textarea id="roomDescription" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Guardar Habitación</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reservation Details Modal -->
+    <div id="reservationDetailsModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <h2>Detalles de Reserva</h2>
+            <div class="reservation-details" id="reservationDetailsContent">
+                <!-- Reservation details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/rooms.js"></script>
+    <script src="../js/reservations.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
