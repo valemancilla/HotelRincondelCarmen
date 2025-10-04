@@ -13,7 +13,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: rgba(28, 28, 28);
+    background-color: white;
     margin: 0;
     padding: 0;
 }
@@ -507,15 +507,22 @@ p {
 .btn-suites {
     background: transparent;
     border: 1px solid #b89a7e;
-    color: #000;
-    padding: 1rem 2rem;
+    color: #b89a7e;
+    padding: 0.8rem 1.8rem;
     font-family: 'Open Sans', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-suites:hover {
+    background: #b89a7e;
+    color: #ffffff;
 }
 
 
@@ -707,7 +714,6 @@ p {
 .experience-btn:hover {
     background: #b89a7e;
     color: #ffffff;
-    transform: translateY(-2px);
 }
 
 .experience-image {
@@ -840,25 +846,23 @@ p {
 .btn-ver-aqui {
     background: transparent;
     border: 1px solid #b89a7e;
-    color: #333333;
-    padding: 1rem 2rem;
+    color: #b89a7e;
+    padding: 0.8rem 1.8rem;
     font-family: 'Open Sans', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: block;
+    display: inline-block;
     text-decoration: none;
     text-align: center;
-    margin: 0 auto;
 }
 
 .btn-ver-aqui:hover {
     background: #b89a7e;
     color: #ffffff;
-    transform: translateY(-2px);
 }
 
 /* Services Section */
@@ -1896,22 +1900,6 @@ p {
     object-fit: cover;
 }
 
-.fullscreen-btn {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.fullscreen-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
 
 .carousel-nav {
     position: absolute;

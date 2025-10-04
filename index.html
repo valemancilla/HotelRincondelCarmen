@@ -26,8 +26,16 @@
                 <li class="nav-item">
                     <a href="html/suites.html" class="nav-link">Suites</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
                     <a href="index.html#experience" class="nav-link">Experiencia</a>
+                    <div class="dropdown-menu">
+                        <a href="html/trinity-restaurant.html" class="dropdown-item">Trinity Restaurant</a>
+                        <a href="#" class="dropdown-item">Sky Bar</a>
+                        <a href="#" class="dropdown-item">The Sacred Spa</a>
+                        <a href="#" class="dropdown-item">Saint Gym</a>
+                        <a href="#" class="dropdown-item">Saint Yachting</a>
+                        <a href="#" class="dropdown-item">VIP Transfers</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Galería</a>
@@ -150,7 +158,7 @@
                 <span class="experience-category">SABORES DIVINOS</span>
                 <h2>Restaurante Trinity</h2>
                 <p>¡Disfrute de la gastronomía griega en su máxima expresión! <br> Deléitese con la deliciosa y creativa cocina gourmet <br> mediterránea acompañada de una variedad de bebidas <br> celestiales.</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/trinity-restaurant.html'">MÁS INFORMACIÓN</button>
             </div>
             <div class="experience-image">
                 <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-36.jpg" alt="Restaurante Trinity">
@@ -329,83 +337,6 @@
     <script src="js/auth.js"></script>
     <script src="js/rooms.js"></script>
     <script src="js/main.js"></script>
-    
-    <script>
-        // Hero Carousel JavaScript
-        let currentSlideIndex = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.dot');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            // Ocultar todas las slides
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            // Mostrar la slide actual
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-
-        function changeSlide(direction) {
-            currentSlideIndex += direction;
-            
-            if (currentSlideIndex >= totalSlides) {
-                currentSlideIndex = 0;
-            } else if (currentSlideIndex < 0) {
-                currentSlideIndex = totalSlides - 1;
-            }
-            
-            showSlide(currentSlideIndex);
-        }
-
-        function currentSlide(index) {
-            currentSlideIndex = index - 1;
-            showSlide(currentSlideIndex);
-        }
-
-        // Auto-play del carrusel desactivado
-        // setInterval(() => {
-        //     changeSlide(1);
-        // }, 5000);
-
-        // Inicializar el carrusel
-        showSlide(0);
-
-        // Botón "VER TODAS LAS SUITES"
-        document.getElementById('viewAllSuitesBtn').addEventListener('click', function() {
-            window.location.href = 'html/reservas.html';
-        });
-
-        // Booking Widget Functionality
-        const guestCount = document.querySelector('.guest-count');
-        const guestUp = document.querySelector('.guest-controls .fa-chevron-up');
-        const guestDown = document.querySelector('.guest-controls .fa-chevron-down');
-        const checkAvailabilityBtn = document.querySelector('.check-availability-btn');
-
-        let currentGuests = 1;
-
-        if (guestUp && guestDown && guestCount) {
-            guestUp.addEventListener('click', function() {
-                if (currentGuests < 10) {
-                    currentGuests++;
-                    guestCount.textContent = currentGuests;
-                }
-            });
-
-            guestDown.addEventListener('click', function() {
-                if (currentGuests > 1) {
-                    currentGuests--;
-                    guestCount.textContent = currentGuests;
-                }
-            });
-        }
-
-        if (checkAvailabilityBtn) {
-            checkAvailabilityBtn.addEventListener('click', function() {
-                window.location.href = 'html/reservas.html';
-            });
-        }
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>

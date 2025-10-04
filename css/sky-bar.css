@@ -1,0 +1,172 @@
+/* Sky Bar Specific Styles */
+.sky-bar-page {
+    background-color: #f8f7f5;
+    min-height: 100vh;
+    font-family: 'Playfair Display', serif;
+}
+
+.sky-bar-title-section {
+    background-color: transparent;
+    padding: 50px 0 10px;
+    margin-top: 80px;
+}
+
+.sky-bar-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+}
+
+.sky-bar-main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    padding: 20px 60px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: #f8f7f5;
+    min-height: 200px;
+    align-items: center;
+}
+
+.sky-bar-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sky-bar-headline {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    text-align: center;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.sky-bar-right {
+    padding: 20px 0;
+}
+
+.sky-bar-description {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 30px;
+}
+
+.description-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.description-left,
+.description-right {
+    margin-bottom: 0;
+}
+
+.description-left p,
+.description-right p {
+    margin-bottom: 20px;
+}
+
+/* Sky Bar Gallery Styles */
+.sky-bar-gallery {
+    padding: 80px 0;
+    background-color: #ffffff;
+}
+
+.sky-gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.sky-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: 400px;
+}
+
+.sky-gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sky-gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Navigation Styles */
+.sky-bar-nav {
+    background: rgba(28, 28, 28);
+    border-bottom: 1px solid #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sky-bar-title-section {
+        padding: 30px 0 5px;
+        margin-top: 60px;
+    }
+
+    .sky-bar-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .sky-bar-main-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 15px 30px 30px;
+        min-height: calc(100vh - 200px);
+    }
+
+    .sky-bar-headline {
+        font-size: 2rem;
+    }
+
+    .description-columns {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sky-bar-gallery {
+        padding: 40px 0;
+    }
+
+    .sky-gallery-container {
+        padding: 0 30px;
+    }
+
+    .sky-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        height: auto;
+    }
+
+    .sky-gallery-item {
+        height: 300px;
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .sky-gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        height: 350px;
+    }
+}
+

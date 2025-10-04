@@ -1,0 +1,324 @@
+/* Trinity Restaurant Specific Styles */
+.trinity-page {
+    background-color: #f8f7f5;
+    min-height: 100vh;
+    font-family: 'Playfair Display', serif;
+}
+
+.trinity-title-section {
+    background-color: #f8f7f5;
+    padding: 50px 0 10px;
+    margin-top: 80px;
+}
+
+.trinity-restaurant-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+}
+
+.trinity-main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    padding: 20px 60px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: #f8f7f5;
+    min-height: 200px;
+    align-items: center;
+}
+
+.trinity-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trinity-headline {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    text-align: center;
+    line-height: 1.1;
+    font-family: 'Playfair Display', serif;
+}
+
+.trinity-right {
+    padding: 20px 0;
+}
+
+.trinity-description {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 30px;
+}
+
+.trinity-description p {
+    margin-bottom: 20px;
+}
+
+.trinity-menu-section {
+    position: fixed;
+    left: 60px;
+    bottom: 80px;
+    z-index: 1000;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-button {
+    background-color: #e8e6e3;
+    border: 1px solid #d4d1cc;
+    padding: 15px 25px;
+    color: #666;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    min-width: 250px;
+    border-radius: 3px;
+}
+
+.menu-button:hover {
+    background-color: #ddd;
+    color: #333;
+}
+
+.trinity-pagination {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-dot.active {
+    background-color: #666;
+}
+
+/* Navigation Styles - Usar estilos estándar del sitio */
+.trinity-nav {
+    background: rgba(28, 28, 28);
+    border-bottom: 1px solid #333;
+}
+
+/* Trinity Gallery Styles */
+.trinity-gallery {
+    padding: 80px 0;
+    background-color: #f8f7f5;
+}
+
+.gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 250px);
+    gap: 20px;
+    height: 770px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.05);
+}
+
+/* Gallery Item Positioning */
+.gallery-food {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+.gallery-appetizers {
+    grid-column: 3 / 5;
+    grid-row: 1 / 2;
+}
+
+.gallery-main {
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+.gallery-terrace {
+    grid-column: 1 / 2;
+    grid-row: 2 / 4;
+}
+
+.gallery-night {
+    grid-column: 4 / 5;
+    grid-row: 2 / 4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .trinity-title-section {
+        padding: 30px 0 5px;
+        margin-top: 60px;
+    }
+
+    .trinity-restaurant-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .trinity-main-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 15px 30px 30px;
+        min-height: calc(100vh - 200px);
+    }
+
+    .trinity-headline {
+        font-size: 2rem;
+    }
+
+    .trinity-gallery {
+        padding: 40px 0;
+    }
+
+    .gallery-container {
+        padding: 0 30px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 200px);
+        gap: 15px;
+        height: auto;
+    }
+
+    .gallery-food,
+    .gallery-appetizers,
+    .gallery-main,
+    .gallery-terrace,
+    .gallery-night {
+        grid-column: 1;
+        grid-row: auto;
+        transform: none;
+    }
+
+    .trinity-menu-section {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        margin-top: 40px;
+        padding: 0 30px;
+    }
+
+    .menu-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .menu-button {
+        min-width: 200px;
+    }
+
+    .trinity-pagination {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        transform: none;
+        justify-content: center;
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 200px);
+        gap: 15px;
+        height: auto;
+    }
+
+    .gallery-food {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    .gallery-appetizers {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+
+    .gallery-main {
+        grid-column: 1 / 3;
+        grid-row: 2 / 3;
+        transform: none;
+    }
+
+    .gallery-terrace {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    .gallery-night {
+        grid-column: 2 / 3;
+        grid-row: 3 / 4;
+    }
+}
+
+/* Sacred Spa Text Alignment */
+.spa-description p,
+.saint-suites-description p,
+.trinity-main-content .spa-description p,
+.trinity-main-content .saint-suites-description p {
+    text-align: left !important;
+    text-indent: 0 !important;
+    direction: ltr !important;
+}
+
+/* Override any center alignment for spa content */
+.spa-grid-center p,
+.spa-grid-right p {
+    text-align: left !important;
+}
