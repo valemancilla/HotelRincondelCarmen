@@ -122,7 +122,7 @@ Hotel el Rincón del Carmen/
 ## 🎨 Características de Diseño
 
 ### Paleta de Colores
-- **Primario**: Gradiente azul-púrpura (#667eea → #764ba2)
+- **Primario**: Gris oscuro (rgba(28, 28, 28))
 - **Secundario**: Grises neutros (#2c3e50, #34495e)
 - **Acentos**: Dorado (#ffd700), Verde (#27ae60), Rojo (#e74c3c)
 

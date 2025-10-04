@@ -68,10 +68,10 @@ class MainApp {
             const navbar = document.querySelector('.navbar');
             if (navbar) {
                 if (window.scrollY > 100) {
-                    navbar.style.background = 'rgba(102, 126, 234, 0.95)';
+                    navbar.style.background = 'rgba(28, 28, 28, 0.95)';
                     navbar.style.backdropFilter = 'blur(10px)';
                 } else {
-                    navbar.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    navbar.style.background = 'rgba(28, 28, 28)';
                     navbar.style.backdropFilter = 'none';
                 }
             }

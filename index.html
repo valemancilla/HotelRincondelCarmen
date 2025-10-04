@@ -14,25 +14,36 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h2>Hotel el Rincón del Carmen</h2>
+                <h2>Hotel el Rincón del Carmen<br><span class="santorini"></span></h2>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link active">Inicio</a>
+                    <a href="index.html" class="nav-link active">Hogar</a>
                 </li>
                 <li class="nav-item">
-                    <a href="html/reservas.html" class="nav-link">Reservas</a>
+                    <a href="index.html#concept" class="nav-link">Concepto</a>
+                </li>
+                <li class="nav-item">
+                    <a href="html/suites.html" class="nav-link">Suites</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#experience" class="nav-link">Experiencia</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Galería</a>
                 </li>
                 <li class="nav-item">
                     <a href="html/contacto.html" class="nav-link">Contacto</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                    <a href="html/reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
             </ul>
+            <div class="search-container">
+                <a href="#" class="search-icon">
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -44,53 +55,168 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Bienvenido al Hotel el Rincón del Carmen</h1>
-            <p>Un oasis de tranquilidad y lujo en el corazón de la ciudad</p>
-            <a href="html/reservas.html" class="cta-button">Reservar Ahora</a>
+            
         </div>
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Hotel exterior">
-        </div>
-    </section>
-
-    <!-- Rooms Carousel -->
-    <section class="rooms-section">
-        <div class="container">
-            <h2>Nuestras Habitaciones</h2>
-            <div class="rooms-carousel" id="roomsCarousel">
-                <!-- Rooms will be loaded dynamically -->
+        <div class="hero-carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/Saint-Drone-Shot-1-Low-Res.jpg" alt="Hotel exterior">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-38.jpg" alt="Habitación de lujo">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-5-min-scaled.jpg" alt="Suite premium">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-36.jpg" alt="Vista al mar">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-scaled.jpg" alt="Terraza privada">
+                </div>
+            </div>
+            <button class="carousel-arrow carousel-prev" onclick="changeSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow carousel-next" onclick="changeSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
             </div>
         </div>
     </section>
 
-    <!-- Hotel Areas -->
-    <section class="areas-section">
+    <!-- Booking Widget Section -->
+    <section class="booking-widget-section">
+        <div class="booking-widget">
+            <div class="booking-field">
+                <label>REGISTRARSE</label>
+                <div class="date-display">
+                    <span class="day">03</span>
+                    <span class="month">Oct</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="booking-field">
+                <label>VERIFICAR</label>
+                <div class="date-display">
+                    <span class="day">04</span>
+                    <span class="month">Oct</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="booking-field">
+                <label>HUÉSPEDES</label>
+                <div class="guests-display">
+                    <span class="guest-count">1</span>
+                    <div class="guest-controls">
+                        <i class="fas fa-chevron-up"></i>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            <button class="check-availability-btn">CONSULTAR DISPONIBILIDAD</button>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="main-content-section" id="suites">
         <div class="container">
-            <h2>Áreas del Hotel</h2>
-            <div class="areas-grid">
-                <div class="area-card">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Restaurante">
-                    <h3>Restaurante</h3>
-                    <p>Disfruta de nuestra gastronomía local e internacional</p>
+            <div class="content-grid">
+                <div class="content-left">
+                    <h2>Recarga tu alma en Saint</h2>
+                    <p>Déjate llevar por tu nuevo refugio en Santorini. Experimenta sensaciones divinas mientras te relajas en tu mítica morada. Disfruta del lujo de admirar las majestuosas vistas desde tu cama, ducha, piscina, jacuzzi o terraza privada... ¡Brindemos por la buena vida!</p>
+                    <button class="btn-suites" id="viewAllSuitesBtn">VER TODAS LAS SUITES</button>
                 </div>
-                <div class="area-card">
-                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Spa">
-                    <h3>Spa & Wellness</h3>
-                    <p>Relájate con nuestros tratamientos de spa</p>
+                <div class="content-right">
+                    <div class="single-image">
+                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Saint-Website-New-Homepage.png" alt="Vista del hotel">
+                    </div>
                 </div>
-                <div class="area-card">
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Piscina">
-                    <h3>Zona Húmeda</h3>
-                    <p>Piscina, jacuzzi y áreas de relajación</p>
-                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience-section" id="experience">
+        <div class="experience-grid">
+            <!-- Row 1: Restaurant Text + Infinity Pool Image -->
+            <div class="experience-text">
+                <span class="experience-category">SABORES DIVINOS</span>
+                <h2>Restaurante Trinity</h2>
+                <p>¡Disfrute de la gastronomía griega en su máxima expresión! <br> Deléitese con la deliciosa y creativa cocina gourmet <br> mediterránea acompañada de una variedad de bebidas <br> celestiales.</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
+            </div>
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-36.jpg" alt="Restaurante Trinity">
+            </div>
+
+            <!-- Row 2: Santorini View Image + Sky Bar Text -->
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2025/02/Sky-bar-Saintsantorini_-100A7670-scaled.jpg" alt="Sky Bar">
+            </div>
+            <div class="experience-text">
+                <span class="experience-category">VISTA IMPRESIONANTE</span>
+                <h2>Bar del Cielo</h2>
+                <p>¡El paraíso del horizonte de Santorini! Disfruta de un cóctel <br> de autor sobre las olas, más allá de lo común.</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
+            </div>
+
+            <!-- Row 3: Spa Text + Spa Interior Image -->
+            <div class="experience-text">
+                <span class="experience-category">MOMENTOS DE RELAJACIÓN</span>
+                <h2>Spa Sagrado</h2>
+                <p>Olvídate de todo y reconecta contigo mismo en nuestro spa <br> privado. Nuestros esteticistas y masajistas expertos te harán <br> sentir como un rey en cada segundo de tu estancia.</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
+            </div>
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-96.jpg" alt="Spa Sagrado">
+            </div>
+
+            <!-- Row 4: Gym Image + Gym Text -->
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-94-3.jpg" alt="Gimnasio Santo">
+            </div>
+            <div class="experience-text">
+                <span class="experience-category">FITNESS Y BIENESTAR</span>
+                <h2>Gimnasio Santo</h2>
+                <p>Mantén tu rutina, estira y tonifica tus músculos en nuestro <br> centro de entrenamiento privado.</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
+            </div>
+
+            <!-- Row 5: Yachting Text + Yacht Image -->
+            <div class="experience-text">
+                <span class="experience-category">ESCAPADAS PRIVADAS</span>
+                <h2>Saint Yachting</h2>
+                <p>Disfrute del privilegio de una experiencia en yate privado. <br> Relájese mientras la suave brisa de Santorini lo acaricia y lo <br> lleva de viaje a la recreación.</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
+            </div>
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Yacht-1.jpg" alt="Saint Yachting">
+            </div>
+
+            <!-- Row 6: VIP Car Image + VIP Text -->
+            <div class="experience-image">
+                <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/BENTLEY-2Ç.jpg" alt="Flota de coches Saint">
+            </div>
+            <div class="experience-text">
+                <span class="experience-category">TRASLADOS VIP</span>
+                <h2>Flota de Coches Saint</h2>
+                <p>¡Conduce tu sueño! Ofrecemos servicio de chófer privado con <br> una selección de coches VIP. ¡Conocemos todas las rutas y los <br> tesoros escondidos de Santorini!</p>
+                <button class="experience-btn">MÁS INFORMACIÓN</button>
             </div>
         </div>
     </section>
 
     <!-- Services -->
-    <section class="services-section">
+    <section class="services-section" id="concept">
         <div class="container">
-            <h2>Nuestros Servicios</h2>
+            <h2>CONCEPT</h2>
             <div class="services-grid">
                 <div class="service-item">
                     <i class="fas fa-wifi"></i>
@@ -203,5 +329,83 @@
     <script src="js/auth.js"></script>
     <script src="js/rooms.js"></script>
     <script src="js/main.js"></script>
+    
+    <script>
+        // Hero Carousel JavaScript
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Ocultar todas las slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Mostrar la slide actual
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            showSlide(currentSlideIndex);
+        }
+
+        function currentSlide(index) {
+            currentSlideIndex = index - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        // Auto-play del carrusel desactivado
+        // setInterval(() => {
+        //     changeSlide(1);
+        // }, 5000);
+
+        // Inicializar el carrusel
+        showSlide(0);
+
+        // Botón "VER TODAS LAS SUITES"
+        document.getElementById('viewAllSuitesBtn').addEventListener('click', function() {
+            window.location.href = 'html/reservas.html';
+        });
+
+        // Booking Widget Functionality
+        const guestCount = document.querySelector('.guest-count');
+        const guestUp = document.querySelector('.guest-controls .fa-chevron-up');
+        const guestDown = document.querySelector('.guest-controls .fa-chevron-down');
+        const checkAvailabilityBtn = document.querySelector('.check-availability-btn');
+
+        let currentGuests = 1;
+
+        if (guestUp && guestDown && guestCount) {
+            guestUp.addEventListener('click', function() {
+                if (currentGuests < 10) {
+                    currentGuests++;
+                    guestCount.textContent = currentGuests;
+                }
+            });
+
+            guestDown.addEventListener('click', function() {
+                if (currentGuests > 1) {
+                    currentGuests--;
+                    guestCount.textContent = currentGuests;
+                }
+            });
+        }
+
+        if (checkAvailabilityBtn) {
+            checkAvailabilityBtn.addEventListener('click', function() {
+                window.location.href = 'html/reservas.html';
+            });
+        }
+    </script>
 </body>
 </html>

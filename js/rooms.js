@@ -12,7 +12,7 @@ class RoomManager {
      * Inicializa el gestor de habitaciones
      */
     init() {
-        this.loadRoomsCarousel();
+        // this.loadRoomsCarousel(); // Desactivado - ahora las habitaciones están en HTML estático
         this.bindEvents();
     }
 

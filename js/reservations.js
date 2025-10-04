@@ -323,3 +323,4 @@ class ReservationManager {
 
 // Crear instancia global del gestor de reservas
 window.reservationManager = new ReservationManager();
+
