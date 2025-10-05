@@ -79,6 +79,7 @@ class AuthManager {
             });
         }
 
+
         // Eventos de admin
         const adminBtn = document.getElementById('adminBtn');
         if (adminBtn) {
@@ -172,10 +173,10 @@ class AuthManager {
         }
 
         try {
-            const user = hotelStorage.getUserByEmail(email);
+            const user = storageManager.getUserByEmail(email);
             
             if (!user) {
-                this.showError('loginForm', 'Usuario no encontrado');
+                this.showError('loginForm', 'Este usuario no está registrado');
                 return;
             }
 
@@ -223,14 +224,14 @@ class AuthManager {
 
         try {
             // Verificar si el email ya existe
-            const existingUser = hotelStorage.getUserByEmail(formData.email);
+            const existingUser = storageManager.getUserByEmail(formData.email);
             if (existingUser) {
                 this.showError('registerForm', 'Este email ya está registrado');
                 return;
             }
 
             // Verificar si la identificación ya existe
-            const users = hotelStorage.getUsers();
+            const users = storageManager.getUsers();
             const existingId = users.find(user => user.identification === formData.identification);
             if (existingId) {
                 this.showError('registerForm', 'Este número de identificación ya está registrado');
@@ -238,7 +239,7 @@ class AuthManager {
             }
 
             // Crear nuevo usuario
-            const newUser = hotelStorage.addUser(formData);
+            const newUser = storageManager.addUser(formData);
             
             this.closeModal(document.getElementById('registerModal'));
             this.showSuccess('Registro exitoso. Ahora puedes iniciar sesión.');
@@ -250,7 +251,7 @@ class AuthManager {
 
         } catch (error) {
             console.error('Error en registro:', error);
-            this.showError('registerForm', 'Error al registrarse');
+            this.showError('registerForm', 'Error al registrarse: ' + error.message);
         }
     }
 
@@ -320,16 +321,6 @@ class AuthManager {
         }, 1000);
     }
 
-    /**
-     * Redirige al panel de administración
-     */
-    goToAdmin() {
-        if (this.isAdmin()) {
-            window.location.href = 'html/admin.html';
-        } else {
-            this.showError('', 'No tienes permisos de administrador');
-        }
-    }
 
     /**
      * Actualiza la interfaz de usuario según el estado de autenticación
@@ -348,6 +339,7 @@ class AuthManager {
                     this.logout();
                 };
             }
+
 
             if (adminBtn && this.isAdmin()) {
                 adminBtn.style.display = 'block';
@@ -385,6 +377,17 @@ class AuthManager {
     }
 
     /**
+     * Redirige al panel de administración
+     */
+    goToAdmin() {
+        if (this.isAdmin()) {
+            window.location.href = 'html/admin.html';
+        } else {
+            this.showError('', 'No tienes permisos de administrador');
+        }
+    }
+
+    /**
      * Verifica si el usuario está autenticado
      */
     isAuthenticated() {
@@ -404,7 +407,7 @@ class AuthManager {
     loadUserReservations() {
         if (!this.currentUser) return;
 
-        const reservations = hotelStorage.getReservationsByUser(this.currentUser.id);
+        const reservations = storageManager.getReservationsByUser(this.currentUser.id);
         const reservationsList = document.getElementById('reservationsList');
         
         if (!reservationsList) return;
@@ -422,7 +425,7 @@ class AuthManager {
         }
 
         reservationsList.innerHTML = reservations.map(reservation => {
-            const room = hotelStorage.getRoomById(reservation.roomId);
+            const room = storageManager.getRoomById(reservation.roomId);
             const checkIn = new Date(reservation.checkIn).toLocaleDateString('es-CO');
             const checkOut = new Date(reservation.checkOut).toLocaleDateString('es-CO');
             const totalNights = Math.ceil((new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
@@ -475,7 +478,7 @@ class AuthManager {
         }
 
         try {
-            hotelStorage.cancelReservation(reservationId);
+            storageManager.cancelReservation(reservationId);
             this.loadUserReservations();
             this.showSuccess('Reserva cancelada exitosamente');
         } catch (error) {

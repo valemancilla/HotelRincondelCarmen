@@ -93,11 +93,57 @@
     margin-bottom: 0.75rem;
 }
 
+/* Botones específicos para modales */
+.modal .btn-primary {
+    background-color: #e74c3c !important;
+    color: white !important;
+    border: 1px solid #e74c3c !important;
+    padding: 12px 24px !important;
+    border-radius: 4px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+}
+
+.modal .btn-primary:hover {
+    background-color: #c0392b !important;
+    border-color: #c0392b !important;
+    transform: none !important;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: #2c3e50;
+}
+
+/* Campos de entrada en modales */
+.modal .form-group input,
+.modal .form-group select,
+.modal .form-group textarea {
+    width: 100% !important;
+    padding: 12px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    font-size: 1rem !important;
+    font-family: inherit !important;
+    background-color: white !important;
+    color: #2c3e50 !important;
+    box-sizing: border-box !important;
+}
+
+.modal .form-group input:focus,
+.modal .form-group select:focus,
+.modal .form-group textarea:focus {
+    outline: none !important;
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2) !important;
 }
 
 .form-group input,

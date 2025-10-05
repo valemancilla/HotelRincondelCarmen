@@ -22,9 +22,6 @@
                     <a href="../index.html" class="nav-link">Hogar</a>
                 </li>
                 <li class="nav-item">
-                    <a href="../index.html#concept" class="nav-link">Concepto</a>
-                </li>
-                <li class="nav-item">
                     <a href="suites.html" class="nav-link">Suites</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -33,13 +30,10 @@
                         <a href="trinity-restaurant.html" class="dropdown-item">Trinity Restaurant</a>
                         <a href="sky-bar.html" class="dropdown-item active">Sky Bar</a>
                         <a href="sacred-spa.html" class="dropdown-item">The Sacred Spa</a>
-                        <a href="#" class="dropdown-item">Saint Gym</a>
-                        <a href="#" class="dropdown-item">Saint Yachting</a>
-                        <a href="#" class="dropdown-item">VIP Transfers</a>
+                        <a href="saint-gym.html" class="dropdown-item">Saint Gym</a>
+                        <a href="saint-yachting.html" class="dropdown-item">Saint Yachting</a>
+                        <a href="vip-transfers.html" class="dropdown-item">VIP Transfers</a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Galería</a>
                 </li>
                 <li class="nav-item">
                     <a href="contacto.html" class="nav-link">Contacto</a>
@@ -47,12 +41,10 @@
                 <li class="nav-item">
                     <a href="reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
+                </li>
             </ul>
-            <div class="search-container">
-                <a href="#" class="search-icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -88,7 +80,76 @@
         </div>
     </main>
 
+    <!-- Bar Images Section -->
+    <section class="bar-images-container">
+        <div class="bar-image-item">
+            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2025/02/Sky-bar-Saintsantorini_-100A7670-1024x683.jpg" alt="Área de Comedor del Sky Bar" class="bar-image">
+        </div>
+        <div class="bar-image-item">
+            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2025/02/SAINT-LUXURY-SUITES-SKYBAR-_4857-2-1024x575.jpg" alt="Área de Lounge del Sky Bar" class="bar-image">
+        </div>
+        <div class="bar-image-item">
+            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2025/02/Sky-bar-Saintsantorini_-100A7672-1024x683.jpg" alt="Bar Principal del Sky Bar" class="bar-image">
+        </div>
+    </section>
 
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regId">Número de Identificación:</label>
+                    <input type="text" id="regId" required>
+                </div>
+                <div class="form-group">
+                    <label for="regName">Nombre Completo:</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regNationality">Nacionalidad:</label>
+                    <input type="text" id="regNationality" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Teléfono:</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña:</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="../js/localStorage.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/main.js"></script>
 </body>
 </html>

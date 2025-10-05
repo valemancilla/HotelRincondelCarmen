@@ -21,24 +21,18 @@
                     <a href="index.html" class="nav-link active">Hogar</a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.html#concept" class="nav-link">Concepto</a>
-                </li>
-                <li class="nav-item">
                     <a href="html/suites.html" class="nav-link">Suites</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="index.html#experience" class="nav-link">Experiencia</a>
                     <div class="dropdown-menu">
                         <a href="html/trinity-restaurant.html" class="dropdown-item">Trinity Restaurant</a>
-                        <a href="#" class="dropdown-item">Sky Bar</a>
-                        <a href="#" class="dropdown-item">The Sacred Spa</a>
-                        <a href="#" class="dropdown-item">Saint Gym</a>
-                        <a href="#" class="dropdown-item">Saint Yachting</a>
-                        <a href="#" class="dropdown-item">VIP Transfers</a>
+                        <a href="html/sky-bar.html" class="dropdown-item">Sky Bar</a>
+                        <a href="html/sacred-spa.html" class="dropdown-item">The Sacred Spa</a>
+                        <a href="html/saint-gym.html" class="dropdown-item">Saint Gym</a>
+                        <a href="html/saint-yachting.html" class="dropdown-item">Saint Yachting</a>
+                        <a href="html/vip-transfers.html" class="dropdown-item">VIP Transfers</a>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Galería</a>
                 </li>
                 <li class="nav-item">
                     <a href="html/contacto.html" class="nav-link">Contacto</a>
@@ -46,12 +40,13 @@
                 <li class="nav-item">
                     <a href="html/reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
             </ul>
-            <div class="search-container">
-                <a href="#" class="search-icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -172,7 +167,7 @@
                 <span class="experience-category">VISTA IMPRESIONANTE</span>
                 <h2>Bar del Cielo</h2>
                 <p>¡El paraíso del horizonte de Santorini! Disfruta de un cóctel <br> de autor sobre las olas, más allá de lo común.</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/sky-bar.html'">MÁS INFORMACIÓN</button>
             </div>
 
             <!-- Row 3: Spa Text + Spa Interior Image -->
@@ -180,7 +175,7 @@
                 <span class="experience-category">MOMENTOS DE RELAJACIÓN</span>
                 <h2>Spa Sagrado</h2>
                 <p>Olvídate de todo y reconecta contigo mismo en nuestro spa <br> privado. Nuestros esteticistas y masajistas expertos te harán <br> sentir como un rey en cada segundo de tu estancia.</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/sacred-spa.html'">MÁS INFORMACIÓN</button>
             </div>
             <div class="experience-image">
                 <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-96.jpg" alt="Spa Sagrado">
@@ -194,7 +189,7 @@
                 <span class="experience-category">FITNESS Y BIENESTAR</span>
                 <h2>Gimnasio Santo</h2>
                 <p>Mantén tu rutina, estira y tonifica tus músculos en nuestro <br> centro de entrenamiento privado.</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/saint-gym.html'">MÁS INFORMACIÓN</button>
             </div>
 
             <!-- Row 5: Yachting Text + Yacht Image -->
@@ -202,7 +197,7 @@
                 <span class="experience-category">ESCAPADAS PRIVADAS</span>
                 <h2>Saint Yachting</h2>
                 <p>Disfrute del privilegio de una experiencia en yate privado. <br> Relájese mientras la suave brisa de Santorini lo acaricia y lo <br> lleva de viaje a la recreación.</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/saint-yachting.html'">MÁS INFORMACIÓN</button>
             </div>
             <div class="experience-image">
                 <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Yacht-1.jpg" alt="Saint Yachting">
@@ -216,7 +211,7 @@
                 <span class="experience-category">TRASLADOS VIP</span>
                 <h2>Flota de Coches Saint</h2>
                 <p>¡Conduce tu sueño! Ofrecemos servicio de chófer privado con <br> una selección de coches VIP. ¡Conocemos todas las rutas y los <br> tesoros escondidos de Santorini!</p>
-                <button class="experience-btn">MÁS INFORMACIÓN</button>
+                <button class="experience-btn" onclick="window.location.href='html/vip-transfers.html'">MÁS INFORMACIÓN</button>
             </div>
         </div>
     </section>
@@ -333,7 +328,7 @@
         </div>
     </div>
 
-    <script src="js/storage.js"></script>
+    <script src="js/localStorage.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/rooms.js"></script>
     <script src="js/main.js"></script>

@@ -1,9 +1,9 @@
 /* ========================================
-   SKY BAR - INDEPENDENT STYLES
+   VIP TRANSFERS - INDEPENDENT STYLES
    ======================================== */
 
-/* Sky Bar Page Base Styles */
-.sky-bar-page {
+/* VIP Transfers Page Base Styles */
+.vip-transfers-page {
     background-color: #ffffff;
     color: #2c2c2c;
     font-family: 'Playfair Display', serif;
@@ -11,8 +11,8 @@
     overflow-x: hidden;
 }
 
-/* Sky Bar Navigation Styles - Same as Index */
-.sky-bar-nav {
+/* VIP Transfers Navigation Styles */
+.vip-transfers-nav {
     background: rgba(28, 28, 28);
     padding: 1.5rem 0;
     position: fixed;
@@ -22,7 +22,7 @@
     border-bottom: 1px solid #333;
 }
 
-.sky-bar-nav .nav-container {
+.vip-transfers-nav .nav-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 30px;
@@ -32,7 +32,7 @@
     position: relative;
 }
 
-.sky-bar-nav .nav-logo h2 {
+.vip-transfers-nav .nav-logo h2 {
     color: #fff;
     margin: 0;
     font-size: 1.2rem;
@@ -43,15 +43,7 @@
     text-transform: uppercase;
 }
 
-.sky-bar-nav .nav-logo h2 .santorini {
-    font-size: 0.7rem;
-    color: #999;
-    letter-spacing: 3px;
-    font-weight: 300;
-    display: none;
-}
-
-.sky-bar-nav .nav-menu {
+.vip-transfers-nav .nav-menu {
     display: flex;
     list-style: none;
     gap: 2rem;
@@ -60,7 +52,7 @@
     justify-content: center;
 }
 
-.sky-bar-nav .nav-link {
+.vip-transfers-nav .nav-link {
     color: #fff;
     text-decoration: none;
     font-weight: 400;
@@ -73,12 +65,12 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.sky-bar-nav .nav-link:hover,
-.sky-bar-nav .nav-link.active {
+.vip-transfers-nav .nav-link:hover,
+.vip-transfers-nav .nav-link.active {
     color: #fff;
 }
 
-.sky-bar-nav .nav-link.active::after {
+.vip-transfers-nav .nav-link.active::after {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -88,12 +80,7 @@
     background: #fff;
 }
 
-.sky-bar-nav .search-container {
-    display: flex;
-    align-items: center;
-}
-
-.sky-bar-nav .search-icon {
+.vip-transfers-nav .search-icon {
     background: transparent;
     padding: 0.5rem;
     border-radius: 0;
@@ -108,18 +95,18 @@
     text-decoration: none;
 }
 
-.sky-bar-nav .search-icon:hover {
+.vip-transfers-nav .search-icon:hover {
     background: #fff;
     color: #010101;
 }
 
-.sky-bar-nav .hamburger {
+.vip-transfers-nav .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
 }
 
-.sky-bar-nav .hamburger .bar {
+.vip-transfers-nav .hamburger .bar {
     width: 25px;
     height: 3px;
     background-color: white;
@@ -127,28 +114,28 @@
     transition: 0.3s;
 }
 
-/* Sky Bar Title Section */
-.sky-bar-title-section {
+/* VIP Transfers Title Section */
+.vip-transfers-title-section {
     background: #f5f5f5;
     padding: 4rem 0 3rem;
     text-align: center;
     position: relative;
     overflow: hidden;
-    margin-top: 80px; /* Account for fixed navbar */
+    margin-top: 80px;
 }
 
-.sky-bar-title-section::before {
+.vip-transfers-title-section::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="skybar-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23skybar-pattern)"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="vip-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23vip-pattern)"/></svg>');
     opacity: 0.3;
 }
 
-.sky-bar-title-section .container {
+.vip-transfers-title-section .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -156,7 +143,7 @@
     z-index: 2;
 }
 
-.sky-bar-title {
+.vip-transfers-title {
     font-size: 3.5rem;
     font-weight: 700;
     color: #2c2c2c;
@@ -165,8 +152,8 @@
     letter-spacing: -0.02em;
 }
 
-/* Sky Bar Main Content */
-.sky-bar-main-content {
+/* VIP Transfers Main Content - Same as Sky Bar */
+.vip-transfers-main-content {
     padding: 6rem 0;
     background: #ffffff;
     min-height: 70vh;
@@ -175,7 +162,7 @@
     justify-content: center;
 }
 
-.sky-bar-left {
+.vip-transfers-left {
     flex: 1;
     max-width: 600px;
     padding-right: 4rem;
@@ -185,7 +172,7 @@
     align-items: center;
 }
 
-.sky-bar-headline {
+.vip-transfers-headline {
     font-size: 2.6rem;
     font-weight: 700;
     color: #2c2c2c;
@@ -196,13 +183,13 @@
     text-align: center;
 }
 
-.sky-bar-right {
+.vip-transfers-right {
     flex: 1;
     max-width: 600px;
     padding-left: 2rem;
 }
 
-.sky-bar-description {
+.vip-transfers-description {
     max-width: 100%;
 }
 
@@ -228,9 +215,51 @@
     text-align: left;
 }
 
-/* Responsive Design for Sky Bar */
+/* ========================================
+   VIP TRANSFERS IMAGES - LUXURY FLEET GALLERY
+   ======================================== */
+
+/* VIP Transfers Images Container */
+.vip-transfers-images-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    margin: -12rem 0 4rem 0;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    align-items: center;
+}
+
+.vip-transfers-image-item {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.vip-transfers-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Center image specific styling - smaller size but aligned */
+.vip-transfers-image-item:nth-child(2) {
+    justify-self: center;
+    max-width: 420px;
+}
+
+.vip-transfers-image-item:nth-child(2) .vip-transfers-image {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Responsive Design for VIP Transfers - Same as Sky Bar */
 @media (max-width: 1200px) {
-    .sky-bar-main-content {
+    .vip-transfers-main-content {
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -238,18 +267,18 @@
         padding: 4rem 2rem;
     }
     
-    .sky-bar-left,
-    .sky-bar-right {
+    .vip-transfers-left,
+    .vip-transfers-right {
         max-width: 100%;
         padding: 0;
         margin: 0;
     }
     
-    .sky-bar-headline {
+    .vip-transfers-headline {
         font-size: 2.2rem;
     }
     
-    .sky-bar-title {
+    .vip-transfers-title {
         font-size: 3rem;
     }
 }
@@ -260,7 +289,7 @@
         gap: 1.5rem;
     }
     
-    .sky-bar-headline {
+    .vip-transfers-headline {
         font-size: 2rem;
         text-align: center;
     }
@@ -271,7 +300,7 @@
         font-size: 1rem;
     }
     
-    .sky-bar-nav .nav-menu {
+    .vip-transfers-nav .nav-menu {
         position: fixed;
         left: -100%;
         top: 70px;
@@ -284,34 +313,34 @@
         padding: 2rem 0;
     }
     
-    .sky-bar-nav .nav-menu.active {
+    .vip-transfers-nav .nav-menu.active {
         left: 0;
     }
     
-    .sky-bar-nav .nav-menu li {
+    .vip-transfers-nav .nav-menu li {
         margin: 1rem 0;
     }
     
-    .sky-bar-nav .hamburger {
+    .vip-transfers-nav .hamburger {
         display: flex;
     }
 }
 
 @media (max-width: 768px) {
-    .sky-bar-title-section {
+    .vip-transfers-title-section {
         padding: 3rem 0 2rem;
     }
     
-    .sky-bar-main-content {
+    .vip-transfers-main-content {
         padding: 3rem 1rem;
         gap: 2.5rem;
     }
     
-    .sky-bar-headline {
+    .vip-transfers-headline {
         font-size: 1.8rem;
     }
     
-    .sky-bar-title {
+    .vip-transfers-title {
         font-size: 2.5rem;
     }
     
@@ -322,24 +351,24 @@
 }
 
 @media (max-width: 480px) {
-    .sky-bar-nav .nav-container {
+    .vip-transfers-nav .nav-container {
         padding: 0 1rem;
     }
     
-    .sky-bar-title-section .container {
+    .vip-transfers-title-section .container {
         padding: 0 1rem;
     }
     
-    .sky-bar-main-content {
+    .vip-transfers-main-content {
         padding: 2rem 1rem;
         gap: 2rem;
     }
     
-    .sky-bar-headline {
+    .vip-transfers-headline {
         font-size: 1.5rem;
     }
     
-    .sky-bar-title {
+    .vip-transfers-title {
         font-size: 2rem;
     }
     
@@ -350,22 +379,38 @@
     }
 }
 
+/* Responsive Design for VIP Transfers Images */
+@media (max-width: 1200px) {
+    .vip-transfers-images-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin: -10rem 0 3rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .vip-transfers-images-container {
+        padding: 0 1rem;
+        gap: 1.5rem;
+    }
+}
+
 /* Animation and Transitions */
-.sky-bar-page * {
+.vip-transfers-page * {
     transition: all 0.3s ease;
 }
 
-.sky-bar-title-section {
+.vip-transfers-title-section {
     animation: fadeInUp 0.8s ease-out;
 }
 
-.sky-bar-left,
-.sky-bar-right {
+.vip-transfers-left,
+.vip-transfers-right {
     animation: fadeInUp 0.8s ease-out;
     animation-fill-mode: both;
 }
 
-.sky-bar-right {
+.vip-transfers-right {
     animation-delay: 0.2s;
 }
 
@@ -380,89 +425,32 @@
     }
 }
 
-/* Hover Effects - Removed */
-
 /* Focus States for Accessibility */
-.sky-bar-nav .nav-link:focus,
-.sky-bar-nav .search-icon:focus {
+.vip-transfers-nav .nav-link:focus,
+.vip-transfers-nav .dropdown-item:focus,
+.vip-transfers-nav .search-icon:focus {
     outline: 2px solid #f4e4c1;
     outline-offset: 2px;
 }
 
-/* ========================================
-   SKY BAR IMAGES - SIMPLE IMAGE GALLERY
-   ======================================== */
-
-/* Bar Images Container */
-.bar-images-container {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 2rem;
-    margin: -2rem 0 4rem 0;
-    padding: 0 2rem;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    background: transparent;
-    align-items: center;
-}
-
-.bar-image-item {
-    position: relative;
-    overflow: hidden;
-}
-
-.bar-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Center image specific styling */
-.bar-image-item:nth-child(2) {
-    justify-self: center;
-    max-width: 400px;
-}
-
-.bar-image-item:nth-child(2) .bar-image {
-    width: 100%;
-    max-width: 400px;
-}
-
-/* Responsive Design for Bar Images */
-@media (max-width: 1200px) {
-    .bar-images-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin: 3rem 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .bar-images-container {
-        padding: 0 1rem;
-        gap: 1.5rem;
-    }
-}
-
 /* Print Styles */
 @media print {
-    .sky-bar-nav,
-    .sky-bar-title-section::before {
+    .vip-transfers-nav,
+    .vip-transfers-title-section::before {
         display: none;
     }
     
-    .sky-bar-page {
+    .vip-transfers-page {
         background: white;
         color: black;
     }
     
-    .sky-bar-headline,
-    .sky-bar-title {
+    .vip-transfers-main-title,
+    .vip-transfers-title {
         color: black;
     }
     
-    .bar-images-container {
+    .vip-transfers-images-container {
         display: none;
     }
 }

@@ -47,9 +47,6 @@ class NavigationManager {
                             <a href="${basePath}index.html" class="nav-link ${this.currentPage === 'home' ? 'active' : ''}">Hogar</a>
                         </li>
                         <li class="nav-item">
-                            <a href="${basePath}index.html#concept" class="nav-link">Concepto</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="${htmlPath}suites.html" class="nav-link ${this.currentPage === 'suites' ? 'active' : ''}">Suites</a>
                         </li>
                         <li class="nav-item dropdown">
@@ -62,9 +59,6 @@ class NavigationManager {
                                 <a href="#" class="dropdown-item">Saint Yachting</a>
                                 <a href="#" class="dropdown-item">VIP Transfers</a>
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Galería</a>
                         </li>
                         <li class="nav-item">
                             <a href="${htmlPath}contacto.html" class="nav-link ${this.currentPage === 'contact' ? 'active' : ''}">Contacto</a>

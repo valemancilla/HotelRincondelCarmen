@@ -1,9 +1,9 @@
 /* ========================================
-   SKY BAR - INDEPENDENT STYLES
+   THE SACRED SPA - INDEPENDENT STYLES
    ======================================== */
 
-/* Sky Bar Page Base Styles */
-.sky-bar-page {
+/* Spa Page Base Styles */
+.spa-page {
     background-color: #ffffff;
     color: #2c2c2c;
     font-family: 'Playfair Display', serif;
@@ -11,8 +11,8 @@
     overflow-x: hidden;
 }
 
-/* Sky Bar Navigation Styles - Same as Index */
-.sky-bar-nav {
+/* Spa Navigation Styles - Same as Index */
+.spa-nav {
     background: rgba(28, 28, 28);
     padding: 1.5rem 0;
     position: fixed;
@@ -22,7 +22,7 @@
     border-bottom: 1px solid #333;
 }
 
-.sky-bar-nav .nav-container {
+.spa-nav .nav-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 30px;
@@ -32,7 +32,7 @@
     position: relative;
 }
 
-.sky-bar-nav .nav-logo h2 {
+.spa-nav .nav-logo h2 {
     color: #fff;
     margin: 0;
     font-size: 1.2rem;
@@ -43,7 +43,7 @@
     text-transform: uppercase;
 }
 
-.sky-bar-nav .nav-logo h2 .santorini {
+.spa-nav .nav-logo h2 .santorini {
     font-size: 0.7rem;
     color: #999;
     letter-spacing: 3px;
@@ -51,7 +51,7 @@
     display: none;
 }
 
-.sky-bar-nav .nav-menu {
+.spa-nav .nav-menu {
     display: flex;
     list-style: none;
     gap: 2rem;
@@ -60,7 +60,7 @@
     justify-content: center;
 }
 
-.sky-bar-nav .nav-link {
+.spa-nav .nav-link {
     color: #fff;
     text-decoration: none;
     font-weight: 400;
@@ -73,12 +73,12 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-.sky-bar-nav .nav-link:hover,
-.sky-bar-nav .nav-link.active {
+.spa-nav .nav-link:hover,
+.spa-nav .nav-link.active {
     color: #fff;
 }
 
-.sky-bar-nav .nav-link.active::after {
+.spa-nav .nav-link.active::after {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -88,12 +88,12 @@
     background: #fff;
 }
 
-.sky-bar-nav .search-container {
+.spa-nav .search-container {
     display: flex;
     align-items: center;
 }
 
-.sky-bar-nav .search-icon {
+.spa-nav .search-icon {
     background: transparent;
     padding: 0.5rem;
     border-radius: 0;
@@ -108,18 +108,18 @@
     text-decoration: none;
 }
 
-.sky-bar-nav .search-icon:hover {
+.spa-nav .search-icon:hover {
     background: #fff;
     color: #010101;
 }
 
-.sky-bar-nav .hamburger {
+.spa-nav .hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
 }
 
-.sky-bar-nav .hamburger .bar {
+.spa-nav .hamburger .bar {
     width: 25px;
     height: 3px;
     background-color: white;
@@ -127,8 +127,8 @@
     transition: 0.3s;
 }
 
-/* Sky Bar Title Section */
-.sky-bar-title-section {
+/* Spa Title Section */
+.spa-title-section {
     background: #f5f5f5;
     padding: 4rem 0 3rem;
     text-align: center;
@@ -137,18 +137,18 @@
     margin-top: 80px; /* Account for fixed navbar */
 }
 
-.sky-bar-title-section::before {
+.spa-title-section::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="skybar-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23skybar-pattern)"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="spa-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23spa-pattern)"/></svg>');
     opacity: 0.3;
 }
 
-.sky-bar-title-section .container {
+.spa-title-section .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
@@ -156,7 +156,7 @@
     z-index: 2;
 }
 
-.sky-bar-title {
+.spa-restaurant-title {
     font-size: 3.5rem;
     font-weight: 700;
     color: #2c2c2c;
@@ -165,61 +165,76 @@
     letter-spacing: -0.02em;
 }
 
-/* Sky Bar Main Content */
-.sky-bar-main-content {
-    padding: 6rem 0;
+/* Spa Main Content */
+.spa-main-content {
+    padding: 2rem 0;
     background: #ffffff;
     min-height: 70vh;
+}
+
+.spa-grid-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Spa Grid Left - Main Title */
+.spa-grid-left {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
-.sky-bar-left {
-    flex: 1;
-    max-width: 600px;
-    padding-right: 4rem;
-    margin-right: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.sky-bar-headline {
-    font-size: 2.6rem;
+.spa-title {
+    font-size: 3.2rem;
     font-weight: 700;
     color: #2c2c2c;
-    line-height: 1.2;
-    margin: 0;
-    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin: 4rem 0 0 0;
+    letter-spacing: -0.02em;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    text-align: center;
 }
 
-.sky-bar-right {
-    flex: 1;
-    max-width: 600px;
-    padding-left: 2rem;
+/* Spa Grid Center - Main Description */
+.spa-grid-center {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-.sky-bar-description {
+.spa-description {
     max-width: 100%;
 }
 
-.description-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+.spa-description p {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    line-height: 1.7;
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+    text-align: left;
 }
 
-.description-left,
-.description-right {
+.spa-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* Spa Grid Right - Saint Suites Description */
+.spa-grid-right {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-.description-left p,
-.description-right p {
+.saint-suites-description {
+    max-width: 100%;
+}
+
+.saint-suites-description p {
     font-size: 1.1rem;
     color: #4a4a4a;
     line-height: 1.7;
@@ -228,50 +243,47 @@
     text-align: left;
 }
 
-/* Responsive Design for Sky Bar */
+
+/* Responsive Design for Spa */
 @media (max-width: 1200px) {
-    .sky-bar-main-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    .spa-grid-container {
         gap: 3rem;
-        padding: 4rem 2rem;
     }
     
-    .sky-bar-left,
-    .sky-bar-right {
-        max-width: 100%;
-        padding: 0;
-        margin: 0;
+    .spa-title {
+        font-size: 2.8rem;
     }
     
-    .sky-bar-headline {
-        font-size: 2.2rem;
-    }
-    
-    .sky-bar-title {
+    .spa-restaurant-title {
         font-size: 3rem;
     }
 }
 
 @media (max-width: 968px) {
-    .description-columns {
+    .spa-grid-container {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .sky-bar-headline {
-        font-size: 2rem;
+        gap: 3rem;
         text-align: center;
     }
     
-    .description-left p,
-    .description-right p {
+    .spa-grid-left,
+    .spa-grid-center,
+    .spa-grid-right {
+        justify-content: center;
+    }
+    
+    .spa-title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+    
+    .spa-description p,
+    .saint-suites-description p {
         text-align: center;
         font-size: 1rem;
     }
     
-    .sky-bar-nav .nav-menu {
+    .spa-nav .nav-menu {
         position: fixed;
         left: -100%;
         top: 70px;
@@ -284,89 +296,98 @@
         padding: 2rem 0;
     }
     
-    .sky-bar-nav .nav-menu.active {
+    .spa-nav .nav-menu.active {
         left: 0;
     }
     
-    .sky-bar-nav .nav-menu li {
+    .spa-nav .nav-menu li {
         margin: 1rem 0;
     }
     
-    .sky-bar-nav .hamburger {
+    .spa-nav .hamburger {
         display: flex;
     }
 }
 
 @media (max-width: 768px) {
-    .sky-bar-title-section {
+    .spa-title-section {
         padding: 3rem 0 2rem;
     }
     
-    .sky-bar-main-content {
-        padding: 3rem 1rem;
+    .spa-main-content {
+        padding: 4rem 0;
+    }
+    
+    .spa-grid-container {
+        padding: 0 1.5rem;
         gap: 2.5rem;
     }
     
-    .sky-bar-headline {
-        font-size: 1.8rem;
+    .spa-title {
+        font-size: 2.2rem;
     }
     
-    .sky-bar-title {
+    .spa-restaurant-title {
         font-size: 2.5rem;
     }
     
-    .description-left p,
-    .description-right p {
+    .spa-description p,
+    .saint-suites-description p {
         font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
-    .sky-bar-nav .nav-container {
+    .spa-nav .nav-container {
         padding: 0 1rem;
     }
     
-    .sky-bar-title-section .container {
+    .spa-title-section .container {
         padding: 0 1rem;
     }
     
-    .sky-bar-main-content {
-        padding: 2rem 1rem;
+    .spa-grid-container {
+        padding: 0 1rem;
         gap: 2rem;
     }
     
-    .sky-bar-headline {
-        font-size: 1.5rem;
+    .spa-title {
+        font-size: 1.8rem;
     }
     
-    .sky-bar-title {
+    .spa-restaurant-title {
         font-size: 2rem;
     }
     
-    .description-left p,
-    .description-right p {
+    .spa-description p,
+    .saint-suites-description p {
         font-size: 0.9rem;
         line-height: 1.6;
     }
 }
 
 /* Animation and Transitions */
-.sky-bar-page * {
+.spa-page * {
     transition: all 0.3s ease;
 }
 
-.sky-bar-title-section {
+.spa-title-section {
     animation: fadeInUp 0.8s ease-out;
 }
 
-.sky-bar-left,
-.sky-bar-right {
+.spa-grid-left,
+.spa-grid-center,
+.spa-grid-right {
     animation: fadeInUp 0.8s ease-out;
     animation-fill-mode: both;
 }
 
-.sky-bar-right {
+.spa-grid-center {
     animation-delay: 0.2s;
+}
+
+.spa-grid-right {
+    animation-delay: 0.4s;
 }
 
 @keyframes fadeInUp {
@@ -383,22 +404,23 @@
 /* Hover Effects - Removed */
 
 /* Focus States for Accessibility */
-.sky-bar-nav .nav-link:focus,
-.sky-bar-nav .search-icon:focus {
+.spa-nav .nav-link:focus,
+.spa-nav .dropdown-item:focus,
+.spa-nav .search-icon:focus {
     outline: 2px solid #f4e4c1;
     outline-offset: 2px;
 }
 
 /* ========================================
-   SKY BAR IMAGES - SIMPLE IMAGE GALLERY
+   SPA IMAGES - LUXURY SPA GALLERY
    ======================================== */
 
-/* Bar Images Container */
-.bar-images-container {
+/* Spa Images Container */
+.spa-images-container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 2rem;
-    margin: -2rem 0 4rem 0;
+    margin: -10rem 0 4rem 0;
     padding: 0 2rem;
     max-width: 1400px;
     margin-left: auto;
@@ -407,39 +429,40 @@
     align-items: center;
 }
 
-.bar-image-item {
+.spa-image-item {
     position: relative;
     overflow: hidden;
 }
 
-.bar-image {
+.spa-image {
     width: 100%;
     height: auto;
     display: block;
 }
 
 /* Center image specific styling */
-.bar-image-item:nth-child(2) {
+.spa-image-item:nth-child(2) {
     justify-self: center;
     max-width: 400px;
+    margin-top: 3rem;
 }
 
-.bar-image-item:nth-child(2) .bar-image {
+.spa-image-item:nth-child(2) .spa-image {
     width: 100%;
     max-width: 400px;
 }
 
-/* Responsive Design for Bar Images */
+/* Responsive Design for Spa Images */
 @media (max-width: 1200px) {
-    .bar-images-container {
+    .spa-images-container {
         grid-template-columns: 1fr;
         gap: 2rem;
-        margin: 3rem 0;
+        margin: -10rem 0 3rem 0;
     }
 }
 
 @media (max-width: 768px) {
-    .bar-images-container {
+    .spa-images-container {
         padding: 0 1rem;
         gap: 1.5rem;
     }
@@ -447,22 +470,22 @@
 
 /* Print Styles */
 @media print {
-    .sky-bar-nav,
-    .sky-bar-title-section::before {
+    .spa-nav,
+    .spa-title-section::before {
         display: none;
     }
     
-    .sky-bar-page {
+    .spa-page {
         background: white;
         color: black;
     }
     
-    .sky-bar-headline,
-    .sky-bar-title {
+    .spa-title,
+    .spa-restaurant-title {
         color: black;
     }
     
-    .bar-images-container {
+    .spa-images-container {
         display: none;
     }
 }
