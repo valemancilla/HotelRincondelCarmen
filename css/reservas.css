@@ -9,7 +9,7 @@
     justify-content: center;
     overflow: hidden;
     width: 100%;
-    padding: 900px 0 50px 0;
+    padding: 100px 0 50px 0;
 }
 
 .search-background {
@@ -50,7 +50,7 @@
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top: 220px;
 }
 
 .search-header {

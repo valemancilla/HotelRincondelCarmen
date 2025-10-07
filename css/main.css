@@ -16,6 +16,8 @@ body {
     background-color: white;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .container {
@@ -173,12 +175,13 @@ p {
 
 /* Hero Section */
 .hero {
-    margin-top: 0;
+    margin: 0;
     padding: 0;
     background: transparent;
     display: flex;
     align-items: center;
-    min-height: 100vh;
+    width: 100%;
+    height: 100vh;
     position: relative;
     overflow: hidden;
 }
@@ -1851,14 +1854,16 @@ p {
 }
 
 .carousel-booking-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.carousel-container {
+.carousel-booking-section .carousel-container {
     position: relative;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .main-carousel {
@@ -2084,8 +2089,11 @@ p {
 /* Responsive styles for carousel and booking */
 @media (max-width: 768px) {
     .carousel-booking-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
+        padding: 0 1rem;
+    }
+    
+    .carousel-booking-section .carousel-container {
+        max-width: 100%;
     }
     
     .main-carousel {

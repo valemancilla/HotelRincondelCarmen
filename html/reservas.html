@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/reservas.css">
+    <link rel="stylesheet" href="../css/mis-reservas.css">
+    <link rel="stylesheet" href="../css/habitaciones-disponibles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -44,6 +46,12 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -80,100 +88,21 @@
                             </div>
                             
                             <div class="form-group-modern">
-                                <label for="nights">Estancia</label>
-                                <select id="nights" required>
-                                    <option value="1">1 noche</option>
-                                    <option value="2">2 noches</option>
-                                    <option value="3">3 noches</option>
-                                    <option value="4">4 noches</option>
-                                    <option value="5">5 noches</option>
-                                    <option value="6">6 noches</option>
-                                    <option value="7">7 noches</option>
-                                    <option value="8">8 noches</option>
-                                    <option value="9">9 noches</option>
-                                    <option value="10">10 noches</option>
-                                    <option value="11">11 noches</option>
-                                    <option value="12">12 noches</option>
-                                    <option value="13">13 noches</option>
-                                    <option value="14">14 noches</option>
-                                    <option value="15">15 noches</option>
-                                    <option value="16">16 noches</option>
-                                    <option value="17">17 noches</option>
-                                    <option value="18">18 noches</option>
-                                    <option value="19">19 noches</option>
-                                    <option value="20">20 noches</option>
-                                    <option value="21">21 noches</option>
-                                    <option value="22">22 noches</option>
-                                    <option value="23">23 noches</option>
-                                    <option value="24">24 noches</option>
-                                    <option value="25">25 noches</option>
-                                    <option value="26">26 noches</option>
-                                    <option value="27">27 noches</option>
-                                    <option value="28">28 noches</option>
-                                    <option value="29">29 noches</option>
-                                    <option value="30">30 noches</option>
-                                    <option value="31">31 noches</option>
-                                    <option value="32">32 noches</option>
-                                    <option value="33">33 noches</option>
-                                    <option value="34">34 noches</option>
-                                    <option value="35">35 noches</option>
-                                    <option value="36">36 noches</option>
-                                    <option value="37">37 noches</option>
-                                    <option value="38">38 noches</option>
-                                    <option value="39">39 noches</option>
-                                    <option value="40">40 noches</option>
-                                    <option value="41">41 noches</option>
-                                    <option value="42">42 noches</option>
-                                    <option value="43">43 noches</option>
-                                    <option value="44">44 noches</option>
-                                    <option value="45">45 noches</option>
-                                    <option value="46">46 noches</option>
-                                    <option value="47">47 noches</option>
-                                    <option value="48">48 noches</option>
-                                    <option value="49">49 noches</option>
-                                    <option value="50">50 noches</option>
-                                    <option value="51">51 noches</option>
-                                    <option value="52">52 noches</option>
-                                    <option value="53">53 noches</option>
-                                    <option value="54">54 noches</option>
-                                    <option value="55">55 noches</option>
-                                    <option value="56">56 noches</option>
-                                    <option value="57">57 noches</option>
-                                    <option value="58">58 noches</option>
-                                    <option value="59">59 noches</option>
-                                    <option value="60">60 noches</option>
-                                </select>
+                                <label for="checkOut">Check-out</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <input type="date" id="checkOut" required>
+                                </div>
                             </div>
                             
                             <div class="form-group-modern">
-                                <label for="suites">Suites</label>
-                                <select id="suites" required>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                <label for="guests">Número de Huéspedes</label>
+                                <select id="guests" required>
+                                    <option value="1">1 huésped</option>
+                                    <option value="2" selected>2 huéspedes</option>
+                                    <option value="3">3 huéspedes</option>
+                                    <option value="4">4 huéspedes</option>
                                 </select>
-                            </div>
-                            
-                            <div class="form-group-modern">
-                                <label for="adults">Adultos</label>
-                                <select id="adults" required>
-                                    <option value="1">1</option>
-                                    <option value="2" selected>2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                                <small>edad: 18+</small>
-                    </div>
-                            
-                            <div class="form-group-modern">
-                                <label for="children">Niños</label>
-                                <select id="children" required>
-                                    <option value="0" selected>0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                        </select>
-                                <small>edad: 13-17</small>
                             </div>
                         </div>
                         

@@ -32,7 +32,7 @@ class LocalStorageManager {
                     id: 1,
                     name: 'Suite Elementos',
                     type: 'suite',
-                    pricePerNight: 500,
+                    pricePerNight: 500000,
                     capacity: 2,
                     beds: 1,
                     description: 'Suite de lujo con vista al mar y terraza privada',
@@ -44,7 +44,7 @@ class LocalStorageManager {
                     id: 2,
                     name: 'Suite Épica',
                     type: 'suite',
-                    pricePerNight: 750,
+                    pricePerNight: 750000,
                     capacity: 4,
                     beds: 2,
                     description: 'Suite premium con jacuzzi privado, vista panorámica y servicios de lujo completos',
@@ -79,7 +79,7 @@ class LocalStorageManager {
                     id: 3,
                     name: 'Suite Majestic',
                     type: 'suite',
-                    pricePerNight: 1000,
+                    pricePerNight: 1000000,
                     capacity: 6,
                     beds: 3,
                     description: 'Suite presidencial con terraza privada y piscina',
@@ -91,7 +91,7 @@ class LocalStorageManager {
                     id: 4,
                     name: 'Suite Mítica',
                     type: 'suite',
-                    pricePerNight: 650,
+                    pricePerNight: 650000,
                     capacity: 3,
                     beds: 2,
                     description: 'Suite con terraza privada y vista de 180° a la Caldera',
@@ -103,7 +103,7 @@ class LocalStorageManager {
                     id: 5,
                     name: 'Suite Santa',
                     type: 'suite',
-                    pricePerNight: 550,
+                    pricePerNight: 550000,
                     capacity: 2,
                     beds: 1,
                     description: 'Suite elegante con vista al mar y decoración tradicional',
@@ -115,7 +115,7 @@ class LocalStorageManager {
                     id: 6,
                     name: 'Villa Santo',
                     type: 'villa',
-                    pricePerNight: 1200,
+                    pricePerNight: 1200000,
                     capacity: 8,
                     beds: 4,
                     description: 'Villa privada con piscina, jacuzzi y múltiples terrazas',
@@ -251,32 +251,105 @@ class LocalStorageManager {
 
     // Métodos específicos para reservas
     addReservation(reservationData) {
-        const reservations = this.getData('reservations') || [];
-        const newReservation = {
-            id: this.generateId(reservations),
-            ...reservationData,
-            status: 'pending',
-            createdAt: new Date().toISOString()
-        };
-        reservations.push(newReservation);
-        this.setData('reservations', reservations);
-        return newReservation;
+        try {
+            console.log('addReservation llamado con:', reservationData);
+            
+            const reservations = this.getData('reservations') || [];
+            console.log('Reservas actuales:', reservations.length);
+            
+            const newReservation = {
+                id: this.generateId(reservations),
+                ...reservationData,
+                status: reservationData.status || 'confirmed',
+                createdAt: new Date().toISOString()
+            };
+            
+            console.log('Nueva reserva a guardar:', newReservation);
+            
+            reservations.push(newReservation);
+            const saved = this.setData('reservations', reservations);
+            
+            console.log('¿Guardado exitoso?:', saved);
+            console.log('Total de reservas después de guardar:', reservations.length);
+            
+            // Verificar que se guardó correctamente
+            const verificacion = this.getData('reservations');
+            console.log('Verificación - Total reservas en localStorage:', verificacion ? verificacion.length : 0);
+            
+            if (!saved) {
+                throw new Error('No se pudo guardar la reserva en localStorage');
+            }
+            
+            return newReservation;
+        } catch (error) {
+            console.error('Error en addReservation:', error);
+            throw error;
+        }
+    }
+
+    getAllReservations() {
+        return this.getData('reservations') || [];
     }
 
     getReservationsByUser(userId) {
+        console.log('getReservationsByUser llamado para userId:', userId);
         const reservations = this.getData('reservations') || [];
-        return reservations.filter(reservation => reservation.userId === userId);
+        console.log('Total de reservas en sistema:', reservations.length);
+        console.log('Todas las reservas:', reservations);
+        const userReservations = reservations.filter(reservation => reservation.userId === userId);
+        console.log('Reservas del usuario:', userReservations.length);
+        return userReservations;
+    }
+
+    deleteReservation(id) {
+        console.log('deleteReservation llamado para id:', id);
+        const reservations = this.getData('reservations') || [];
+        const filteredReservations = reservations.filter(reservation => reservation.id !== id);
+        
+        if (filteredReservations.length < reservations.length) {
+            this.setData('reservations', filteredReservations);
+            console.log('Reserva eliminada. Total de reservas ahora:', filteredReservations.length);
+            return true;
+        }
+        
+        console.error('Reserva no encontrada con id:', id);
+        return false;
+    }
+
+    updateReservation(id, updatedData) {
+        console.log('updateReservation llamado:', { id, updatedData });
+        const reservations = this.getData('reservations') || [];
+        const index = reservations.findIndex(reservation => reservation.id === id);
+        
+        if (index !== -1) {
+            reservations[index] = {
+                ...reservations[index],
+                ...updatedData,
+                updatedAt: new Date().toISOString()
+            };
+            this.setData('reservations', reservations);
+            console.log('Reserva actualizada:', reservations[index]);
+            return reservations[index];
+        }
+        
+        console.error('Reserva no encontrada con id:', id);
+        return null;
     }
 
     updateReservationStatus(id, status) {
+        console.log('updateReservationStatus llamado:', { id, status });
         const reservations = this.getData('reservations') || [];
         const index = reservations.findIndex(reservation => reservation.id === id);
+        
         if (index !== -1) {
             reservations[index].status = status;
             reservations[index].updatedAt = new Date().toISOString();
             this.setData('reservations', reservations);
+            console.log('Estado de reserva actualizado:', reservations[index]);
             return reservations[index];
         }
+        
+        console.error('Reserva no encontrada con id:', id);
         return null;
     }
 
@@ -307,6 +380,15 @@ class LocalStorageManager {
     }
 
     // Métodos específicos para habitaciones
+    getRooms() {
+        return this.getData('rooms') || [];
+    }
+
+    getRoomById(roomId) {
+        const rooms = this.getRooms();
+        return rooms.find(room => room.id === roomId);
+    }
+
     getAvailableRooms(checkIn, checkOut, guests = 1) {
         console.log('getAvailableRooms llamado con:', { checkIn, checkOut, guests });
         
@@ -325,9 +407,10 @@ class LocalStorageManager {
             }
             
             // Verificar si la habitación está disponible en las fechas solicitadas
+            // Considerar tanto reservas confirmadas como pendientes
             const conflictingReservations = reservations.filter(reservation => 
                 reservation.roomId === room.id && 
-                reservation.status === 'confirmed' &&
+                (reservation.status === 'confirmed' || reservation.status === 'pending') &&
                 this.datesOverlap(checkIn, checkOut, reservation.checkIn, reservation.checkOut)
             );
             
@@ -372,6 +455,13 @@ class LocalStorageManager {
     }
 
     // Métodos de limpieza y reset
+    clearReservations() {
+        console.log('Limpiando todas las reservas...');
+        this.setData('reservations', []);
+        console.log('Reservas limpiadas exitosamente');
+        return true;
+    }
+
     clearAllData() {
         const keys = ['users', 'rooms', 'reservations', 'contactMessages', 'services'];
         keys.forEach(key => localStorage.removeItem(key));

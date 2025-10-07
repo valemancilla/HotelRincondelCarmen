@@ -327,6 +327,7 @@ class AuthManager {
      */
     updateUI() {
         const loginBtn = document.getElementById('loginBtn');
+        const logoutBtnItem = document.getElementById('logoutBtnItem');
         const adminBtn = document.getElementById('adminBtn');
         const myReservations = document.getElementById('myReservations');
 
@@ -334,12 +335,16 @@ class AuthManager {
             // Usuario logueado
             if (loginBtn) {
                 loginBtn.textContent = `Hola, ${this.currentUser.name.split(' ')[0]}`;
-                loginBtn.onclick = (e) => {
-                    e.preventDefault();
-                    this.logout();
-                };
+                // Remover cualquier evento de click y hacer que el botón solo muestre el nombre
+                loginBtn.onclick = null;
+                loginBtn.style.cursor = 'default';
+                loginBtn.removeAttribute('href');
             }
 
+            // Mostrar botón de cerrar sesión
+            if (logoutBtnItem) {
+                logoutBtnItem.style.display = 'block';
+            }
 
             if (adminBtn && this.isAdmin()) {
                 adminBtn.style.display = 'block';
@@ -353,10 +358,17 @@ class AuthManager {
             // Usuario no logueado
             if (loginBtn) {
                 loginBtn.textContent = 'Iniciar Sesión';
+                loginBtn.style.cursor = 'pointer';
+                loginBtn.setAttribute('href', '#');
                 loginBtn.onclick = (e) => {
                     e.preventDefault();
                     this.showLoginModal();
                 };
+            }
+
+            // Ocultar botón de cerrar sesión
+            if (logoutBtnItem) {
+                logoutBtnItem.style.display = 'none';
             }
 
             if (adminBtn) {
@@ -407,18 +419,42 @@ class AuthManager {
     loadUserReservations() {
         if (!this.currentUser) return;
 
-        const reservations = storageManager.getReservationsByUser(this.currentUser.id);
+        const allReservations = storageManager.getReservationsByUser(this.currentUser.id);
         const reservationsList = document.getElementById('reservationsList');
         
         if (!reservationsList) return;
 
-        if (reservations.length === 0) {
+        // Filtrar solo reservas activas (no canceladas)
+        const reservations = allReservations.filter(r => r.status !== 'cancelled');
+        const cancelledCount = allReservations.length - reservations.length;
+
+        if (reservations.length === 0 && cancelledCount === 0) {
             reservationsList.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-calendar-times"></i>
                     <h3>No tienes reservas</h3>
                     <p>¡Haz tu primera reserva ahora!</p>
-                    <a href="${this.getReservasUrl()}" class="btn-primary">Ver Habitaciones</a>
+                    <a href="${this.getReservasUrl()}" class="btn-suites">VER HABITACIONES</a>
+                </div>
+            `;
+            return;
+        }
+
+        if (reservations.length === 0 && cancelledCount > 0) {
+            reservationsList.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>No tienes reservas activas</h3>
+                    <p>Tienes ${cancelledCount} reserva(s) cancelada(s).</p>
+                    <button onclick="authManager.deleteAllCancelledReservations()" 
+                            style="background: #e74c3c; color: white; border: none; padding: 6px 12px; 
+                                   font-size: 12px; border-radius: 4px; cursor: pointer; 
+                                   display: inline-flex; align-items: center; gap: 5px;">
+                        <i class="fas fa-trash" style="font-size: 11px;"></i> 
+                        <span>Eliminar canceladas</span>
+                    </button>
+                    <br><br>
+                    <a href="${this.getReservasUrl()}" class="btn-suites">VER HABITACIONES</a>
                 </div>
             `;
             return;
@@ -430,39 +466,63 @@ class AuthManager {
             const checkOut = new Date(reservation.checkOut).toLocaleDateString('es-CO');
             const totalNights = Math.ceil((new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
             const totalPrice = totalNights * room.pricePerNight;
+            const roomImage = room.images && room.images[0] ? room.images[0] : 'https://via.placeholder.com/400x300?text=Sin+Imagen';
 
             return `
-                <div class="reservation-item">
-                    <h4>Habitación ${room.number} - ${this.getRoomTypeName(room.type)}</h4>
-                    <div class="reservation-details">
-                        <div class="reservation-detail">
-                            <strong>Check-in:</strong>
-                            <span>${checkIn}</span>
-                        </div>
-                        <div class="reservation-detail">
-                            <strong>Check-out:</strong>
-                            <span>${checkOut}</span>
-                        </div>
-                        <div class="reservation-detail">
-                            <strong>Huéspedes:</strong>
-                            <span>${reservation.guests}</span>
-                        </div>
-                        <div class="reservation-detail">
-                            <strong>Total:</strong>
-                            <span>$${totalPrice.toLocaleString('es-CO')}</span>
-                        </div>
-                        <div class="reservation-detail">
-                            <strong>Estado:</strong>
-                            <span class="status-badge status-${reservation.status}">${this.getStatusText(reservation.status)}</span>
+                <div class="reservation-card-vertical">
+                    <div class="reservation-image-top">
+                        <img src="${roomImage}" alt="${room.name}">
+                        <div class="status-overlay status-${reservation.status}">
+                            <i class="fas fa-${reservation.status === 'pending' ? 'clock' : reservation.status === 'confirmed' ? 'check-circle' : 'circle'}"></i>
+                            ${this.getStatusText(reservation.status)}
                         </div>
                     </div>
-                    ${reservation.notes ? `<p><strong>Notas:</strong> ${reservation.notes}</p>` : ''}
-                    <div class="reservation-actions">
-                        ${reservation.status === 'active' ? `
-                            <button class="btn-danger" onclick="authManager.cancelReservation('${reservation.id}')">
-                                Cancelar Reserva
-                            </button>
-                        ` : ''}
+                    
+                    <div class="reservation-content-vertical">
+                        <h3 class="room-name-vertical">${room.name}</h3>
+                        <span class="room-type-badge">${this.getRoomTypeName(room.type)}</span>
+                        
+                        <div class="dates-section">
+                            <div class="date-box">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <div>
+                                    <small>Check-in</small>
+                                    <strong>${checkIn}</strong>
+                                </div>
+                            </div>
+                            <div class="nights-indicator">
+                                <i class="fas fa-moon"></i>
+                                ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}
+                            </div>
+                            <div class="date-box">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <div>
+                                    <small>Check-out</small>
+                                    <strong>${checkOut}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="guests-info">
+                            <i class="fas fa-users"></i>
+                            <span>${reservation.guests} huéspedes</span>
+                        </div>
+                        
+                        <div class="price-box">
+                            <div class="price-detail">COP $${room.pricePerNight.toLocaleString('es-CO')} × ${totalNights}</div>
+                            <div class="price-total">COP $${totalPrice.toLocaleString('es-CO')}</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            ${(reservation.status === 'pending' || reservation.status === 'confirmed') ? `
+                                <button class="btn-modify" onclick="authManager.modifyReservation(${reservation.id})">
+                                    <i class="fas fa-edit"></i> Modificar
+                                </button>
+                                <button class="btn-delete" onclick="authManager.cancelReservation(${reservation.id})">
+                                    <i class="fas fa-trash-alt"></i> Cancelar
+                                </button>
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
             `;
@@ -470,20 +530,153 @@ class AuthManager {
     }
 
     /**
-     * Cancela una reserva
+     * Modifica una reserva
      */
-    cancelReservation(reservationId) {
-        if (!confirm('¿Estás seguro de que quieres cancelar esta reserva?')) {
+    modifyReservation(reservationId) {
+        const reservations = storageManager.getReservationsByUser(this.currentUser.id);
+        const reservation = reservations.find(r => r.id === reservationId);
+        
+        if (!reservation) {
+            this.showError('Reserva no encontrada');
             return;
         }
 
+        const room = storageManager.getRoomById(reservation.roomId);
+        
+        // Crear modal de edición
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'block';
+        modal.id = 'editReservationModal';
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Modificar Reserva</h2>
+                <h3>${room.name}</h3>
+                <form id="editReservationForm">
+                    <div class="form-group">
+                        <label for="editCheckIn">Fecha de entrada:</label>
+                        <input type="date" id="editCheckIn" value="${reservation.checkIn}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCheckOut">Fecha de salida:</label>
+                        <input type="date" id="editCheckOut" value="${reservation.checkOut}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGuests">Número de Huéspedes:</label>
+                        <select id="editGuests" required>
+                            ${[1,2,3,4].map(n => 
+                                `<option value="${n}" ${reservation.guests === n ? 'selected' : ''}>${n} ${n === 1 ? 'huésped' : 'huéspedes'}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn-outline" onclick="document.getElementById('editReservationModal').remove()">Cancelar</button>
+                </form>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Cerrar modal
+        modal.querySelector('.close').onclick = () => modal.remove();
+        modal.onclick = (e) => {
+            if (e.target === modal) modal.remove();
+        };
+        
+        // Configurar fechas mínimas
+        const today = new Date().toISOString().split('T')[0];
+        const editCheckIn = document.getElementById('editCheckIn');
+        const editCheckOut = document.getElementById('editCheckOut');
+        
+        editCheckIn.min = today;
+        editCheckOut.min = today;
+        
+        // Actualizar fecha mínima de salida cuando cambie la entrada
+        editCheckIn.addEventListener('change', () => {
+            const checkInDate = new Date(editCheckIn.value);
+            const nextDay = new Date(checkInDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            editCheckOut.min = nextDay.toISOString().split('T')[0];
+            
+            if (editCheckOut.value && new Date(editCheckOut.value) <= checkInDate) {
+                editCheckOut.value = '';
+            }
+        });
+        
+        // Manejar envío del formulario
+        document.getElementById('editReservationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newCheckIn = document.getElementById('editCheckIn').value;
+            const newCheckOut = document.getElementById('editCheckOut').value;
+            const newGuests = parseInt(document.getElementById('editGuests').value);
+            
+            // Validar fechas
+            if (new Date(newCheckOut) <= new Date(newCheckIn)) {
+                alert('La fecha de salida debe ser posterior a la fecha de entrada');
+                return;
+            }
+            
+            // Calcular noches automáticamente
+            const newNights = Math.ceil((new Date(newCheckOut) - new Date(newCheckIn)) / (1000 * 60 * 60 * 24));
+            
+            // Actualizar reserva
+            const updatedData = {
+                checkIn: newCheckIn,
+                checkOut: newCheckOut,
+                nights: newNights,
+                guests: newGuests
+            };
+            
+            try {
+                storageManager.updateReservation(reservationId, updatedData);
+                modal.remove();
+                this.loadUserReservations();
+                this.showSuccess('Reserva modificada exitosamente');
+            } catch (error) {
+                console.error('Error al modificar reserva:', error);
+                this.showError('Error al modificar la reserva: ' + error.message);
+            }
+        });
+    }
+
+    /**
+     * Cancela una reserva
+     */
+    cancelReservation(reservationId) {
         try {
-            storageManager.cancelReservation(reservationId);
+            storageManager.updateReservationStatus(reservationId, 'cancelled');
             this.loadUserReservations();
             this.showSuccess('Reserva cancelada exitosamente');
         } catch (error) {
             console.error('Error al cancelar reserva:', error);
-            this.showError('', 'Error al cancelar la reserva');
+            this.showError('Error al cancelar la reserva');
+        }
+    }
+
+    /**
+     * Elimina todas las reservas canceladas del usuario actual
+     */
+    deleteAllCancelledReservations() {
+        if (!this.currentUser) return;
+
+        try {
+            const allReservations = storageManager.getAllReservations();
+            const userCancelledReservations = allReservations.filter(r => 
+                r.userId === this.currentUser.id && r.status === 'cancelled'
+            );
+            
+            userCancelledReservations.forEach(r => {
+                storageManager.deleteReservation(r.id);
+            });
+            
+            this.loadUserReservations();
+            this.showSuccess(`${userCancelledReservations.length} reserva(s) cancelada(s) eliminada(s) exitosamente`);
+        } catch (error) {
+            console.error('Error al eliminar reservas:', error);
+            this.showError('Error al eliminar las reservas');
         }
     }
 
@@ -506,8 +699,9 @@ class AuthManager {
     getStatusText(status) {
         const statuses = {
             'active': 'Activa',
-            'cancelled': 'Cancelada',
-            'pending': 'Pendiente'
+            'pending': 'Pendiente',
+            'confirmed': 'Confirmada',
+            'cancelled': 'Cancelada'
         };
         return statuses[status] || status;
     }

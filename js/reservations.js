@@ -106,16 +106,19 @@ class ReservationManager {
         console.log('Iniciando búsqueda...');
         
         const checkIn = document.getElementById('checkIn').value;
-        const nights = parseInt(document.getElementById('nights').value);
-        const adults = parseInt(document.getElementById('adults').value);
-        const children = parseInt(document.getElementById('children').value);
-        const totalGuests = adults + children;
+        const checkOut = document.getElementById('checkOut').value;
+        const guests = parseInt(document.getElementById('guests').value) || 2;
 
-        console.log('Datos:', { checkIn, nights, adults, children, totalGuests });
+        console.log('Datos:', { checkIn, checkOut, guests });
 
         // Validaciones
         if (!checkIn) {
             this.showError('Por favor selecciona la fecha de entrada');
+            return;
+        }
+
+        if (!checkOut) {
+            this.showError('Por favor selecciona la fecha de salida');
             return;
         }
 
@@ -124,13 +127,14 @@ class ReservationManager {
             return;
         }
 
-        // Calcular fecha de salida basada en las noches
-        const checkInDate = new Date(checkIn);
-        const checkOutDate = new Date(checkInDate);
-        checkOutDate.setDate(checkInDate.getDate() + nights);
-        const checkOut = checkOutDate.toISOString().split('T')[0];
+        if (new Date(checkOut) <= new Date(checkIn)) {
+            this.showError('La fecha de salida debe ser posterior a la fecha de entrada');
+            return;
+        }
 
-        console.log('Fechas calculadas:', { checkIn, checkOut });
+        // Calcular noches automáticamente
+        const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+        console.log('Noches calculadas automáticamente:', nights);
 
         // Verificar que storageManager existe
         if (typeof storageManager === 'undefined') {
@@ -140,16 +144,16 @@ class ReservationManager {
         }
 
         // Buscar habitaciones disponibles
-        const availableRooms = storageManager.getAvailableRooms(checkIn, checkOut, totalGuests);
+        const availableRooms = storageManager.getAvailableRooms(checkIn, checkOut, guests);
         console.log('Habitaciones encontradas:', availableRooms);
         
-        this.displayAvailableRooms(availableRooms, checkIn, checkOut, totalGuests);
+        this.displayAvailableRooms(availableRooms, checkIn, checkOut, guests, nights);
     }
 
     /**
      * Muestra las habitaciones disponibles
      */
-    displayAvailableRooms(rooms, checkIn, checkOut, guests) {
+    displayAvailableRooms(rooms, checkIn, checkOut, guests, nights) {
         const resultsSection = document.getElementById('resultsSection');
         const availableRoomsContainer = document.getElementById('availableRooms');
 
@@ -165,44 +169,51 @@ class ReservationManager {
                 </div>
             `;
         } else {
-            const totalNights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+            const totalNights = nights || Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
             
             availableRoomsContainer.innerHTML = rooms.map(room => {
                 const totalPrice = totalNights * room.pricePerNight;
                 const services = this.getServiceIcons(room.services);
-                const amenities = room.amenities ? this.formatAmenities(room.amenities) : '';
+                const suiteUrl = this.getSuiteUrl(room.name);
                 
                 return `
-                    <div class="room-card card-hover">
-                        <img src="${room.images[0]}" alt="${room.name}" class="room-image">
-                        <div class="room-content">
-                            <h3 class="room-title">${room.name}</h3>
-                            <div class="room-price">$${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
-                            <div class="room-total-price">
-                                <strong>Total ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}: $${totalPrice.toLocaleString('es-CO')}</strong>
+                    <div class="room-card">
+                        <div class="room-image">
+                            <img src="${room.images[0]}" alt="${room.name}">
+                        </div>
+                        
+                        <div class="room-info">
+                            <h3 class="room-name">${room.name}</h3>
+                            
+                            <div class="room-price-section">
+                                <span class="price-night">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</span>
+                                <span class="price-total">Total ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}: COP $${totalPrice.toLocaleString('es-CO')}</span>
                             </div>
-                            <ul class="room-features">
-                                <li>Máximo ${room.capacity} huéspedes</li>
-                                <li>${room.beds} ${room.beds === 1 ? 'cama' : 'camas'}</li>
-                                <li>${this.getRoomTypeName(room.type)}</li>
-                            </ul>
-                            <div class="room-services">
+                            
+                            <div class="room-specs">
+                                <div class="spec">
+                                    <i class="fas fa-users"></i>
+                                    <span>Máximo ${room.capacity} huéspedes</span>
+                                </div>
+                                <div class="spec">
+                                    <i class="fas fa-bed"></i>
+                                    <span>${room.beds} ${room.beds === 1 ? 'cama' : 'camas'}</span>
+                                </div>
+                                <div class="spec">
+                                    <i class="fas fa-crown"></i>
+                                    <span>${this.getRoomTypeName(room.type)}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="room-amenities">
                                 ${services}
                             </div>
-                            ${amenities ? `
-                            <div class="room-amenities">
-                                <h4>Servicios y Amenidades:</h4>
-                                ${amenities}
-                            </div>
-                            ` : ''}
-                            <p class="room-description">${room.description}</p>
-                            <div class="room-actions">
-                                <button class="btn-outline view-room-details" data-room-id="${room.id}">
-                                    Ver Detalles
-                                </button>
-                                <button class="btn-primary reserve-room" data-room-id="${room.id}">
-                                    Reservar Ahora
-                                </button>
+                            
+                            <p class="room-desc">${room.description}</p>
+                            
+                            <div class="room-buttons">
+                                <button class="btn-details" onclick="window.location.href='${suiteUrl}'">VER DETALLES</button>
+                                <button class="btn-reserve reserve-room" data-room-id="${room.id}">RESERVAR AHORA</button>
                             </div>
                         </div>
                     </div>
@@ -311,6 +322,18 @@ class ReservationManager {
         return types[type] || type;
     }
 
+    getSuiteUrl(roomName) {
+        const suiteUrls = {
+            'Suite Elementos': 'suite-elementos.html',
+            'Suite Épica': 'suite-epica.html',
+            'Suite Majestic': 'suite-majestic.html',
+            'Suite Mítica': 'suite-mitica.html',
+            'Suite Santa': 'suite-santa.html',
+            'Villa Santo': 'suite-villa-santo.html'
+        };
+        return suiteUrls[roomName] || 'suite-detail.html';
+    }
+
     /**
      * Formatea las amenidades para mostrar
      */
@@ -331,26 +354,24 @@ class ReservationManager {
         // Verificar si el usuario está logueado
         const currentUser = JSON.parse(localStorage.getItem('current_user'));
         if (!currentUser) {
-            alert('Debes iniciar sesión para hacer una reserva');
+            this.showError('Debes iniciar sesión para hacer una reserva');
+            if (window.authManager && window.authManager.showLoginModal) {
+                setTimeout(() => window.authManager.showLoginModal(), 500);
+            }
             return;
         }
 
         const checkIn = document.getElementById('checkIn').value;
-        const nights = parseInt(document.getElementById('nights').value);
-        const adults = parseInt(document.getElementById('adults').value);
-        const children = parseInt(document.getElementById('children').value);
-        const totalGuests = adults + children;
+        const checkOut = document.getElementById('checkOut').value;
+        const guests = parseInt(document.getElementById('guests').value) || 2;
 
-        if (!checkIn) {
-            this.showError('Por favor selecciona la fecha de entrada');
+        if (!checkIn || !checkOut) {
+            this.showError('Por favor selecciona las fechas de entrada y salida');
             return;
         }
 
-        // Calcular fecha de salida basada en las noches
-        const checkInDate = new Date(checkIn);
-        const checkOutDate = new Date(checkInDate);
-        checkOutDate.setDate(checkInDate.getDate() + nights);
-        const checkOut = checkOutDate.toISOString().split('T')[0];
+        // Calcular noches automáticamente
+        const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
 
         // Crear la reserva
         const reservationData = {
@@ -358,28 +379,25 @@ class ReservationManager {
             roomId: roomId,
             checkIn: checkIn,
             checkOut: checkOut,
-            guests: totalGuests,
-            adults: adults,
-            children: children,
+            guests: guests,
             nights: nights,
-            status: 'pending'
+            status: 'confirmed'
         };
 
         try {
             const newReservation = storageManager.addReservation(reservationData);
-            alert('Reserva creada exitosamente. Te contactaremos pronto para confirmar.');
+            this.showSuccess('¡Reserva creada exitosamente!');
             
-            // Limpiar el formulario de búsqueda
-            document.getElementById('checkIn').value = '';
-            document.getElementById('nights').value = '1';
-            document.getElementById('adults').value = '2';
-            document.getElementById('children').value = '0';
-            
-            // Ocultar resultados
-            document.getElementById('resultsSection').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('checkIn').value = '';
+                document.getElementById('checkOut').value = '';
+                document.getElementById('guests').value = '2';
+                document.getElementById('resultsSection').style.display = 'none';
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error('Error al crear reserva:', error);
-            this.showError('Error al crear la reserva. Inténtalo de nuevo.');
+            this.showError('Error al crear la reserva: ' + error.message);
         }
     }
 
@@ -402,27 +420,19 @@ class ReservationManager {
 
         const services = this.getServiceIcons(room.services);
         const checkIn = document.getElementById('checkIn').value;
-        const nights = parseInt(document.getElementById('nights').value);
-        const adults = parseInt(document.getElementById('adults').value);
-        const children = parseInt(document.getElementById('children').value);
-        const totalGuests = adults + children;
+        const checkOut = document.getElementById('checkOut').value;
+        const guests = parseInt(document.getElementById('guests').value) || 2;
         
-        let totalNights = nights || 1;
-        let totalPrice = totalNights * room.pricePerNight;
-        
-        // Calcular fecha de salida si hay fecha de entrada
-        let checkOut = '';
-        if (checkIn) {
-            const checkInDate = new Date(checkIn);
-            const checkOutDate = new Date(checkInDate);
-            checkOutDate.setDate(checkInDate.getDate() + totalNights);
-            checkOut = checkOutDate.toISOString().split('T')[0];
+        let totalNights = 1;
+        if (checkIn && checkOut) {
+            totalNights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
         }
+        let totalPrice = totalNights * room.pricePerNight;
 
         content.innerHTML = `
             <div class="room-details-header">
                 <h2>${room.name}</h2>
-                <div class="room-price">$${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
+                <div class="room-price">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
             </div>
             
             <div class="room-details-images">
@@ -458,9 +468,8 @@ class ReservationManager {
                         <li><strong>Check-in:</strong> ${new Date(checkIn).toLocaleDateString('es-CO')}</li>
                         <li><strong>Check-out:</strong> ${checkOut ? new Date(checkOut).toLocaleDateString('es-CO') : 'Por calcular'}</li>
                         <li><strong>Noches:</strong> ${totalNights}</li>
-                        <li><strong>Adultos:</strong> ${adults}</li>
-                        <li><strong>Niños:</strong> ${children}</li>
-                        <li><strong>Total:</strong> $${totalPrice.toLocaleString('es-CO')}</li>
+                        <li><strong>Huéspedes:</strong> ${guests}</li>
+                        <li><strong>Total:</strong> COP $${totalPrice.toLocaleString('es-CO')}</li>
                     </ul>
                 </div>
                 ` : ''}

@@ -43,6 +43,12 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -55,7 +61,7 @@
     <!-- Suite Detail Hero -->
     <section class="suite-detail-hero">
         <div class="suite-detail-image">
-            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg" alt="Suite Santa">
+            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2017/06/HighRes-22.jpg" alt="Suite Santa">
         </div>
     </section>
 
@@ -74,22 +80,25 @@
                 <div class="carousel-container">
                     <div class="main-carousel">
                         <div class="carousel-slide active">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg" alt="Suite Santa - Vista Principal">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2017/06/HighRes-22.jpg" alt="Suite Santa - Vista Principal">
                             <button class="fullscreen-btn">
                                 <i class="fas fa-expand"></i>
                             </button>
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Suite Santa - Terraza">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-66.jpg" alt="Suite Santa - Terraza">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg" alt="Suite Santa - Interior">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/03/HighRes-71.jpg" alt="Suite Santa - Interior">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Suite Santa - Vista Nocturna">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-69.jpg" alt="Suite Santa - Vista Nocturna">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-80.jpg" alt="Suite Santa - Piscina">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-70.jpg" alt="Suite Santa - Piscina">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-67.jpg" alt="Suite Santa - Piscina">
                         </div>
                         
                         <!-- Navigation Arrows -->
@@ -104,55 +113,23 @@
                     <!-- Thumbnails -->
                     <div class="carousel-thumbnails">
                         <div class="thumbnail active" onclick="currentSlide(1)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg" alt="Vista Principal">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2017/06/HighRes-22.jpg" alt="Vista Principal">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(2)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Terraza">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-66.jpg" alt="Terraza">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(3)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg" alt="Interior">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/03/HighRes-71.jpg" alt="Interior">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(4)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Vista Nocturna">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-69.jpg" alt="Vista Nocturna">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(5)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-80.jpg" alt="Piscina">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-70.jpg" alt="Piscina">
                         </div>
-                    </div>
-                </div>
-
-                <!-- Booking Widget -->
-                <div class="booking-widget">
-                    <div class="widget-header">
-                        <h3>Buscar habitaciones</h3>
-                        <p>COMENZAR A RESERVAR</p>
-                    </div>
-                    
-                    <div class="booking-form">
-                        <div class="date-inputs">
-                            <div class="date-field">
-                                <label>CHECK-IN</label>
-                                <div class="date-display">
-                                    <span class="day">04</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                            </div>
-                            <div class="date-field">
-                                <label>CHECK-OUT</label>
-                                <div class="date-display">
-                                    <span class="day">05</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                            </div>
+                        <div class="thumbnail" onclick="currentSlide(6)">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-67.jpg" alt="Piscina">
                         </div>
-                        
-                        <div class="guest-field">
-                            <span class="guest-count">2 GUEST</span>
-                        </div>
-                        
-                        <button class="check-availability-btn">
-                            CONSULTAR DISPONIBILIDAD
-                        </button>
                     </div>
                 </div>
             </div>
@@ -170,20 +147,20 @@
                     <div class="metric-icon">
                         <i class="fas fa-user"></i>
                     </div>
-                    <span class="metric-text">2 GUESTS</span>
+                    <span class="metric-text">4 GUESTS</span>
                 </div>
                 <div class="metric-item">
                     <div class="metric-icon">
                         <i class="fas fa-th-large"></i>
                     </div>
-                    <span class="metric-text">85 m²</span>
+                    <span class="metric-text">80 m²</span>
                 </div>
             </div>
 
             <!-- Description Text -->
             <div class="description-text">
-                <p>Para los huéspedes que anhelan la icónica experiencia de Santorini, sin tener que comprometer el lujo y la comodidad, la Suite Santa ofrece el refugio perfecto. Esta suite encalada combina la autenticidad histórica de la arquitectura tradicional de Santorini con las comodidades modernas más sofisticadas, creando un espacio verdaderamente único y memorable.</p>
-                <p>Con su terraza privada y vistas panorámicas de 180° a la Caldera, esta suite santa ofrece el escenario perfecto para momentos inolvidables. El diseño elegante y los acabados de alta calidad crean una atmósfera de lujo y tranquilidad, perfecta para parejas que buscan una experiencia verdaderamente especial en el corazón de Santorini.</p>
+                <p>La Suite Saint promete una experiencia inolvidable con características diseñadas para crear recuerdos inolvidables. Esta lujosa suite cuenta con dos dormitorios, cada uno equipado con camas California king size, y dos amplios baños con duchas de lluvia dobles a ras de suelo. Los huéspedes pueden relajarse en la sala de estar independiente o acceder al vestidor para mayor comodidad. La suite tiene un diseño único con dos habitaciones separadas que comparten el mismo balcón, lo que ofrece amplio espacio y una gran sensación de privacidad.Lo más destacado de la suite es la piscina infinita climatizada, que ofrece impresionantes vistas a la icónica caldera de Santorini. Estas impresionantes vistas se pueden disfrutar desde todos los ángulos de la suite, incluyendo la amplia sala de estar al aire libre, la terraza privada e incluso mientras se relaja en el interior.Las comodidades adicionales incluyen aire acondicionado, TV de pantalla plana con canales vía satélite, cafetera, armario y caja fuerte, todo cuidadosamente diseñado para su comodidad. Ya sea que se relaje junto a la piscina o disfrute de la serena terraza, la Suite Saint ofrece una estancia única y placentera como ninguna otra.</p>
+                
             </div>
 
             <!-- Room Services -->
@@ -298,10 +275,10 @@
                 <!-- Suite Icónica -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="/image/habitacion 1 imagen grande.jpg" alt="Suite Icónica">
+                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Suite Icónica">
                     </div>
                     <div class="room-info">
-                        <h3 class="room-name">Suite Icónica</h3>
+                        <h3 class="room-name">Suite Mítica</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
@@ -319,18 +296,18 @@
                 <!-- Suite Mítica -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Suite Mítica">
+                        <img src="/image/habitacion 1 imagen grande.jpg" alt="Suite Mítica">
                     </div>
                     <div class="room-info">
-                        <h3 class="room-name">Suite Mítica</h3>
+                        <h3 class="room-name">Suite icónica</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
-                                <span>2 GUESTS</span>
+                                <span>4 GUESTS</span>
                             </div>
                             <div class="room-detail">
                                 <i class="fas fa-th-large"></i>
-                                <span>60 m²</span>
+                                <span>80 m²</span>
                             </div>
                         </div>
                         <button class="room-btn" onclick="window.location.href='suite-mitica.html'">VER MÁS</button>
@@ -340,18 +317,18 @@
                 <!-- Suite de elementos -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26.jpg" alt="Suite de elementos">
+                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Night-with-Pool-scaled.jpg" alt="Suite de elementos">
                     </div>
                     <div class="room-info">
-                        <h3 class="room-name">Suite de elementos</h3>
+                        <h3 class="room-name">La Villa del Santo Uno</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
-                                <span>4 GUESTS</span>
+                                <span>2 GUESTS</span>
                             </div>
                             <div class="room-detail">
                                 <i class="fas fa-th-large"></i>
-                                <span>80 m²</span>
+                                <span>200 m²</span>
                             </div>
                         </div>
                         <button class="room-btn" onclick="window.location.href='suite-elementos.html'">VER MÁS</button>

@@ -82,27 +82,12 @@ function initBookingButton() {
     }
 }
 
-// Similar rooms functionality
-function initSimilarRooms() {
-    const roomButtons = document.querySelectorAll('.room-btn');
-    roomButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Get the room name from the parent card
-            const roomCard = this.closest('.room-card');
-            const roomName = roomCard.querySelector('.room-name').textContent;
-            
-            // For now, just show an alert. Later this can redirect to specific room pages
-            alert(`Redirigiendo a la página de ${roomName}...`);
-            // window.location.href = `suite-detail.html?room=${encodeURIComponent(roomName)}`;
-        });
-    });
-}
+// Similar rooms functionality - Los botones redirigen directamente desde el HTML
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initFullscreen();
     initBookingButton();
-    initSimilarRooms();
 });
 
 // Make functions globally available for onclick handlers

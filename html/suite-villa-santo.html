@@ -43,6 +43,12 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -55,7 +61,7 @@
     <!-- Suite Detail Hero -->
     <section class="suite-detail-hero">
         <div class="suite-detail-image">
-            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Night-with-Pool-scaled.jpg" alt="Villa del Santo Uno">
+            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled.jpg" alt="Villa del Santo Uno">
         </div>
     </section>
 
@@ -74,24 +80,26 @@
                 <div class="carousel-container">
                     <div class="main-carousel">
                         <div class="carousel-slide active">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Night-with-Pool-scaled.jpg" alt="Villa One - Vista Principal">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Pool-full-View-from-Above-1-scaled.jpg" alt="Villa One - Vista Principal">
                             <button class="fullscreen-btn">
                                 <i class="fas fa-expand"></i>
                             </button>
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg" alt="Villa One - Piscina">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Kitchen-with-Door-scaled.jpg" alt="Villa One - Piscina">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg" alt="Villa One - Interior">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Interior-Living-Room-scaled.jpg" alt="Villa One - Interior">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Villa One - Terraza">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bathroom-scaled.jpg" alt="Villa One - Terraza">
                         </div>
                         <div class="carousel-slide">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-80.jpg" alt="Villa One - Vista Nocturna">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bed-with-View-scaled.jpg" alt="Villa One - Vista Nocturna">
                         </div>
-                        
+                        <div class="carousel-slide">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Luxury-Pool-scaled.jpg" alt="Villa One - Vista Nocturna">
+                        </div>
                         <!-- Navigation Arrows -->
                         <button class="carousel-nav prev" onclick="changeSlide(-1)">
                             <i class="fas fa-chevron-left"></i>
@@ -104,55 +112,23 @@
                     <!-- Thumbnails -->
                     <div class="carousel-thumbnails">
                         <div class="thumbnail active" onclick="currentSlide(1)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Night-with-Pool-scaled.jpg" alt="Vista Principal">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Pool-full-View-from-Above-1-scaled.jpg" alt="Vista Principal">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(2)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg" alt="Piscina">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Kitchen-with-Door-scaled.jpg" alt="Piscina">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(3)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg" alt="Interior">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Interior-Living-Room-scaled.jpg" alt="Interior">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(4)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Terraza">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bathroom-scaled.jpg" alt="Terraza">
                         </div>
                         <div class="thumbnail" onclick="currentSlide(5)">
-                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-80.jpg" alt="Vista Nocturna">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bed-with-View-scaled.jpg" alt="Vista Nocturna">
                         </div>
-                    </div>
-                </div>
-
-                <!-- Booking Widget -->
-                <div class="booking-widget">
-                    <div class="widget-header">
-                        <h3>Buscar habitaciones</h3>
-                        <p>COMENZAR A RESERVAR</p>
-                    </div>
-                    
-                    <div class="booking-form">
-                        <div class="date-inputs">
-                            <div class="date-field">
-                                <label>CHECK-IN</label>
-                                <div class="date-display">
-                                    <span class="day">04</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                            </div>
-                            <div class="date-field">
-                                <label>CHECK-OUT</label>
-                                <div class="date-display">
-                                    <span class="day">05</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                            </div>
+                        <div class="thumbnail" onclick="currentSlide(6)">
+                            <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Luxury-Pool-scaled.jpg" alt="Vista Nocturna">
                         </div>
-                        
-                        <div class="guest-field">
-                            <span class="guest-count">2 GUEST</span>
-                        </div>
-                        
-                        <button class="check-availability-btn">
-                            CONSULTAR DISPONIBILIDAD
-                        </button>
                     </div>
                 </div>
             </div>
@@ -182,8 +158,8 @@
 
             <!-- Description Text -->
             <div class="description-text">
-                <p>La villa "ONE" de SAINT es nuestra villa más exclusiva y ofrece impresionantes vistas de la Caldera de Santorini desde dos de sus áreas de estar al aire libre. Esta villa de lujo redefine la experiencia de hospedaje en Santorini, combinando la elegancia contemporánea con la autenticidad de la arquitectura tradicional de la isla.</p>
-                <p>Con su piscina privada de borde infinito, terraza panorámica y espacios interiores amplios y luminosos, esta villa es perfecta para una escapada romántica o una celebración especial. Disfrute de vistas de 360° a la Caldera mientras se relaja en su refugio privado de lujo, donde cada detalle ha sido cuidadosamente diseñado para crear una experiencia inolvidable.</p>
+                <p>La Villa "ONE" de SAINT es un refugio verdaderamente único y lujoso que ofrece una experiencia inigualable con sus amplios 200 m² de espacio cuidadosamente diseñado y sus impresionantes vistas a la icónica Caldera de Santorini. Distribuida en dos plantas, esta villa combina a la perfección la vida interior y exterior, convirtiéndola en la opción ideal para una estancia inolvidable.En la planta baja, los huéspedes pueden relajarse junto a la piscina infinita privada, con una impresionante cascada, o relajarse en la terraza mientras contemplan el impresionante paisaje. En el interior, la villa cuenta con una amplia sala de estar, comedor, cocina y un exclusivo bar de vinos, perfecto para recibir invitados o disfrutar de momentos de tranquilidad. Los amantes del fitness apreciarán el gimnasio privado equipado con TechnoGym, que garantiza un bienestar inigualable. La segunda planta ofrece una perspectiva diferente de la Caldera con un jacuzzi climatizado.La villa está rodeada de altavoces para una experiencia de sonido envolvente. Los interiores presumen de detalles lujosos, como una cama California King, un vestidor independiente y un baño de lujo con ducha a ras de suelo.Cada rincón de esta villa está diseñado con meticulosa atención al detalle, combinando lujo, comodidad y privacidad para ofrecer una experiencia inigualable. Ya sea que se relaje en la piscina o el jacuzzi, cene bajo las estrellas o se relaje en los elegantes interiores de la villa, la Villa "ONE" de SAINT ofrece una escapada a Santorini verdaderamente extraordinaria.</p>
+                
             </div>
 
             <!-- Room Services -->
@@ -298,10 +274,10 @@
                 <!-- Suite Icónica -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="/image/habitacion 1 imagen grande.jpg" alt="Suite Icónica">
+                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Suite Icónica">
                     </div>
                     <div class="room-info">
-                        <h3 class="room-name">Suite Icónica</h3>
+                        <h3 class="room-name">Suite Mítica</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
@@ -319,18 +295,18 @@
                 <!-- Suite Mítica -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg" alt="Suite Mítica">
+                        <img src="/image/habitacion 1 imagen grande.jpg" alt="Suite Mítica">
                     </div>
                     <div class="room-info">
                         <h3 class="room-name">Suite Mítica</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
-                                <span>2 GUESTS</span>
+                                <span>4 GUESTS</span>
                             </div>
                             <div class="room-detail">
                                 <i class="fas fa-th-large"></i>
-                                <span>60 m²</span>
+                                <span>80 m²</span>
                             </div>
                         </div>
                         <button class="room-btn" onclick="window.location.href='suite-mitica.html'">VER MÁS</button>
@@ -340,18 +316,18 @@
                 <!-- Suite de elementos -->
                 <div class="room-card">
                     <div class="room-image">
-                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26.jpg" alt="Suite de elementos">
+                        <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Night-with-Pool-scaled.jpg" alt="Suite de elementos">
                     </div>
                     <div class="room-info">
-                        <h3 class="room-name">Suite de elementos</h3>
+                        <h3 class="room-name">La Villa del Santo Uno</h3>
                         <div class="room-details">
                             <div class="room-detail">
                                 <i class="fas fa-user"></i>
-                                <span>4 GUESTS</span>
+                                <span>2 GUESTS</span>
                             </div>
                             <div class="room-detail">
                                 <i class="fas fa-th-large"></i>
-                                <span>80 m²</span>
+                                <span>200 m²</span>
                             </div>
                         </div>
                         <button class="room-btn" onclick="window.location.href='suite-elementos.html'">VER MÁS</button>

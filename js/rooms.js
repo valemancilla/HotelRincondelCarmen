@@ -81,7 +81,7 @@ class RoomManager {
                 <img src="${room.image}" alt="Habitación ${room.number}" class="room-image">
                 <div class="room-content">
                     <h3 class="room-title">Habitación ${room.number}</h3>
-                    <div class="room-price">$${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
+                    <div class="room-price">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
                     <ul class="room-features">
                         <li>Máximo ${room.maxGuests} huéspedes</li>
                         <li>${room.beds} ${room.beds === 1 ? 'cama' : 'camas'}</li>
@@ -160,9 +160,9 @@ class RoomManager {
                         <img src="${room.image}" alt="Habitación ${room.number}" class="room-image">
                         <div class="room-content">
                             <h3 class="room-title">Habitación ${room.number}</h3>
-                            <div class="room-price">$${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
+                            <div class="room-price">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
                             <div class="room-total-price">
-                                <strong>Total ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}: $${totalPrice.toLocaleString('es-CO')}</strong>
+                                <strong>Total ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}: COP $${totalPrice.toLocaleString('es-CO')}</strong>
                             </div>
                             <ul class="room-features">
                                 <li>Máximo ${room.maxGuests} huéspedes</li>
@@ -210,7 +210,7 @@ class RoomManager {
                 <img src="${room.image}" alt="Habitación ${room.number}" class="room-details-image">
                 <div class="room-details-info">
                     <h3>Habitación ${room.number}</h3>
-                    <div class="room-details-price">$${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
+                    <div class="room-details-price">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
                     <ul class="room-details-features">
                         <li><strong>Tipo:</strong> ${this.getRoomTypeName(room.type)}</li>
                         <li><strong>Máximo de huéspedes:</strong> ${room.maxGuests}</li>
@@ -294,11 +294,11 @@ class RoomManager {
             </div>
             <div class="reservation-summary-item">
                 <span>Precio por noche:</span>
-                <span>$${room.pricePerNight.toLocaleString('es-CO')}</span>
+                <span>COP $${room.pricePerNight.toLocaleString('es-CO')}</span>
             </div>
             <div class="reservation-summary-item">
                 <span>Total:</span>
-                <span>$${totalPrice.toLocaleString('es-CO')}</span>
+                <span>COP $${totalPrice.toLocaleString('es-CO')}</span>
             </div>
         `;
 
