@@ -176,24 +176,47 @@ class ReservationManager {
                 const services = this.getServiceIcons(room.services);
                 const suiteUrl = this.getSuiteUrl(room.name);
                 
+                // Generar badges para suites premium
+                let badges = '';
+                if (room.freeBreakfast) badges += '<span class="room-badge breakfast"><i class="fas fa-coffee"></i> Desayuno</span>';
+                if (room.transferIncluded) badges += '<span class="room-badge transfer"><i class="fas fa-car"></i> Transporte Incluido</span>';
+                if (room.freeCancellation) badges += '<span class="room-badge cancellation"><i class="fas fa-check-circle"></i> Cancelación Gratuita</span>';
+                
+                // Generar lista de beneficios si existen
+                let benefitsList = '';
+                if (room.benefits && room.benefits.length > 0) {
+                    benefitsList = `
+                        <div class="room-benefits">
+                            <h4>Incluye:</h4>
+                            <ul>
+                                ${room.benefits.slice(0, 4).map(benefit => `<li><i class="fas fa-check"></i> ${benefit}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
                 return `
-                    <div class="room-card">
+                    <div class="room-card ${room.flexibleRate ? 'premium-suite' : ''}">
                         <div class="room-image">
                             <img src="${room.images[0]}" alt="${room.name}">
+                            ${room.flexibleRate ? '<div class="flexible-badge">Tarifa Flexible</div>' : ''}
                         </div>
                         
                         <div class="room-info">
+                            ${badges ? `<div class="room-badges">${badges}</div>` : ''}
+                            
                             <h3 class="room-name">${room.name}</h3>
                             
                             <div class="room-price-section">
                                 <span class="price-night">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</span>
                                 <span class="price-total">Total ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}: COP $${totalPrice.toLocaleString('es-CO')}</span>
+                                <span class="price-note">incluye todos los impuestos</span>
                             </div>
                             
                             <div class="room-specs">
                                 <div class="spec">
                                     <i class="fas fa-users"></i>
-                                    <span>Máximo ${room.capacity} huéspedes</span>
+                                    <span>${room.capacity} huéspedes</span>
                                 </div>
                                 <div class="spec">
                                     <i class="fas fa-bed"></i>
@@ -205,11 +228,7 @@ class ReservationManager {
                                 </div>
                             </div>
                             
-                            <div class="room-amenities">
-                                ${services}
-                            </div>
-                            
-                            <p class="room-desc">${room.description}</p>
+                            ${benefitsList}
                             
                             <div class="room-buttons">
                                 <button class="btn-details" onclick="window.location.href='${suiteUrl}'">VER DETALLES</button>
@@ -243,7 +262,7 @@ class ReservationManager {
         }
 
         try {
-            hotelStorage.addContactMessage(formData);
+            storageManager.addContactMessage(formData);
             this.showSuccess('Mensaje enviado exitosamente. Te contactaremos pronto.');
             document.getElementById('contactForm').reset();
         } catch (error) {
@@ -324,14 +343,15 @@ class ReservationManager {
 
     getSuiteUrl(roomName) {
         const suiteUrls = {
-            'Suite Elementos': 'suite-elementos.html',
+            'Suite Icónica': 'suite-detail.html',
+            'Suite Mítica': 'suite-mitica.html',
             'Suite Épica': 'suite-epica.html',
             'Suite Majestic': 'suite-majestic.html',
-            'Suite Mítica': 'suite-mitica.html',
-            'Suite Santa': 'suite-santa.html',
-            'Villa Santo': 'suite-villa-santo.html'
+            'Suite Elementos': 'suite-elementos.html',
+            'The Saint Suite': 'suite-santa.html',
+            'The One Suite': 'suite-villa-santo.html'
         };
-        return suiteUrls[roomName] || 'suite-detail.html';
+        return suiteUrls[roomName] || 'suites.html';
     }
 
     /**

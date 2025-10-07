@@ -78,14 +78,14 @@
 }
 
 .travel-agents {
-    color: #e74c3c;
+    color: #b89a7e;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .travel-agents:hover {
-    color: #c0392b;
+    color: #a08568;
 }
 
 .loyalty-checkbox {
@@ -97,7 +97,7 @@
 .loyalty-checkbox input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: #e74c3c;
+    accent-color: #b89a7e;
 }
 
 .loyalty-checkbox label {
@@ -111,13 +111,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #2c3e50;
+    color: #b89a7e;
     font-size: 0.9rem;
     font-weight: 500;
 }
 
 .flexible-dates i {
-    color: #e74c3c;
+    color: #b89a7e;
 }
 
 /* Formulario moderno */
@@ -175,8 +175,8 @@
 .form-group-modern input:focus,
 .form-group-modern select:focus {
     outline: none;
-    border-color: #e74c3c;
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+    border-color: #b89a7e;
+    box-shadow: 0 0 0 3px rgba(184, 154, 126, 0.1);
 }
 
 .form-group-modern input[type="text"] {
@@ -191,30 +191,27 @@
 
 /* Botón de búsqueda */
 .search-button {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    background: #b89a7e;
+    border: 1px solid #b89a7e;
+    color: #ffffff;
+    padding: 0.8rem 1.8rem;
+    border-radius: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: none;
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 0 auto;
-    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
-}
-
-.search-button:hover {
-    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
+    box-shadow: none;
 }
 
 .search-button i {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 /* Garantía */
@@ -291,7 +288,7 @@
 
 .room-price {
     font-size: 1.2rem;
-    color: #e74c3c;
+    color: #b89a7e;
     font-weight: 600;
     margin-bottom: 15px;
 }
@@ -325,8 +322,8 @@
 
 .room-services i {
     font-size: 1.2rem;
-    color: #e74c3c;
-    background: rgba(231, 76, 60, 0.1);
+    color: #b89a7e;
+    background: rgba(184, 154, 126, 0.1);
     padding: 8px;
     border-radius: 50%;
     width: 35px;
@@ -341,7 +338,7 @@
     padding: 15px;
     background: #f8f9fa;
     border-radius: 8px;
-    border-left: 4px solid #e74c3c;
+    border-left: 4px solid #b89a7e;
 }
 
 .room-amenities h4 {
@@ -388,8 +385,8 @@
 
 .btn-outline {
     background: transparent;
-    border: 2px solid #e74c3c;
-    color: #e74c3c;
+    border: 2px solid #b89a7e;
+    color: #b89a7e;
     padding: 10px 20px;
     border-radius: 6px;
     font-weight: 600;
@@ -399,12 +396,12 @@
 }
 
 .btn-outline:hover {
-    background: #e74c3c;
+    background: #b89a7e;
     color: white;
 }
 
 .btn-primary {
-    background: #e74c3c;
+    background: #b89a7e;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -416,7 +413,7 @@
 }
 
 .btn-primary:hover {
-    background: #c0392b;
+    background: #a08568;
     transform: translateY(-1px);
 }
 

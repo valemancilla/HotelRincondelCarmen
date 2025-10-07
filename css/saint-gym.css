@@ -11,108 +11,7 @@
     overflow-x: hidden;
 }
 
-/* Gym Navigation Styles */
-.gym-nav {
-    background: rgba(28, 28, 28);
-    padding: 1.5rem 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 1px solid #333;
-}
-
-.gym-nav .nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-.gym-nav .nav-logo h2 {
-    color: #fff;
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    line-height: 1.1;
-    font-family: 'Open Sans', sans-serif;
-    text-transform: uppercase;
-}
-
-.gym-nav .nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-    flex: 1;
-    justify-content: center;
-}
-
-.gym-nav .nav-link {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    position: relative;
-    padding: 0.5rem 0;
-    text-transform: uppercase;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.gym-nav .nav-link:hover,
-.gym-nav .nav-link.active {
-    color: #fff;
-}
-
-.gym-nav .nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: #fff;
-}
-
-.gym-nav .search-icon {
-    background: transparent;
-    padding: 0.5rem;
-    border-radius: 0;
-    border: 1px solid #fff;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    text-decoration: none;
-}
-
-.gym-nav .search-icon:hover {
-    background: #fff;
-    color: #010101;
-}
-
-.gym-nav .hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.gym-nav .hamburger .bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 3px 0;
-    transition: 0.3s;
-}
+/* Navegación usa estilos de main.css */
 
 /* Gym Title Section */
 .gym-title-section {
@@ -291,7 +190,7 @@
         font-size: 1.05rem;
     }
     
-    .gym-nav .nav-menu {
+    /* .gym-nav .nav-menu {
         position: fixed;
         left: -100%;
         top: 70px;
@@ -304,15 +203,15 @@
         padding: 2rem 0;
     }
     
-    .gym-nav .nav-menu.active {
+    .gym-nav .nav-menu.active { */
         left: 0;
     }
     
-    .gym-nav .nav-menu li {
+    /* .gym-nav .nav-menu li {
         margin: 1rem 0;
     }
     
-    .gym-nav .hamburger {
+    .gym-nav .hamburger { */
         display: flex;
     }
 }
@@ -342,9 +241,6 @@
 }
 
 @media (max-width: 480px) {
-    .gym-nav .nav-container {
-        padding: 0 1rem;
-    }
     
     .gym-title-section .container {
         padding: 0 1rem;
@@ -417,16 +313,10 @@
 }
 
 /* Focus States for Accessibility */
-.gym-nav .nav-link:focus,
-.gym-nav .dropdown-item:focus,
-.gym-nav .search-icon:focus {
-    outline: 2px solid #f4e4c1;
-    outline-offset: 2px;
-}
+/* Focus States en main.css */
 
 /* Print Styles */
 @media print {
-    .gym-nav,
     .gym-title-section::before {
         display: none;
     }

@@ -6,8 +6,214 @@ class LocalStorageManager {
         console.log('LocalStorageManager inicializado');
     }
 
+    // Forzar actualización de datos de habitaciones
+    updateRoomsData() {
+        // Siempre actualizar las habitaciones con los datos correctos
+        this.setData('rooms', [
+            {
+                id: 1,
+                name: 'Suite Icónica',
+                type: 'suite',
+                pricePerNight: 4786092,
+                capacity: 2,
+                beds: 1,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
+                benefits: [
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Impuestos incluidos'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-35-600x400.jpg']
+            },
+            {
+                id: 2,
+                name: 'Suite Mítica',
+                type: 'suite',
+                pricePerNight: 5612572,
+                capacity: 2,
+                beds: 1,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
+                benefits: [
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Impuestos incluidos'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg']
+            },
+            {
+                id: 3,
+                name: 'Suite Épica',
+                type: 'suite',
+                pricePerNight: 6276414,
+                capacity: 2,
+                beds: 1,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
+                available: true,
+                services: [
+                    'wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi',
+                    'welcome-gifts', 'room-service-24h', 'laptop-safe', 'wardrobe',
+                    'walk-in-shower', 'king-bed-gold-mattress', 'smart-tv-netflix', 'hairdryer-bathrobe',
+                    'e-butler-smartphone', 'custom-sunbeds', 'turndown-service', 'caldera-volcano-view',
+                    'usb-bedside-plugs', 'central-ac-heating'
+                ],
+                amenities: [
+                    'Welcome gifts',
+                    '24-hour Room Service',
+                    'Laptop safe',
+                    'Wardrobe/Closet',
+                    'Walk-in shower',
+                    'King sized bed featuring Luxury Gold Mattress',
+                    'High speed Wi-Fi',
+                    'Flat Screen Smart TV - Netflix Accessible, Satellite Channels, Movie Library',
+                    'Hairdryer, Bathrobe & Slippers, Molton Brown toiletries',
+                    'Personal e-butler (smartphone)',
+                    'Queen-sized custom sunbeds',
+                    'Daily turndown service',
+                    '180° Caldera & Volcano View',
+                    'USB bed-side plugs',
+                    'Central Air conditioning & Heating'
+                ],
+                benefits: [
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Impuestos incluidos'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Homepage-2-600x500.jpg']
+            },
+            {
+                id: 4,
+                name: 'Suite Majestic',
+                type: 'suite',
+                pricePerNight: 6931717,
+                capacity: 2,
+                beds: 1,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transporte VIP y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi'],
+                benefits: [
+                    'Servicio de auto de lujo ida y vuelta',
+                    'Desayuno flotante una vez por estadía',
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Transporte incluido'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                transferIncluded: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-24-600x500.jpg']
+            },
+            {
+                id: 5,
+                name: 'Suite Elementos',
+                type: 'suite',
+                pricePerNight: 7256618,
+                capacity: 4,
+                beds: 2,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transfer VIP y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice'],
+                benefits: [
+                    'Servicio de auto de lujo ida y vuelta',
+                    'Desayuno flotante una vez por estadía',
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Transporte incluido'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                transferIncluded: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg']
+            },
+            {
+                id: 6,
+                name: 'The Saint Suite',
+                type: 'suite',
+                pricePerNight: 8579778,
+                capacity: 4,
+                beds: 2,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transfer VIP y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice', 'safe'],
+                benefits: [
+                    'Servicio de auto de lujo ida y vuelta',
+                    'Desayuno flotante una vez por estadía',
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Transporte incluido'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                transferIncluded: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg']
+            },
+            {
+                id: 7,
+                name: 'The One Suite',
+                type: 'villa',
+                pricePerNight: 13192353,
+                capacity: 2,
+                beds: 1,
+                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transporte VIP y amenidades premium',
+                available: true,
+                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice', 'safe'],
+                benefits: [
+                    'Servicio de auto de lujo ida y vuelta',
+                    'Desayuno flotante una vez por estadía',
+                    'Bebida de bienvenida al llegar',
+                    'Botella de champagne y plato de frutas en la habitación',
+                    'Desayuno a la carta',
+                    'Wi-Fi gratuito',
+                    'Cancelación gratuita',
+                    'Transporte incluido'
+                ],
+                flexibleRate: true,
+                freeBreakfast: true,
+                transferIncluded: true,
+                freeCancellation: true,
+                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg']
+            }
+        ]);
+    }
+
     // Inicializar datos por defecto si no existen
     initializeData() {
+        // Forzar actualización de habitaciones para reflejar cambios
+        this.updateRoomsData();
+        
         // Datos de usuarios por defecto
         if (!this.getData('users')) {
             this.setData('users', [
@@ -25,106 +231,8 @@ class LocalStorageManager {
             ]);
         }
 
-        // Datos de habitaciones/suites por defecto
-        if (!this.getData('rooms')) {
-            this.setData('rooms', [
-                {
-                    id: 1,
-                    name: 'Suite Elementos',
-                    type: 'suite',
-                    pricePerNight: 500000,
-                    capacity: 2,
-                    beds: 1,
-                    description: 'Suite de lujo con vista al mar y terraza privada',
-                    available: true,
-                    services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-5-min-scaled.jpg']
-                },
-                {
-                    id: 2,
-                    name: 'Suite Épica',
-                    type: 'suite',
-                    pricePerNight: 750000,
-                    capacity: 4,
-                    beds: 2,
-                    description: 'Suite premium con jacuzzi privado, vista panorámica y servicios de lujo completos',
-                    available: true,
-                    services: [
-                        'wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi',
-                        'welcome-gifts', 'room-service-24h', 'laptop-safe', 'wardrobe',
-                        'walk-in-shower', 'king-bed-gold-mattress', 'smart-tv-netflix', 'hairdryer-bathrobe',
-                        'e-butler-smartphone', 'custom-sunbeds', 'turndown-service', 'caldera-volcano-view',
-                        'usb-bedside-plugs', 'central-ac-heating'
-                    ],
-                    amenities: [
-                        'Welcome gifts',
-                        '24-hour Room Service',
-                        'Laptop safe',
-                        'Wardrobe/Closet',
-                        'Walk-in shower',
-                        'King sized bed featuring Luxury Gold Mattress',
-                        'High speed Wi-Fi',
-                        'Flat Screen Smart TV - Netflix Accessible, Satellite Channels, Movie Library',
-                        'Hairdryer, Bathrobe & Slippers, Molton Brown toiletries',
-                        'Personal e-butler (smartphone)',
-                        'Queen-sized custom sunbeds',
-                        'Daily turndown service',
-                        '180° Caldera & Volcano View',
-                        'USB bed-side plugs',
-                        'Central Air conditioning & Heating'
-                    ],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-38.jpg']
-                },
-                {
-                    id: 3,
-                    name: 'Suite Majestic',
-                    type: 'suite',
-                    pricePerNight: 1000000,
-                    capacity: 6,
-                    beds: 3,
-                    description: 'Suite presidencial con terraza privada y piscina',
-                    available: true,
-                    services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi'],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-36.jpg']
-                },
-                {
-                    id: 4,
-                    name: 'Suite Mítica',
-                    type: 'suite',
-                    pricePerNight: 650000,
-                    capacity: 3,
-                    beds: 2,
-                    description: 'Suite con terraza privada y vista de 180° a la Caldera',
-                    available: true,
-                    services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg']
-                },
-                {
-                    id: 5,
-                    name: 'Suite Santa',
-                    type: 'suite',
-                    pricePerNight: 550000,
-                    capacity: 2,
-                    beds: 1,
-                    description: 'Suite elegante con vista al mar y decoración tradicional',
-                    available: true,
-                    services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-6-min-scaled.jpg']
-                },
-                {
-                    id: 6,
-                    name: 'Villa Santo',
-                    type: 'villa',
-                    pricePerNight: 1200000,
-                    capacity: 8,
-                    beds: 4,
-                    description: 'Villa privada con piscina, jacuzzi y múltiples terrazas',
-                    available: true,
-                    services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi'],
-                    images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/01/HighRes-5-min-scaled.jpg']
-                }
-            ]);
-        }
+        // Datos de habitaciones/suites por defecto (se actualizan automáticamente con updateRoomsData)
+        // Ya no se necesita, updateRoomsData() ya los crea
 
         // Datos de reservas por defecto
         if (!this.getData('reservations')) {
@@ -400,9 +508,19 @@ class LocalStorageManager {
         console.log('Habitaciones:', rooms);
         
         const availableRooms = rooms.filter(room => {
-            // Verificar capacidad de la habitación
+            // Verificar que la habitación pueda acomodar al número de huéspedes
+            // Cualquier habitación con capacidad >= número de huéspedes es válida
             if (room.capacity < guests) {
-                console.log(`Habitación ${room.name} no tiene capacidad suficiente (${room.capacity} < ${guests})`);
+                console.log(`Habitación ${room.name} con capacidad ${room.capacity} es menor que ${guests} huéspedes solicitados`);
+                return false;
+            }
+            
+            // Filtrar habitaciones excesivamente grandes para evitar mostrar villas cuando buscan 1-2 personas
+            // Si buscan 1-2 huéspedes, no mostrar habitaciones para más de 4
+            // Si buscan 3-4 huéspedes, no mostrar habitaciones para más de 6
+            const maxReasonableCapacity = guests <= 2 ? 4 : guests + 2;
+            if (room.capacity > maxReasonableCapacity) {
+                console.log(`Habitación ${room.name} con capacidad ${room.capacity} es demasiado grande para ${guests} huéspedes (máximo razonable: ${maxReasonableCapacity})`);
                 return false;
             }
             
@@ -481,6 +599,26 @@ class LocalStorageManager {
         Object.keys(data).forEach(key => {
             this.setData(key, data[key]);
         });
+    }
+
+    // Verificar precios de habitaciones para debugging
+    verifyRoomPrices() {
+        const rooms = this.getRooms();
+        console.log('=== VERIFICACIÓN DE PRECIOS DE HABITACIONES ===');
+        rooms.forEach(room => {
+            console.log(`${room.name}:`);
+            console.log(`  Precio por noche: $${room.pricePerNight.toLocaleString('es-CO')}`);
+            console.log(`  10 noches: $${(room.pricePerNight * 10).toLocaleString('es-CO')}`);
+            console.log(`  Capacidad: ${room.capacity} personas`);
+            console.log('---');
+        });
+    }
+
+    // Forzar reset completo de habitaciones
+    forceResetRooms() {
+        console.log('Forzando reset de habitaciones...');
+        this.updateRoomsData();
+        console.log('Habitaciones reseteadas. Recarga la página.');
     }
 }
 

@@ -424,11 +424,12 @@ class AuthManager {
         
         if (!reservationsList) return;
 
-        // Filtrar solo reservas activas (no canceladas)
-        const reservations = allReservations.filter(r => r.status !== 'cancelled');
-        const cancelledCount = allReservations.length - reservations.length;
+        // Mostrar TODAS las reservas (activas y canceladas)
+        const reservations = allReservations;
+        const activeCount = reservations.filter(r => r.status !== 'cancelled').length;
+        const cancelledCount = reservations.filter(r => r.status === 'cancelled').length;
 
-        if (reservations.length === 0 && cancelledCount === 0) {
+        if (reservations.length === 0) {
             reservationsList.innerHTML = `
                 <div class="empty-state">
                     <i class="fas fa-calendar-times"></i>
@@ -440,47 +441,40 @@ class AuthManager {
             return;
         }
 
-        if (reservations.length === 0 && cancelledCount > 0) {
-            reservationsList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-calendar-times"></i>
-                    <h3>No tienes reservas activas</h3>
-                    <p>Tienes ${cancelledCount} reserva(s) cancelada(s).</p>
-                    <button onclick="authManager.deleteAllCancelledReservations()" 
-                            style="background: #e74c3c; color: white; border: none; padding: 6px 12px; 
-                                   font-size: 12px; border-radius: 4px; cursor: pointer; 
-                                   display: inline-flex; align-items: center; gap: 5px;">
-                        <i class="fas fa-trash" style="font-size: 11px;"></i> 
-                        <span>Eliminar canceladas</span>
-                    </button>
-                    <br><br>
-                    <a href="${this.getReservasUrl()}" class="btn-suites">VER HABITACIONES</a>
-                </div>
-            `;
-            return;
-        }
-
         reservationsList.innerHTML = reservations.map(reservation => {
             const room = storageManager.getRoomById(reservation.roomId);
             const checkIn = new Date(reservation.checkIn).toLocaleDateString('es-CO');
             const checkOut = new Date(reservation.checkOut).toLocaleDateString('es-CO');
+            const bookingDate = reservation.createdAt ? new Date(reservation.createdAt).toLocaleDateString('es-CO', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) : 'No disponible';
             const totalNights = Math.ceil((new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
             const totalPrice = totalNights * room.pricePerNight;
             const roomImage = room.images && room.images[0] ? room.images[0] : 'https://via.placeholder.com/400x300?text=Sin+Imagen';
 
             return `
-                <div class="reservation-card-vertical">
+                <div class="reservation-card-vertical ${reservation.status === 'cancelled' ? 'cancelled-reservation' : ''}">
                     <div class="reservation-image-top">
                         <img src="${roomImage}" alt="${room.name}">
                         <div class="status-overlay status-${reservation.status}">
-                            <i class="fas fa-${reservation.status === 'pending' ? 'clock' : reservation.status === 'confirmed' ? 'check-circle' : 'circle'}"></i>
+                            <i class="fas fa-${reservation.status === 'pending' ? 'clock' : reservation.status === 'confirmed' ? 'check-circle' : reservation.status === 'cancelled' ? 'times-circle' : 'circle'}"></i>
                             ${this.getStatusText(reservation.status)}
                         </div>
+                        ${reservation.status === 'cancelled' ? '<div class="cancelled-overlay">CANCELADA</div>' : ''}
                     </div>
                     
                     <div class="reservation-content-vertical">
                         <h3 class="room-name-vertical">${room.name}</h3>
                         <span class="room-type-badge">${this.getRoomTypeName(room.type)}</span>
+                        
+                        <div class="booking-date-info">
+                            <i class="fas fa-calendar-check"></i>
+                            <span><strong>Reservado:</strong> ${bookingDate}</span>
+                        </div>
                         
                         <div class="dates-section">
                             <div class="date-box">
@@ -508,21 +502,26 @@ class AuthManager {
                             <span>${reservation.guests} huéspedes</span>
                         </div>
                         
-                        <div class="price-box">
+                        <div class="price-box ${reservation.status === 'cancelled' ? 'cancelled-price' : ''}">
                             <div class="price-detail">COP $${room.pricePerNight.toLocaleString('es-CO')} × ${totalNights}</div>
                             <div class="price-total">COP $${totalPrice.toLocaleString('es-CO')}</div>
                         </div>
                         
-                        <div class="action-buttons">
-                            ${(reservation.status === 'pending' || reservation.status === 'confirmed') ? `
+                        ${reservation.status === 'cancelled' ? `
+                            <div class="cancellation-notice">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Esta reserva fue cancelada</span>
+                            </div>
+                        ` : `
+                            <div class="action-buttons">
                                 <button class="btn-modify" onclick="authManager.modifyReservation(${reservation.id})">
                                     <i class="fas fa-edit"></i> Modificar
                                 </button>
                                 <button class="btn-delete" onclick="authManager.cancelReservation(${reservation.id})">
                                     <i class="fas fa-trash-alt"></i> Cancelar
                                 </button>
-                            ` : ''}
-                        </div>
+                            </div>
+                        `}
                     </div>
                 </div>
             `;

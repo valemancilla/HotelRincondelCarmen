@@ -335,28 +335,86 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Hotel el Rincón del Carmen</h3>
-                    <p>Tu refugio perfecto en Santorini</p>
+                    <p>Tu hogar lejos de casa</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <p>Email: info@hotelrincondelcarmen.com</p>
-                    <p>Teléfono: +30 2286 012345</p>
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="reservas.html">Reservas</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Síguenos</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-phone"></i> +57 3137713137</p>
+                    <p><i class="fas fa-envelope"></i> info@rincondelcarmen.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Hotel el Rincón del Carmen. Todos los derechos reservados.</p>
+                <p>Desarrollado por <a href="https://github.com/valemancilla" target="_blank" style="color: #b89a7e; text-decoration: none;">Vale Mancilla</a></p>
             </div>
         </div>
     </footer>
 
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regId">Número de Identificación:</label>
+                    <input type="text" id="regId" required>
+                </div>
+                <div class="form-group">
+                    <label for="regName">Nombre Completo:</label>
+                    <input type="text" id="regName" required>
+                </div>
+                <div class="form-group">
+                    <label for="regNationality">Nacionalidad:</label>
+                    <input type="text" id="regNationality" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email:</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Teléfono:</label>
+                    <input type="tel" id="regPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña:</label>
+                    <input type="password" id="regPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Registrarse</button>
+            </form>
+            <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="../js/localStorage.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/suite-detail.js"></script>
 </body>

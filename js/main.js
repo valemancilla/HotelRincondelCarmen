@@ -226,7 +226,7 @@ class MainApp {
      * Carga estadísticas del admin
      */
     loadAdminStats() {
-        const stats = hotelStorage.getHotelStats();
+        const stats = storageManager.exportData();
         
         // Crear panel de estadísticas si no existe
         let statsPanel = document.querySelector('.admin-stats');
@@ -266,7 +266,7 @@ class MainApp {
      */
     loadContactMessages() {
         // Esta funcionalidad se puede expandir para mostrar mensajes en el admin
-        const contacts = hotelStorage.getContactMessages();
+        const contacts = storageManager.getData('contactMessages') || [];
         console.log('Mensajes de contacto:', contacts);
     }
 
@@ -501,18 +501,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.mainApp = new MainApp();
 });
 
-// Manejar errores globales
-window.addEventListener('error', (e) => {
-    console.error('Error global:', e.error);
-    if (window.mainApp) {
-        window.mainApp.showNotification('Ha ocurrido un error inesperado', 'error');
-    }
-});
+// Manejar errores globales (deshabilitado para evitar notificaciones molestas)
+// window.addEventListener('error', (e) => {
+//     console.error('Error global:', e.error);
+// });
 
-// Manejar promesas rechazadas
-window.addEventListener('unhandledrejection', (e) => {
-    console.error('Promesa rechazada:', e.reason);
-    if (window.mainApp) {
-        window.mainApp.showNotification('Ha ocurrido un error inesperado', 'error');
-    }
-});
+// Manejar promesas rechazadas (deshabilitado para evitar notificaciones molestas)
+// window.addEventListener('unhandledrejection', (e) => {
+//     console.error('Promesa rechazada:', e.reason);
+// });

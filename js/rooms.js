@@ -47,59 +47,7 @@ class RoomManager {
         });
     }
 
-    /**
-     * Carga el carrusel de habitaciones en la página principal
-     */
-    loadRoomsCarousel() {
-        const carousel = document.getElementById('roomsCarousel');
-        if (!carousel) return;
-
-        const rooms = hotelStorage.getRooms().filter(room => room.isActive);
-        
-        if (rooms.length === 0) {
-            carousel.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-bed"></i>
-                    <h3>No hay habitaciones disponibles</h3>
-                    <p>Pronto tendremos nuevas habitaciones para ti</p>
-                </div>
-            `;
-            return;
-        }
-
-        carousel.innerHTML = rooms.slice(0, 6).map(room => this.createRoomCard(room)).join('');
-    }
-
-    /**
-     * Crea una tarjeta de habitación
-     */
-    createRoomCard(room) {
-        const services = this.getServiceIcons(room.services);
-        
-        return `
-            <div class="room-card card-hover">
-                <img src="${room.image}" alt="Habitación ${room.number}" class="room-image">
-                <div class="room-content">
-                    <h3 class="room-title">Habitación ${room.number}</h3>
-                    <div class="room-price">COP $${room.pricePerNight.toLocaleString('es-CO')}/noche</div>
-                    <ul class="room-features">
-                        <li>Máximo ${room.maxGuests} huéspedes</li>
-                        <li>${room.beds} ${room.beds === 1 ? 'cama' : 'camas'}</li>
-                        <li>${this.getRoomTypeName(room.type)}</li>
-                    </ul>
-                    <div class="room-services">
-                        ${services}
-                    </div>
-                    <p class="room-description">${room.description}</p>
-                    <div class="room-actions">
-                        <button class="btn-outline view-room-details" data-room-id="${room.id}">
-                            Ver Detalles
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
+    /* Métodos loadRoomsCarousel y createRoomCard eliminados - no se utilizan */
 
     /**
      * Busca habitaciones disponibles
@@ -126,7 +74,7 @@ class RoomManager {
         }
 
         // Buscar habitaciones disponibles
-        const availableRooms = hotelStorage.getAvailableRooms(checkIn, checkOut, guests);
+        const availableRooms = storageManager.getAvailableRooms(checkIn, checkOut, guests);
         this.displayAvailableRooms(availableRooms, checkIn, checkOut, guests);
     }
 
@@ -195,7 +143,7 @@ class RoomManager {
      * Muestra los detalles de una habitación
      */
     showRoomDetails(roomId) {
-        const room = hotelStorage.getRoomById(roomId);
+        const room = storageManager.getRoomById(roomId);
         if (!room) return;
 
         const modal = document.getElementById('roomDetailsModal');
@@ -250,7 +198,7 @@ class RoomManager {
             return;
         }
 
-        const room = hotelStorage.getRoomById(roomId);
+        const room = storageManager.getRoomById(roomId);
         if (!room) return;
 
         const checkIn = document.getElementById('checkIn')?.value;
@@ -320,7 +268,8 @@ class RoomManager {
     processReservation(roomId, checkIn, checkOut, guests) {
         try {
             // Verificar disponibilidad nuevamente
-            if (!hotelStorage.checkRoomAvailability(roomId, checkIn, checkOut)) {
+            const rooms = storageManager.getAvailableRooms(checkIn, checkOut, 1);
+            if (!rooms.find(r => r.id === roomId)) {
                 this.showError('Lo sentimos, esta habitación ya no está disponible para las fechas seleccionadas');
                 return;
             }
@@ -335,10 +284,10 @@ class RoomManager {
                 checkOut: checkOut,
                 guests: guests,
                 notes: notes,
-                totalPrice: Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)) * hotelStorage.getRoomById(roomId).pricePerNight
+                totalPrice: Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24)) * storageManager.getRoomById(roomId).pricePerNight
             };
 
-            const reservation = hotelStorage.addReservation(reservationData);
+            const reservation = storageManager.addReservation(reservationData);
             
             this.closeModal(document.getElementById('reservationModal'));
             this.showSuccess('¡Reserva confirmada exitosamente!');

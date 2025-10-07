@@ -95,9 +95,9 @@
 
 /* Botones específicos para modales */
 .modal .btn-primary {
-    background-color: #e74c3c !important;
+    background-color: #b89a7e !important;
     color: white !important;
-    border: 1px solid #e74c3c !important;
+    border: 1px solid #b89a7e !important;
     padding: 12px 24px !important;
     border-radius: 4px !important;
     font-size: 1rem !important;
@@ -111,9 +111,28 @@
 }
 
 .modal .btn-primary:hover {
-    background-color: #c0392b !important;
-    border-color: #c0392b !important;
+    background-color: #a08568 !important;
+    border-color: #a08568 !important;
     transform: none !important;
+}
+
+/* Enlaces en modales */
+.modal p {
+    text-align: center;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.modal p a {
+    color: #b89a7e;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.modal p a:hover {
+    color: #a08568;
+    text-decoration: underline;
 }
 
 .form-group label {
@@ -142,8 +161,8 @@
 .modal .form-group select:focus,
 .modal .form-group textarea:focus {
     outline: none !important;
-    border-color: #e74c3c !important;
-    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2) !important;
+    border-color: #b89a7e !important;
+    box-shadow: 0 0 0 2px rgba(184, 154, 126, 0.2) !important;
 }
 
 .form-group input,
@@ -162,15 +181,31 @@
 .form-group textarea:focus {
     outline: none;
     border-color: #b89a7e;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(184, 154, 126, 0.1);
 }
 
 .form-group input:invalid {
-    border-color: #dc3545;
+    border-color: #b89a7e;
 }
 
 .form-group input:valid {
     border-color: #28a745;
+}
+
+/* Estilos para mensajes de validación nativos del navegador */
+input::-webkit-validation-bubble-message,
+select::-webkit-validation-bubble-message,
+textarea::-webkit-validation-bubble-message {
+    color: #6b5a48;
+    background-color: #f5efe8;
+}
+
+/* Para Firefox */
+input::-moz-error-message,
+select::-moz-error-message,
+textarea::-moz-error-message {
+    color: #6b5a48;
+    background-color: #f5efe8;
 }
 
 /* Services Checkboxes */
@@ -223,7 +258,7 @@
 .room-details-price {
     font-size: 2rem;
     font-weight: bold;
-    color: #e74c3c;
+    color: #b89a7e;
     margin-bottom: 1rem;
 }
 
@@ -316,9 +351,9 @@
 }
 
 .alert-error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    color: #6b5a48 !important;
+    background-color: #f5efe8 !important;
+    border-color: #e6d5c3 !important;
 }
 
 .alert-warning {
@@ -349,8 +384,8 @@
 }
 
 .status-cancelled {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: #f5efe8 !important;
+    color: #6b5a48 !important;
 }
 
 .status-pending {
