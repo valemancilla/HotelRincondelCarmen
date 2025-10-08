@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP Transfers - Hotel el Rincón del Carmen</title>
+     <script src="../js/localStorage.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/main.js" defer></script>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/vip-transfers.css">
@@ -41,14 +44,17 @@
                 <li class="nav-item">
                     <a href="reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item" id="userGreeting" style="display: none;">
+                    <span class="nav-link user-greeting"><span id="userName"></span></span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
-                <li class="nav-item" id="logoutBtnItem" style="display: none;">
-                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -111,7 +117,10 @@
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña:</label>
-                    <input type="password" id="loginPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="loginPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Iniciar Sesión</button>
             </form>
@@ -146,7 +155,10 @@
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Contraseña:</label>
-                    <input type="password" id="regPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="regPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Registrarse</button>
             </form>
@@ -183,8 +195,6 @@
         </div>
     </footer>
 
-    <script src="../js/localStorage.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/main.js"></script>
+    
 </body>
 </html>

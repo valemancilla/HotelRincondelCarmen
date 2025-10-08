@@ -1,631 +1,721 @@
-// LocalStorage Utilities - Sistema de simulación completo
-class LocalStorageManager {
-    constructor() {
-        console.log('LocalStorageManager inicializando...');
-        this.initializeData();
-        console.log('LocalStorageManager inicializado');
-    }
+// Sistema de almacenamiento local
 
-    // Forzar actualización de datos de habitaciones
-    updateRoomsData() {
-        // Siempre actualizar las habitaciones con los datos correctos
-        this.setData('rooms', [
+var roomsData = [
+    {
+        id: 1,
+        name: 'Suite Icónica',
+        type: 'suite',
+        number: '101',
+        pricePerNight: 4786092,
+        maxGuests: 2,
+        capacity: 2,
+        beds: 1,
+        description: 'Tarifa totalmente flexible. Bebida de bienvenida a la llegada y champagne con frutas en la habitación. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
+        benefits: [
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-35-600x400.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-35-600x400.jpg']
+    },
+    {
+        id: 2,
+        name: 'Suite Mítica',
+        type: 'suite',
+        number: '102',
+        pricePerNight: 5612572,
+        maxGuests: 2,
+        capacity: 2,
+        beds: 1,
+        description: 'Tarifa totalmente flexible. Bebida de bienvenida a la llegada y champagne con frutas en la habitación. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
+        benefits: [
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg']
+    },
+    {
+        id: 3,
+        name: 'Suite Épica',
+        type: 'suite',
+        number: '103',
+        pricePerNight: 6276414,
+        maxGuests: 2,
+        capacity: 2,
+        beds: 1,
+        description: 'Tarifa totalmente flexible. Bebida de bienvenida a la llegada y champagne con frutas en la habitación. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi'],
+        benefits: [
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Homepage-2-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Homepage-2-600x500.jpg']
+    },
+    {
+        id: 4,
+        name: 'Suite Majestic',
+        type: 'suite',
+        number: '104',
+        pricePerNight: 7002894,
+        maxGuests: 2,
+        capacity: 2,
+        beds: 1,
+        description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Servicio de transporte de lujo ida y vuelta, desayuno flotante una vez por estadía, bebida de bienvenida y champagne con frutas a la llegada. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice'],
+        benefits: [
+            'Servicio de transporte de lujo ida y vuelta',
+            'Desayuno flotante una vez por estadía',
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        transferIncluded: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-24-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-24-600x500.jpg']
+    },
+    {
+        id: 5,
+        name: 'Suite Element',
+        type: 'suite',
+        number: '105',
+        pricePerNight: 8103339,
+        maxGuests: 4,
+        capacity: 4,
+        beds: 2,
+        description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Servicio de transporte de lujo incluido, desayuno flotante una vez por estadía, bebida de bienvenida y champagne con frutas a la llegada. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice'],
+        benefits: [
+            'Servicio de transporte de lujo ida y vuelta',
+            'Desayuno flotante una vez por estadía',
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        transferIncluded: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg']
+    },
+    {
+        id: 6,
+        name: 'La Suite Santa',
+        type: 'suite',
+        number: '106',
+        pricePerNight: 8861911,
+        maxGuests: 4,
+        capacity: 4,
+        beds: 2,
+        description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Servicio de transporte de lujo incluido, desayuno flotante una vez por estadía, bebida de bienvenida y champagne con frutas a la llegada. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice'],
+        benefits: [
+            'Servicio de transporte de lujo ida y vuelta',
+            'Desayuno flotante una vez por estadía',
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        transferIncluded: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg']
+    },
+    {
+        id: 7,
+        name: 'Villa One Saint',
+        type: 'villa',
+        number: '201',
+        pricePerNight: 12967440,
+        maxGuests: 2,
+        capacity: 2,
+        beds: 1,
+        description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Servicio de transporte de lujo ida y vuelta, desayuno flotante una vez por estadía, bebida de bienvenida y champagne con frutas a la llegada. Villa exclusiva con piscina privada y vistas panorámicas. Incluye desayuno a la carta, WiFi gratuito, IVA e impuestos locales',
+        available: true,
+        services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice', 'safe'],
+        benefits: [
+            'Servicio de transporte de lujo ida y vuelta',
+            'Desayuno flotante una vez por estadía',
+            'Bebida de bienvenida a la llegada',
+            'Botella de champagne y plato de frutas en la habitación',
+            'Piscina privada exclusiva',
+            'Vistas panorámicas a la Caldera',
+            'Desayuno a la carta incluido',
+            'WiFi gratuito',
+            'Cancelación gratuita'
+        ],
+        flexibleRate: true,
+        freeBreakfast: true,
+        freeCancellation: true,
+        transferIncluded: true,
+        image: 'https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg',
+        images: ['https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg']
+    }
+];
+
+function setData(key, data) {
+    try {
+        localStorage.setItem(key, JSON.stringify(data));
+        return true;
+    } catch (error) {
+        console.error('Error guardando en localStorage:', error);
+        return false;
+    }
+}
+
+function getData(key) {
+    try {
+        var data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    } catch (error) {
+        console.error('Error leyendo de localStorage:', error);
+        return null;
+    }
+}
+
+function generateId(array) {
+    if (array.length === 0) return 1;
+    var max = 0;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].id && array[i].id > max) {
+            max = array[i].id;
+        }
+    }
+    return max + 1;
+}
+
+function initializeData() {
+    // Solo inicializar habitaciones si no existen, o si es la primera vez
+    var existingRooms = getData('rooms');
+    if (!existingRooms || existingRooms.length === 0) {
+        // Solo establecer las habitaciones predefinidas si no hay habitaciones
+        setData('rooms', roomsData);
+    } else {
+        // Si ya existen habitaciones, verificar que las predefinidas tengan todas las propiedades
+        var needsUpdate = false;
+        var updatedRooms = [];
+        
+        // Agregar habitaciones existentes que no están en roomsData
+        for (var i = 0; i < existingRooms.length; i++) {
+            var existingRoom = existingRooms[i];
+            var isPredefined = false;
+            
+            // Verificar si es una habitación predefinida
+            for (var j = 0; j < roomsData.length; j++) {
+                if (roomsData[j].id === existingRoom.id && roomsData[j].name === existingRoom.name) {
+                    isPredefined = true;
+                    // Actualizar con datos más recientes pero preservar cambios del admin
+                    var updatedRoom = Object.assign({}, roomsData[j], {
+                        // Preservar campos que el admin puede haber modificado
+                        available: existingRoom.available,
+                        services: existingRoom.services || roomsData[j].services,
+                        description: existingRoom.description || roomsData[j].description
+                    });
+                    updatedRooms.push(updatedRoom);
+                    break;
+                }
+            }
+            
+            // Si no es predefinida, es una habitación agregada por el admin
+            if (!isPredefined) {
+                updatedRooms.push(existingRoom);
+            }
+        }
+        
+        // Agregar habitaciones predefinidas que no existen
+        for (var k = 0; k < roomsData.length; k++) {
+            var predefinedRoom = roomsData[k];
+            var exists = false;
+            
+            for (var l = 0; l < updatedRooms.length; l++) {
+                if (updatedRooms[l].id === predefinedRoom.id) {
+                    exists = true;
+                    break;
+                }
+            }
+            
+            if (!exists) {
+                updatedRooms.push(predefinedRoom);
+            }
+        }
+        
+        setData('rooms', updatedRooms);
+    }
+    
+    if (!getData('users')) {
+        setData('users', [
             {
                 id: 1,
-                name: 'Suite Icónica',
-                type: 'suite',
-                pricePerNight: 4786092,
-                capacity: 2,
-                beds: 1,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
-                benefits: [
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Impuestos incluidos'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-35-600x400.jpg']
+                identification: '12345678',
+                name: 'Administrador del Hotel',
+                nationality: 'Colombiana',
+                email: 'admin@hotel.com',
+                phone: '+57 300 123 4567',
+                password: 'admin123',
+                role: 'admin',
+                createdAt: new Date().toISOString()
             },
             {
                 id: 2,
-                name: 'Suite Mítica',
-                type: 'suite',
-                pricePerNight: 5612572,
-                capacity: 2,
-                beds: 1,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar'],
-                benefits: [
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Impuestos incluidos'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-40-600x500.jpg']
-            },
-            {
-                id: 3,
-                name: 'Suite Épica',
-                type: 'suite',
-                pricePerNight: 6276414,
-                capacity: 2,
-                beds: 1,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno, WiFi gratuito y amenidades premium',
-                available: true,
-                services: [
-                    'wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi',
-                    'welcome-gifts', 'room-service-24h', 'laptop-safe', 'wardrobe',
-                    'walk-in-shower', 'king-bed-gold-mattress', 'smart-tv-netflix', 'hairdryer-bathrobe',
-                    'e-butler-smartphone', 'custom-sunbeds', 'turndown-service', 'caldera-volcano-view',
-                    'usb-bedside-plugs', 'central-ac-heating'
-                ],
-                amenities: [
-                    'Welcome gifts',
-                    '24-hour Room Service',
-                    'Laptop safe',
-                    'Wardrobe/Closet',
-                    'Walk-in shower',
-                    'King sized bed featuring Luxury Gold Mattress',
-                    'High speed Wi-Fi',
-                    'Flat Screen Smart TV - Netflix Accessible, Satellite Channels, Movie Library',
-                    'Hairdryer, Bathrobe & Slippers, Molton Brown toiletries',
-                    'Personal e-butler (smartphone)',
-                    'Queen-sized custom sunbeds',
-                    'Daily turndown service',
-                    '180° Caldera & Volcano View',
-                    'USB bed-side plugs',
-                    'Central Air conditioning & Heating'
-                ],
-                benefits: [
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Impuestos incluidos'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/Homepage-2-600x500.jpg']
-            },
-            {
-                id: 4,
-                name: 'Suite Majestic',
-                type: 'suite',
-                pricePerNight: 6931717,
-                capacity: 2,
-                beds: 1,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transporte VIP y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi'],
-                benefits: [
-                    'Servicio de auto de lujo ida y vuelta',
-                    'Desayuno flotante una vez por estadía',
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Transporte incluido'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                transferIncluded: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-24-600x500.jpg']
-            },
-            {
-                id: 5,
-                name: 'Suite Elementos',
-                type: 'suite',
-                pricePerNight: 7256618,
-                capacity: 4,
-                beds: 2,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transfer VIP y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice'],
-                benefits: [
-                    'Servicio de auto de lujo ida y vuelta',
-                    'Desayuno flotante una vez por estadía',
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Transporte incluido'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                transferIncluded: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-26-600x500.jpg']
-            },
-            {
-                id: 6,
-                name: 'The Saint Suite',
-                type: 'suite',
-                pricePerNight: 8579778,
-                capacity: 4,
-                beds: 2,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transfer VIP y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice', 'safe'],
-                benefits: [
-                    'Servicio de auto de lujo ida y vuelta',
-                    'Desayuno flotante una vez por estadía',
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Transporte incluido'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                transferIncluded: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2019/12/HighRes-6-min-1-scaled-e1575923182587-600x500.jpg']
-            },
-            {
-                id: 7,
-                name: 'The One Suite',
-                type: 'villa',
-                pricePerNight: 13192353,
-                capacity: 2,
-                beds: 1,
-                description: 'Tarifa totalmente flexible con servicios de lujo incluidos. Desayuno flotante, transporte VIP y amenidades premium',
-                available: true,
-                services: ['wifi', 'tv', 'ac', 'balcony', 'minibar', 'jacuzzi', 'roomservice', 'safe'],
-                benefits: [
-                    'Servicio de auto de lujo ida y vuelta',
-                    'Desayuno flotante una vez por estadía',
-                    'Bebida de bienvenida al llegar',
-                    'Botella de champagne y plato de frutas en la habitación',
-                    'Desayuno a la carta',
-                    'Wi-Fi gratuito',
-                    'Cancelación gratuita',
-                    'Transporte incluido'
-                ],
-                flexibleRate: true,
-                freeBreakfast: true,
-                transferIncluded: true,
-                freeCancellation: true,
-                images: ['https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Exterior-Pool-scaled-600x500.jpg']
+                identification: '1234567890',
+                name: 'Juan Manuel',
+                nationality: 'Colombiana',
+                email: 'juanman42@gmail.com',
+                phone: '+57 300 987 6543',
+                password: 'vale2007',
+                role: 'user',
+                createdAt: new Date().toISOString()
             }
         ]);
     }
 
-    // Inicializar datos por defecto si no existen
-    initializeData() {
-        // Forzar actualización de habitaciones para reflejar cambios
-        this.updateRoomsData();
-        
-        // Datos de usuarios por defecto
-        if (!this.getData('users')) {
-            this.setData('users', [
-                {
-                    id: 1,
-                    identification: '12345678',
-                    name: 'Administrador del Hotel',
-                    nationality: 'Colombiana',
-                    email: 'admin@hotel.com',
-                    phone: '+57 300 123 4567',
-                    password: 'admin123',
-                    role: 'admin',
-                    createdAt: new Date().toISOString()
-                }
-            ]);
-        }
-
-        // Datos de habitaciones/suites por defecto (se actualizan automáticamente con updateRoomsData)
-        // Ya no se necesita, updateRoomsData() ya los crea
-
-        // Datos de reservas por defecto
-        if (!this.getData('reservations')) {
-            this.setData('reservations', []);
-        }
-
-        // Datos de mensajes de contacto por defecto
-        if (!this.getData('contactMessages')) {
-            this.setData('contactMessages', []);
-        }
-
-        // Datos de servicios por defecto
-        if (!this.getData('services')) {
-            this.setData('services', [
-                {
-                    id: 1,
-                    name: 'Trinity Restaurant',
-                    type: 'restaurant',
-                    description: 'Restaurante gourmet con cocina mediterránea',
-                    price: 0,
-                    available: true
-                },
-                {
-                    id: 2,
-                    name: 'Sky Bar',
-                    type: 'bar',
-                    description: 'Bar en la azotea con vista panorámica',
-                    price: 0,
-                    available: true
-                },
-                {
-                    id: 3,
-                    name: 'The Sacred Spa',
-                    type: 'spa',
-                    description: 'Spa de lujo con tratamientos relajantes',
-                    price: 150,
-                    available: true
-                },
-                {
-                    id: 4,
-                    name: 'Saint Gym',
-                    type: 'gym',
-                    description: 'Gimnasio equipado con tecnología de vanguardia',
-                    price: 0,
-                    available: true
-                }
-            ]);
-        }
+    if (!getData('reservations')) {
+        setData('reservations', []);
     }
 
-    // Métodos genéricos para manejar localStorage
-    setData(key, data) {
-        try {
-            localStorage.setItem(key, JSON.stringify(data));
-            return true;
-        } catch (error) {
-            console.error('Error saving to localStorage:', error);
-            return false;
-        }
+    if (!getData('contactMessages')) {
+        setData('contactMessages', []);
     }
 
-    getData(key) {
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch (error) {
-            console.error('Error reading from localStorage:', error);
-            return null;
-        }
-    }
-
-    // Métodos específicos para usuarios
-    addUser(userData) {
-        try {
-            // Verificar que localStorage funciona
-            if (!this.testLocalStorage()) {
-                throw new Error('El navegador no permite el almacenamiento local. Verifica la configuración de privacidad.');
-            }
-            
-            let users = this.getData('users');
-            if (!users) {
-                users = [];
-            }
-            
-            const newUser = {
-                id: this.generateId(users),
-                ...userData,
-                createdAt: new Date().toISOString()
-            };
-            
-            users.push(newUser);
-            const saved = this.setData('users', users);
-            
-            if (!saved) {
-                throw new Error('No se pudo guardar el usuario. Inténtalo de nuevo.');
-            }
-            
-            return newUser;
-        } catch (error) {
-            console.error('Error in addUser:', error);
-            throw error;
-        }
-    }
-
-    getUsers() {
-        return this.getData('users') || [];
-    }
-
-    getUserByEmail(email) {
-        const users = this.getUsers();
-        return users.find(user => user.email === email);
-    }
-
-    updateUser(id, userData) {
-        const users = this.getData('users') || [];
-        const index = users.findIndex(user => user.id === id);
-        if (index !== -1) {
-            users[index] = { ...users[index], ...userData };
-            this.setData('users', users);
-            return users[index];
-        }
-        return null;
-    }
-
-    // Métodos específicos para reservas
-    addReservation(reservationData) {
-        try {
-            console.log('addReservation llamado con:', reservationData);
-            
-            const reservations = this.getData('reservations') || [];
-            console.log('Reservas actuales:', reservations.length);
-            
-            const newReservation = {
-                id: this.generateId(reservations),
-                ...reservationData,
-                status: reservationData.status || 'confirmed',
-                createdAt: new Date().toISOString()
-            };
-            
-            console.log('Nueva reserva a guardar:', newReservation);
-            
-            reservations.push(newReservation);
-            const saved = this.setData('reservations', reservations);
-            
-            console.log('¿Guardado exitoso?:', saved);
-            console.log('Total de reservas después de guardar:', reservations.length);
-            
-            // Verificar que se guardó correctamente
-            const verificacion = this.getData('reservations');
-            console.log('Verificación - Total reservas en localStorage:', verificacion ? verificacion.length : 0);
-            
-            if (!saved) {
-                throw new Error('No se pudo guardar la reserva en localStorage');
-            }
-            
-            return newReservation;
-        } catch (error) {
-            console.error('Error en addReservation:', error);
-            throw error;
-        }
-    }
-
-    getAllReservations() {
-        return this.getData('reservations') || [];
-    }
-
-    getReservationsByUser(userId) {
-        console.log('getReservationsByUser llamado para userId:', userId);
-        const reservations = this.getData('reservations') || [];
-        console.log('Total de reservas en sistema:', reservations.length);
-        console.log('Todas las reservas:', reservations);
-        const userReservations = reservations.filter(reservation => reservation.userId === userId);
-        console.log('Reservas del usuario:', userReservations.length);
-        return userReservations;
-    }
-
-    deleteReservation(id) {
-        console.log('deleteReservation llamado para id:', id);
-        const reservations = this.getData('reservations') || [];
-        const filteredReservations = reservations.filter(reservation => reservation.id !== id);
-        
-        if (filteredReservations.length < reservations.length) {
-            this.setData('reservations', filteredReservations);
-            console.log('Reserva eliminada. Total de reservas ahora:', filteredReservations.length);
-            return true;
-        }
-        
-        console.error('Reserva no encontrada con id:', id);
-        return false;
-    }
-
-    updateReservation(id, updatedData) {
-        console.log('updateReservation llamado:', { id, updatedData });
-        const reservations = this.getData('reservations') || [];
-        const index = reservations.findIndex(reservation => reservation.id === id);
-        
-        if (index !== -1) {
-            reservations[index] = {
-                ...reservations[index],
-                ...updatedData,
-                updatedAt: new Date().toISOString()
-            };
-            this.setData('reservations', reservations);
-            console.log('Reserva actualizada:', reservations[index]);
-            return reservations[index];
-        }
-        
-        console.error('Reserva no encontrada con id:', id);
-        return null;
-    }
-
-    updateReservationStatus(id, status) {
-        console.log('updateReservationStatus llamado:', { id, status });
-        const reservations = this.getData('reservations') || [];
-        const index = reservations.findIndex(reservation => reservation.id === id);
-        
-        if (index !== -1) {
-            reservations[index].status = status;
-            reservations[index].updatedAt = new Date().toISOString();
-            this.setData('reservations', reservations);
-            console.log('Estado de reserva actualizado:', reservations[index]);
-            return reservations[index];
-        }
-        
-        console.error('Reserva no encontrada con id:', id);
-        return null;
-    }
-
-    // Métodos específicos para mensajes de contacto
-    addContactMessage(messageData) {
-        const messages = this.getData('contactMessages') || [];
-        const newMessage = {
-            id: this.generateId(messages),
-            ...messageData,
-            read: false,
-            createdAt: new Date().toISOString()
-        };
-        messages.push(newMessage);
-        this.setData('contactMessages', messages);
-        return newMessage;
-    }
-
-    markMessageAsRead(id) {
-        const messages = this.getData('contactMessages') || [];
-        const index = messages.findIndex(message => message.id === id);
-        if (index !== -1) {
-            messages[index].read = true;
-            messages[index].readAt = new Date().toISOString();
-            this.setData('contactMessages', messages);
-            return messages[index];
-        }
-        return null;
-    }
-
-    // Métodos específicos para habitaciones
-    getRooms() {
-        return this.getData('rooms') || [];
-    }
-
-    getRoomById(roomId) {
-        const rooms = this.getRooms();
-        return rooms.find(room => room.id === roomId);
-    }
-
-    getAvailableRooms(checkIn, checkOut, guests = 1) {
-        console.log('getAvailableRooms llamado con:', { checkIn, checkOut, guests });
-        
-        const rooms = this.getData('rooms') || [];
-        const reservations = this.getData('reservations') || [];
-        
-        console.log('Total de habitaciones:', rooms.length);
-        console.log('Total de reservas:', reservations.length);
-        console.log('Habitaciones:', rooms);
-        
-        const availableRooms = rooms.filter(room => {
-            // Verificar que la habitación pueda acomodar al número de huéspedes
-            // Cualquier habitación con capacidad >= número de huéspedes es válida
-            if (room.capacity < guests) {
-                console.log(`Habitación ${room.name} con capacidad ${room.capacity} es menor que ${guests} huéspedes solicitados`);
-                return false;
-            }
-            
-            // Filtrar habitaciones excesivamente grandes para evitar mostrar villas cuando buscan 1-2 personas
-            // Si buscan 1-2 huéspedes, no mostrar habitaciones para más de 4
-            // Si buscan 3-4 huéspedes, no mostrar habitaciones para más de 6
-            const maxReasonableCapacity = guests <= 2 ? 4 : guests + 2;
-            if (room.capacity > maxReasonableCapacity) {
-                console.log(`Habitación ${room.name} con capacidad ${room.capacity} es demasiado grande para ${guests} huéspedes (máximo razonable: ${maxReasonableCapacity})`);
-                return false;
-            }
-            
-            // Verificar si la habitación está disponible en las fechas solicitadas
-            // Considerar tanto reservas confirmadas como pendientes
-            const conflictingReservations = reservations.filter(reservation => 
-                reservation.roomId === room.id && 
-                (reservation.status === 'confirmed' || reservation.status === 'pending') &&
-                this.datesOverlap(checkIn, checkOut, reservation.checkIn, reservation.checkOut)
-            );
-            
-            console.log(`Habitación ${room.name}: ${conflictingReservations.length} reservas conflictivas`);
-            
-            return conflictingReservations.length === 0;
-        });
-        
-        console.log('Habitaciones disponibles:', availableRooms.length);
-        return availableRooms;
-    }
-
-    // Métodos de utilidad
-    generateId(array) {
-        if (array.length === 0) return 1;
-        const ids = array.map(item => item.id || 0).filter(id => typeof id === 'number');
-        if (ids.length === 0) return 1;
-        return Math.max(...ids) + 1;
-    }
-
-    datesOverlap(start1, end1, start2, end2) {
-        const d1 = new Date(start1);
-        const d2 = new Date(end1);
-        const d3 = new Date(start2);
-        const d4 = new Date(end2);
-        
-        return d1 < d4 && d2 > d3;
-    }
-
-    // Método de prueba para verificar localStorage
-    testLocalStorage() {
-        try {
-            const testData = { test: 'data' };
-            localStorage.setItem('test', JSON.stringify(testData));
-            const retrieved = JSON.parse(localStorage.getItem('test'));
-            localStorage.removeItem('test');
-            return retrieved && retrieved.test === 'data';
-        } catch (error) {
-            console.error('localStorage test failed:', error);
-            return false;
-        }
-    }
-
-    // Métodos de limpieza y reset
-    clearReservations() {
-        console.log('Limpiando todas las reservas...');
-        this.setData('reservations', []);
-        console.log('Reservas limpiadas exitosamente');
-        return true;
-    }
-
-    clearAllData() {
-        const keys = ['users', 'rooms', 'reservations', 'contactMessages', 'services'];
-        keys.forEach(key => localStorage.removeItem(key));
-        this.initializeData();
-    }
-
-    exportData() {
-        const data = {};
-        const keys = ['users', 'rooms', 'reservations', 'contactMessages', 'services'];
-        keys.forEach(key => {
-            data[key] = this.getData(key);
-        });
-        return data;
-    }
-
-    importData(data) {
-        Object.keys(data).forEach(key => {
-            this.setData(key, data[key]);
-        });
-    }
-
-    // Verificar precios de habitaciones para debugging
-    verifyRoomPrices() {
-        const rooms = this.getRooms();
-        console.log('=== VERIFICACIÓN DE PRECIOS DE HABITACIONES ===');
-        rooms.forEach(room => {
-            console.log(`${room.name}:`);
-            console.log(`  Precio por noche: $${room.pricePerNight.toLocaleString('es-CO')}`);
-            console.log(`  10 noches: $${(room.pricePerNight * 10).toLocaleString('es-CO')}`);
-            console.log(`  Capacidad: ${room.capacity} personas`);
-            console.log('---');
-        });
-    }
-
-    // Forzar reset completo de habitaciones
-    forceResetRooms() {
-        console.log('Forzando reset de habitaciones...');
-        this.updateRoomsData();
-        console.log('Habitaciones reseteadas. Recarga la página.');
+    if (!getData('services')) {
+        setData('services', [
+            { id: 1, name: 'Trinity Restaurant', type: 'restaurant', description: 'Restaurante gourmet con cocina mediterránea', price: 0, available: true },
+            { id: 2, name: 'Sky Bar', type: 'bar', description: 'Bar en la azotea con vista panorámica', price: 0, available: true },
+            { id: 3, name: 'The Sacred Spa', type: 'spa', description: 'Spa de lujo con tratamientos relajantes', price: 150, available: true },
+            { id: 4, name: 'Saint Gym', type: 'gym', description: 'Gimnasio equipado con tecnología de vanguardia', price: 0, available: true }
+        ]);
     }
 }
 
-// Crear instancia global
-const storageManager = new LocalStorageManager();
+function addUser(userData) {
+    var users = getData('users') || [];
+    var newUser = {
+        id: generateId(users),
+        identification: userData.identification,
+        name: userData.name,
+        nationality: userData.nationality,
+        email: userData.email,
+        phone: userData.phone,
+        password: userData.password,
+        role: userData.role || 'user',
+        createdAt: new Date().toISOString()
+    };
+    users.push(newUser);
+    setData('users', users);
+    return newUser;
+}
 
-// Exportar para uso en otros archivos
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = LocalStorageManager;
+function getUsers() {
+    return getData('users') || [];
+}
+
+function getUserByEmail(email) {
+    var users = getUsers();
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].email === email) {
+            return users[i];
+        }
+    }
+    return null;
+}
+
+function updateUser(id, userData) {
+    var users = getData('users') || [];
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === id) {
+            users[i] = {
+                id: users[i].id,
+                identification: userData.identification !== undefined ? userData.identification : users[i].identification,
+                name: userData.name !== undefined ? userData.name : users[i].name,
+                nationality: userData.nationality !== undefined ? userData.nationality : users[i].nationality,
+                email: userData.email !== undefined ? userData.email : users[i].email,
+                phone: userData.phone !== undefined ? userData.phone : users[i].phone,
+                password: userData.password !== undefined ? userData.password : users[i].password,
+                role: userData.role !== undefined ? userData.role : users[i].role,
+                createdAt: users[i].createdAt
+            };
+            setData('users', users);
+            return users[i];
+        }
+    }
+    return null;
+}
+
+function addReservation(reservationData) {
+    var reservations = getData('reservations') || [];
+    var newReservation = {
+        id: generateId(reservations),
+        roomId: reservationData.roomId,
+        userId: reservationData.userId,
+        checkIn: reservationData.checkIn,
+        checkOut: reservationData.checkOut,
+        guests: reservationData.guests,
+        notes: reservationData.notes || '',
+        totalPrice: reservationData.totalPrice,
+        status: reservationData.status || 'pending',
+        createdAt: new Date().toISOString()
+    };
+    reservations.push(newReservation);
+    setData('reservations', reservations);
+    return newReservation;
+}
+
+function getAllReservations() {
+    return getData('reservations') || [];
+}
+
+function getReservationsByUser(userId) {
+    var reservations = getData('reservations') || [];
+    var result = [];
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].userId === userId) {
+            result.push(reservations[i]);
+        }
+    }
+    return result;
+}
+
+function deleteReservation(id) {
+    var reservations = getData('reservations') || [];
+    var filtered = [];
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].id !== id) {
+            filtered.push(reservations[i]);
+        }
+    }
+    setData('reservations', filtered);
+    return true;
+}
+
+function updateReservation(id, updatedData) {
+    var reservations = getData('reservations') || [];
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].id === id) {
+            for (var key in updatedData) {
+                reservations[i][key] = updatedData[key];
+            }
+            reservations[i].updatedAt = new Date().toISOString();
+            setData('reservations', reservations);
+            return reservations[i];
+        }
+    }
+    return null;
+}
+
+function updateReservationStatus(id, status) {
+    var reservations = getData('reservations') || [];
+    var previousStatus = null;
+    var reservation = null;
+    
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].id === id) {
+            previousStatus = reservations[i].status;
+            reservations[i].status = status;
+            reservations[i].updatedAt = new Date().toISOString();
+            reservation = reservations[i];
+            break;
+        }
+    }
+    
+    if (reservation) {
+        setData('reservations', reservations);
+        
+        // Si la reserva fue cancelada, la habitación automáticamente vuelve a estar disponible
+        if (status === 'cancelled' && (previousStatus === 'confirmed' || previousStatus === 'pending')) {
+            // La habitación ya está disponible automáticamente porque getAvailableRooms excluye reservas canceladas
+            console.log('Reserva cancelada: Habitación ' + reservation.roomId + ' vuelve a estar disponible');
+        }
+        
+        return reservation;
+    }
+    return null;
+}
+
+function addContactMessage(messageData) {
+    var messages = getData('contactMessages') || [];
+    var newMessage = {
+        id: generateId(messages),
+        name: messageData.name,
+        email: messageData.email,
+        subject: messageData.subject,
+        message: messageData.message,
+        read: false,
+        createdAt: new Date().toISOString()
+    };
+    messages.push(newMessage);
+    setData('contactMessages', messages);
+    return newMessage;
+}
+
+function markMessageAsRead(id) {
+    var messages = getData('contactMessages') || [];
+    for (var i = 0; i < messages.length; i++) {
+        if (messages[i].id === id) {
+            messages[i].read = true;
+            messages[i].readAt = new Date().toISOString();
+            setData('contactMessages', messages);
+            return messages[i];
+        }
+    }
+    return null;
+}
+
+function getRooms() {
+    return getData('rooms') || roomsData;
+}
+
+function getRoomById(roomId) {
+    var rooms = getRooms();
+    for (var i = 0; i < rooms.length; i++) {
+        if (rooms[i].id === roomId) {
+            return rooms[i];
+        }
+    }
+    return null;
+}
+
+function datesOverlap(start1, end1, start2, end2) {
+    return new Date(start1) < new Date(end2) && new Date(end1) > new Date(start2);
+}
+
+function getAvailableRooms(checkIn, checkOut, guests) {
+    if (!guests) guests = 1;
+    
+    var rooms = getData('rooms') || roomsData;
+    var reservations = getData('reservations') || [];
+    
+    var activeReservations = [];
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].status === 'confirmed' || reservations[i].status === 'pending') {
+            activeReservations.push(reservations[i]);
+        }
+    }
+    
+    var availableRooms = [];
+    for (var i = 0; i < rooms.length; i++) {
+        var room = rooms[i];
+        
+        if (room.capacity < guests) {
+            continue;
+        }
+        
+        // Solo mostrar habitaciones que coincidan exactamente con la capacidad o sean ligeramente mayores
+        // Para 2 huéspedes mostrar todas las habitaciones disponibles
+        // Para 3 y 4 huéspedes mostrar solo las habitaciones con capacidad 4
+        var maxReasonableCapacity = guests <= 2 ? 4 : (guests <= 4 ? 4 : guests);
+        if (room.capacity > maxReasonableCapacity) {
+            continue;
+        }
+        
+        var hasConflict = false;
+        for (var j = 0; j < activeReservations.length; j++) {
+            if (activeReservations[j].roomId === room.id && 
+                datesOverlap(checkIn, checkOut, activeReservations[j].checkIn, activeReservations[j].checkOut)) {
+                hasConflict = true;
+                break;
+            }
+        }
+        
+        if (!hasConflict) {
+            availableRooms.push(room);
+        }
+    }
+    
+    return availableRooms;
+}
+
+function testLocalStorage() {
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function clearReservations() {
+    setData('reservations', []);
+    return true;
+}
+
+function clearAllData() {
+    localStorage.removeItem('users');
+    localStorage.removeItem('rooms');
+    localStorage.removeItem('reservations');
+    localStorage.removeItem('contactMessages');
+    localStorage.removeItem('services');
+    initializeData();
+}
+
+function exportData() {
+    return {
+        users: getData('users'),
+        rooms: getData('rooms'),
+        reservations: getData('reservations'),
+        contactMessages: getData('contactMessages'),
+        services: getData('services')
+    };
+}
+
+/**
+ * Calcula el precio total de una reserva basado en noches y número de personas
+ */
+function calculateTotalPrice(room, checkIn, checkOut, guests) {
+    try {
+        // Calcular número de noches
+        const checkInDate = new Date(checkIn);
+        const checkOutDate = new Date(checkOut);
+        const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+        
+        // Precio base por noche
+        let basePrice = room.pricePerNight;
+        
+        // Aplicar recargos por persona adicional (si aplica)
+        let totalPrice = basePrice * nights;
+        
+        // Política de precios por persona:
+        // - Hasta 2 personas: precio base
+        // - 3-4 personas: +20% por persona adicional
+        // - 5+ personas: +30% por persona adicional
+        
+        if (guests > 2) {
+            const additionalGuests = guests - 2;
+            let surchargePerGuest = 0;
+            
+            if (guests <= 4) {
+                // 3-4 personas: +20% por persona adicional
+                surchargePerGuest = basePrice * 0.20;
+            } else {
+                // 5+ personas: +30% por persona adicional
+                surchargePerGuest = basePrice * 0.30;
+            }
+            
+            totalPrice += (surchargePerGuest * additionalGuests * nights);
+        }
+        
+        // Redondear al múltiplo de 1000 más cercano
+        totalPrice = Math.round(totalPrice / 1000) * 1000;
+        
+        return {
+            basePrice: basePrice,
+            nights: nights,
+            guests: guests,
+            additionalGuests: Math.max(0, guests - 2),
+            surchargePerGuest: guests > 2 ? (guests <= 4 ? basePrice * 0.20 : basePrice * 0.30) : 0,
+            totalPrice: totalPrice,
+            breakdown: generatePriceBreakdown(room, nights, guests, totalPrice)
+        };
+        
+    } catch (error) {
+        console.error('Error calculando precio total:', error);
+        // Fallback al cálculo simple
+        const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+        return {
+            basePrice: room.pricePerNight,
+            nights: nights,
+            guests: guests,
+            additionalGuests: 0,
+            surchargePerGuest: 0,
+            totalPrice: room.pricePerNight * nights,
+            breakdown: `Precio base: ${nights} noches × COP $${room.pricePerNight.toLocaleString('es-CO')} = COP $${(room.pricePerNight * nights).toLocaleString('es-CO')}`
+        };
+    }
+}
+
+/**
+ * Genera un desglose detallado del precio
+ */
+function generatePriceBreakdown(room, nights, guests, totalPrice) {
+    let breakdown = [];
+    
+    breakdown.push(`Precio base (${nights} noches × COP $${room.pricePerNight.toLocaleString('es-CO')}) = COP $${(room.pricePerNight * nights).toLocaleString('es-CO')}`);
+    
+    if (guests > 2) {
+        const additionalGuests = guests - 2;
+        const surchargeRate = guests <= 4 ? '20%' : '30%';
+        const surchargePerGuest = guests <= 4 ? room.pricePerNight * 0.20 : room.pricePerNight * 0.30;
+        const totalSurcharge = surchargePerGuest * additionalGuests * nights;
+        
+        breakdown.push(`Recargo por ${additionalGuests} ${additionalGuests === 1 ? 'persona adicional' : 'personas adicionales'} (${surchargeRate}) = COP $${totalSurcharge.toLocaleString('es-CO')}`);
+    }
+    
+    breakdown.push(`Total: COP $${totalPrice.toLocaleString('es-CO')}`);
+    
+    return breakdown.join('\n');
+}
+
+var storageManager = {
+    setData: setData,
+    getData: getData,
+    addUser: addUser,
+    getUsers: getUsers,
+    getUserByEmail: getUserByEmail,
+    updateUser: updateUser,
+    addReservation: addReservation,
+    getAllReservations: getAllReservations,
+    getReservationsByUser: getReservationsByUser,
+    deleteReservation: deleteReservation,
+    updateReservation: updateReservation,
+    updateReservationStatus: updateReservationStatus,
+    addContactMessage: addContactMessage,
+    markMessageAsRead: markMessageAsRead,
+    getRooms: getRooms,
+    getRoomById: getRoomById,
+    getAvailableRooms: getAvailableRooms,
+    datesOverlap: datesOverlap,
+    testLocalStorage: testLocalStorage,
+    clearReservations: clearReservations,
+    clearAllData: clearAllData,
+    exportData: exportData,
+    generateId: generateId,
+    updateRoomsData: function() { setData('rooms', roomsData); },
+    calculateTotalPrice: calculateTotalPrice,
+    generatePriceBreakdown: generatePriceBreakdown
+};
+
+window.storageManager = storageManager;
+
+// Inicializar datos después de definir storageManager
+if (typeof window !== 'undefined') {
+    initializeData();
 }

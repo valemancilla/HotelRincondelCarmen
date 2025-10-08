@@ -40,14 +40,17 @@
                 <li class="nav-item">
                     <a href="reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item" id="userGreeting" style="display: none;">
+                    <span class="nav-link user-greeting"><span id="userName"></span></span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
-                <li class="nav-item" id="logoutBtnItem" style="display: none;">
-                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -100,33 +103,26 @@
                         <div class="carousel-slide">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Luxury-Pool-scaled.jpg" alt="Villa One - Vista Nocturna">
                         </div>
-                        <!-- Navigation Arrows -->
-                        <button class="carousel-nav prev" onclick="changeSlide(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="carousel-nav next" onclick="changeSlide(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
                     </div>
                     
                     <!-- Thumbnails -->
                     <div class="carousel-thumbnails">
-                        <div class="thumbnail active" onclick="currentSlide(1)">
+                        <div class="thumbnail active">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Pool-full-View-from-Above-1-scaled.jpg" alt="Vista Principal">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(2)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Kitchen-with-Door-scaled.jpg" alt="Piscina">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(3)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Interior-Living-Room-scaled.jpg" alt="Interior">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(4)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bathroom-scaled.jpg" alt="Terraza">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(5)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Bed-with-View-scaled.jpg" alt="Vista Nocturna">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(6)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2022/06/The-One-Private-Villa-Luxury-Pool-scaled.jpg" alt="Vista Nocturna">
                         </div>
                     </div>
@@ -378,7 +374,10 @@
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña:</label>
-                    <input type="password" id="loginPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="loginPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Iniciar Sesión</button>
             </form>
@@ -413,7 +412,10 @@
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Contraseña:</label>
-                    <input type="password" id="regPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="regPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Registrarse</button>
             </form>

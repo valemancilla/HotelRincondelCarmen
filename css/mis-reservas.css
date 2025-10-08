@@ -265,7 +265,62 @@
     font-weight: 700;
 }
 
-/* Botones de acción */
+/* Botones de acción - Diseño mejorado */
+.reservation-actions-vertical {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.reservation-actions-vertical .btn-outline,
+.reservation-actions-vertical .btn-danger {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid #b89a7e;
+}
+
+.reservation-actions-vertical .btn-outline {
+    background: #b89a7e;
+    color: white;
+    border-color: #b89a7e;
+}
+
+.reservation-actions-vertical .btn-outline:hover {
+    background: #a08568;
+    border-color: #a08568;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(184, 154, 126, 0.4);
+}
+
+.reservation-actions-vertical .btn-danger {
+    background: white;
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.reservation-actions-vertical .btn-danger:hover {
+    background: #e74c3c;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.reservation-actions-vertical i {
+    font-size: 1rem;
+}
+
+/* Botones alternativos (por compatibilidad) */
 .action-buttons {
     display: flex;
     gap: 0.8rem;
@@ -392,6 +447,11 @@
     
     .date-box {
         width: 100%;
+    }
+    
+    .reservation-actions-vertical {
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
     
     .action-buttons {

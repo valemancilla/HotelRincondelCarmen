@@ -172,7 +172,8 @@ class ReservationManager {
             const totalNights = nights || Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
             
             availableRoomsContainer.innerHTML = rooms.map(room => {
-                const totalPrice = totalNights * room.pricePerNight;
+                const priceCalculation = storageManager.calculateTotalPrice(room, checkIn, checkOut, guests);
+                const totalPrice = priceCalculation.totalPrice;
                 const services = this.getServiceIcons(room.services);
                 const suiteUrl = this.getSuiteUrl(room.name);
                 
@@ -381,6 +382,12 @@ class ReservationManager {
             return;
         }
 
+        // Verificar si el usuario es admin (los admins no pueden hacer reservas)
+        if (currentUser.role === 'admin') {
+            this.showError('Los administradores no pueden hacer reservas. Usa el Panel de Administración para gestionar reservas.');
+            return;
+        }
+
         const checkIn = document.getElementById('checkIn').value;
         const checkOut = document.getElementById('checkOut').value;
         const guests = parseInt(document.getElementById('guests').value) || 2;
@@ -390,8 +397,19 @@ class ReservationManager {
             return;
         }
 
+        // Verificar disponibilidad antes de crear la reserva
+        const availabilityCheck = this.checkRoomAvailability(roomId, checkIn, checkOut, guests);
+        if (!availabilityCheck.available) {
+            this.showError(availabilityCheck.reason);
+            return;
+        }
+
         // Calcular noches automáticamente
         const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+
+        // Calcular precio total usando la nueva función
+        const room = storageManager.getRoomById(roomId);
+        const priceCalculation = storageManager.calculateTotalPrice(room, checkIn, checkOut, guests);
 
         // Crear la reserva
         const reservationData = {
@@ -400,8 +418,13 @@ class ReservationManager {
             checkIn: checkIn,
             checkOut: checkOut,
             guests: guests,
-            nights: nights,
-            status: 'confirmed'
+            nights: priceCalculation.nights,
+            status: 'pending',
+            totalPrice: priceCalculation.totalPrice,
+            basePrice: priceCalculation.basePrice,
+            additionalGuests: priceCalculation.additionalGuests,
+            surchargePerGuest: priceCalculation.surchargePerGuest,
+            priceBreakdown: priceCalculation.breakdown
         };
 
         try {
@@ -444,10 +467,14 @@ class ReservationManager {
         const guests = parseInt(document.getElementById('guests').value) || 2;
         
         let totalNights = 1;
+        let totalPrice = room.pricePerNight;
+        let priceCalculation = null;
+        
         if (checkIn && checkOut) {
-            totalNights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+            priceCalculation = storageManager.calculateTotalPrice(room, checkIn, checkOut, guests);
+            totalNights = priceCalculation.nights;
+            totalPrice = priceCalculation.totalPrice;
         }
-        let totalPrice = totalNights * room.pricePerNight;
 
         content.innerHTML = `
             <div class="room-details-header">
@@ -490,6 +517,11 @@ class ReservationManager {
                         <li><strong>Noches:</strong> ${totalNights}</li>
                         <li><strong>Huéspedes:</strong> ${guests}</li>
                         <li><strong>Total:</strong> COP $${totalPrice.toLocaleString('es-CO')}</li>
+                        ${priceCalculation && priceCalculation.additionalGuests > 0 ? `
+                        <li><strong>Desglose:</strong></li>
+                        <li>• Precio base: ${totalNights} noches × COP $${room.pricePerNight.toLocaleString('es-CO')} = COP $${(room.pricePerNight * totalNights).toLocaleString('es-CO')}</li>
+                        <li>• Recargo por ${priceCalculation.additionalGuests} ${priceCalculation.additionalGuests === 1 ? 'persona adicional' : 'personas adicionales'}: COP $${(priceCalculation.surchargePerGuest * priceCalculation.additionalGuests * totalNights).toLocaleString('es-CO')}</li>
+                        ` : ''}
                     </ul>
                 </div>
                 ` : ''}
@@ -557,6 +589,85 @@ class ReservationManager {
                 }
             }, 300);
         }, 3000);
+    }
+
+    /**
+     * Verifica la disponibilidad de una habitación específica con validación mejorada
+     */
+    checkRoomAvailability(roomId, checkIn, checkOut, guests) {
+        try {
+            // Validar fechas
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // Verificar que las fechas sean válidas
+            if (checkInDate >= checkOutDate) {
+                return {
+                    available: false,
+                    reason: 'La fecha de salida debe ser posterior a la fecha de entrada'
+                };
+            }
+
+            // Verificar que la fecha de entrada no sea en el pasado
+            if (checkInDate < today) {
+                return {
+                    available: false,
+                    reason: 'La fecha de entrada no puede ser en el pasado'
+                };
+            }
+
+            // Obtener la habitación
+            const room = storageManager.getRoomById(roomId);
+            if (!room) {
+                return {
+                    available: false,
+                    reason: 'Habitación no encontrada'
+                };
+            }
+
+            // Verificar capacidad
+            if (room.capacity < guests) {
+                return {
+                    available: false,
+                    reason: `Esta habitación tiene capacidad para máximo ${room.capacity} ${room.capacity === 1 ? 'persona' : 'personas'}`
+                };
+            }
+
+            // Verificar disponibilidad contra reservas existentes
+            const reservations = storageManager.getData('reservations') || [];
+            const activeReservations = reservations.filter(res => 
+                res.roomId === roomId && 
+                (res.status === 'confirmed' || res.status === 'pending')
+            );
+
+            // Verificar solapamiento de fechas
+            for (let reservation of activeReservations) {
+                const resCheckIn = new Date(reservation.checkIn);
+                const resCheckOut = new Date(reservation.checkOut);
+                
+                // Verificar solapamiento
+                if (checkInDate < resCheckOut && checkOutDate > resCheckIn) {
+                    return {
+                        available: false,
+                        reason: `Esta habitación ya está reservada del ${resCheckIn.toLocaleDateString()} al ${resCheckOut.toLocaleDateString()}`
+                    };
+                }
+            }
+
+            return {
+                available: true,
+                reason: 'Habitación disponible'
+            };
+
+        } catch (error) {
+            console.error('Error verificando disponibilidad:', error);
+            return {
+                available: false,
+                reason: 'Error al verificar disponibilidad. Intenta nuevamente.'
+            };
+        }
     }
 }
 

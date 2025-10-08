@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suite Icónica - Hotel el Rincón del Carmen</title>
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/localStorage.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/suite-detail.js" defer></script>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -40,14 +45,17 @@
                 <li class="nav-item">
                     <a href="reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item" id="userGreeting" style="display: none;">
+                    <span class="nav-link user-greeting"><span id="userName"></span></span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
-                <li class="nav-item" id="logoutBtnItem" style="display: none;">
-                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -94,31 +102,23 @@
                         <div class="carousel-slide">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Suite Icónica - Vista Nocturna">
                         </div>
-                        
-                        <!-- Navigation Arrows -->
-                        <button class="carousel-nav prev" onclick="changeSlide(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="carousel-nav next" onclick="changeSlide(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
                     </div>
                     
                     <!-- Thumbnails -->
                     <div class="carousel-thumbnails">
-                        <div class="thumbnail active" onclick="currentSlide(1)">
+                        <div class="thumbnail active">
                             <img src="/image/habitacion 1.jpg" alt="Vista Principal">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(2)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-80.jpg" alt="Terraza">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(3)">
+                        <div class="thumbnail">
                             <img src="/image/habitacion 1.3.jpg" alt="Interior">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(4)">
+                        <div class="thumbnail">
                             <img src="/image/habitacion 1.4.jpg" alt="Baño">
                         </div>
-                        <div class="thumbnail" onclick="currentSlide(5)">
+                        <div class="thumbnail">
                             <img src="https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-74.jpg" alt="Vista Nocturna">
                         </div>
                     </div>
@@ -280,7 +280,7 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
                                 <span>60 m²</span>
                             </div>
                         </div>
-                        <button class="room-btn">VER MÁS</button>
+                        <button class="room-btn" onclick="window.location.href='suite-mitica.html'">VER MÁS</button>
                     </div>
                 </div>
 
@@ -301,7 +301,7 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
                                 <span>80 m²</span>
                             </div>
                         </div>
-                        <button class="room-btn">VER MÁS</button>
+                        <button class="room-btn" onclick="window.location.href='suite-elementos.html'">VER MÁS</button>
                     </div>
                 </div>
 
@@ -322,7 +322,7 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
                                 <span>200 m²</span>
                             </div>
                         </div>
-                        <button class="room-btn">VER MÁS</button>
+                        <button class="room-btn" onclick="window.location.href='suite-villa-santo.html'">VER MÁS</button>
                     </div>
                 </div>
             </div>
@@ -370,7 +370,10 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña:</label>
-                    <input type="password" id="loginPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="loginPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Iniciar Sesión</button>
             </form>
@@ -405,17 +408,15 @@ Salga a su terraza privada al aire libre, con piscina climatizada, y contemple l
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Contraseña:</label>
-                    <input type="password" id="regPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="regPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Registrarse</button>
             </form>
             <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
         </div>
     </div>
-
-    <script src="../js/localStorage.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/suite-detail.js"></script>
 </body>
 </html>

@@ -1,99 +1,111 @@
-// Index Page JavaScript
-// Hero Carousel functionality
-
-let currentSlideIndex = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const dots = document.querySelectorAll('.dot');
-const totalSlides = slides.length;
+// Carrusel del index
+var heroIndex = 0;
 
 function showSlide(index) {
-    // Ocultar todas las slides
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
+    var slides = document.querySelectorAll('.carousel-slide');
+    var dots = document.querySelectorAll('.dot');
+    var content = document.querySelector('.hero-content');
     
-    // Mostrar la slide actual
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-}
-
-function changeSlide(direction) {
-    currentSlideIndex += direction;
+    if (slides.length === 0) return;
     
-    if (currentSlideIndex >= totalSlides) {
-        currentSlideIndex = 0;
-    } else if (currentSlideIndex < 0) {
-        currentSlideIndex = totalSlides - 1;
+    // Animacion texto
+    if (content) {
+        content.style.opacity = '0';
+        content.style.transform = 'translate(-50%, -50%) scale(0.9)';
     }
     
-    showSlide(currentSlideIndex);
+    // Mostrar nueva imagen
+    slides[index].classList.add('active');
+    for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+    }
+    dots[index].classList.add('active');
+    
+    // Ocultar otras imagenes
+    setTimeout(function() {
+        for (var i = 0; i < slides.length; i++) {
+            if (i !== index) {
+                slides[i].classList.remove('active');
+            }
+        }
+        
+        if (content) {
+            content.style.opacity = '1';
+            content.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+    }, 500);
 }
 
-function currentSlide(index) {
-    currentSlideIndex = index - 1;
-    showSlide(currentSlideIndex);
+function changeSlide(dir) {
+    var slides = document.querySelectorAll('.carousel-slide');
+    heroIndex = heroIndex + dir;
+    
+    if (heroIndex >= slides.length) {
+        heroIndex = 0;
+    } else if (heroIndex < 0) {
+        heroIndex = slides.length - 1;
+    }
+    
+    showSlide(heroIndex);
 }
 
-// Auto-play del carrusel desactivado
-// setInterval(() => {
-//     changeSlide(1);
-// }, 5000);
+function currentSlide(num) {
+    heroIndex = num - 1;
+    showSlide(heroIndex);
+}
 
-// Initialize carousel
 function initHeroCarousel() {
+    var slides = document.querySelectorAll('.carousel-slide');
     if (slides.length > 0) {
         showSlide(0);
     }
 }
 
-// "VER TODAS LAS SUITES" button functionality
 function initViewAllSuitesButton() {
-    const viewAllSuitesBtn = document.getElementById('viewAllSuitesBtn');
-    if (viewAllSuitesBtn) {
-        viewAllSuitesBtn.addEventListener('click', function() {
+    var btn = document.getElementById('viewAllSuitesBtn');
+    if (btn) {
+        btn.onclick = function() {
             window.location.href = 'html/suites.html';
-        });
+        };
     }
 }
 
-// Booking Widget Functionality
 function initBookingWidget() {
-    const guestCount = document.querySelector('.guest-count');
-    const guestUp = document.querySelector('.guest-controls .fa-chevron-up');
-    const guestDown = document.querySelector('.guest-controls .fa-chevron-down');
-    const checkAvailabilityBtn = document.querySelector('.check-availability-btn');
+    var count = document.querySelector('.guest-count');
+    var up = document.querySelector('.guest-controls .fa-chevron-up');
+    var down = document.querySelector('.guest-controls .fa-chevron-down');
+    var btn = document.querySelector('.check-availability-btn');
+    var guests = 1;
 
-    let currentGuests = 1;
-
-    if (guestUp && guestDown && guestCount) {
-        guestUp.addEventListener('click', function() {
-            if (currentGuests < 10) {
-                currentGuests++;
-                guestCount.textContent = currentGuests;
+    if (up && down && count) {
+        up.onclick = function() {
+            if (guests < 10) {
+                guests++;
+                count.textContent = guests;
             }
-        });
+        };
 
-        guestDown.addEventListener('click', function() {
-            if (currentGuests > 1) {
-                currentGuests--;
-                guestCount.textContent = currentGuests;
+        down.onclick = function() {
+            if (guests > 1) {
+                guests--;
+                count.textContent = guests;
             }
-        });
+        };
     }
 
-    if (checkAvailabilityBtn) {
-        checkAvailabilityBtn.addEventListener('click', function() {
+    if (btn) {
+        btn.onclick = function() {
             window.location.href = 'html/reservas.html';
-        });
+        };
     }
 }
 
-// Initialize all functionality when DOM is loaded
+window.changeSlide = changeSlide;
+window.currentSlide = currentSlide;
+
 document.addEventListener('DOMContentLoaded', function() {
     initHeroCarousel();
     initViewAllSuitesButton();
     initBookingWidget();
 });
 
-// Make functions globally available for onclick handlers
-window.changeSlide = changeSlide;
-window.currentSlide = currentSlide;

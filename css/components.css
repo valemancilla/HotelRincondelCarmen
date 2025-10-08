@@ -467,6 +467,21 @@ textarea::-moz-error-message {
     color: white;
 }
 
+/* Form Buttons Container */
+.form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.form-buttons button {
+    flex: 0 0 auto;
+    width: 180px;
+    padding: 12px 20px;
+}
+
 .btn-small {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
@@ -480,16 +495,201 @@ textarea::-moz-error-message {
 /* Responsive Modal */
 @media (max-width: 768px) {
     .modal-content {
-        margin: 5% auto;
+        margin: 2% auto;
         width: 95%;
         padding: 1.5rem;
-        max-height: 90vh;
+        max-height: 95vh;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Formularios optimizados para móvil */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        border: 2px solid #e1e8ed;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        min-height: 48px; /* Tamaño mínimo para touch */
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #b89a7e;
+        background-color: white;
+        box-shadow: 0 0 0 3px rgba(184, 154, 126, 0.1);
+        outline: none;
+    }
+
+    /* Botones optimizados para touch */
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger {
+        min-height: 48px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-danger:active {
+        transform: scale(0.98);
+    }
+
+    /* Password input wrapper para móvil */
+    .password-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .password-input-wrapper input {
+        padding-right: 3rem;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 1rem;
+        color: #666;
+        cursor: pointer;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .toggle-password:active {
+        color: #b89a7e;
     }
     
     .modal-content.large {
-        margin: 2% auto;
-        width: 95%;
-        max-height: 95vh;
+        margin: 1% auto;
+        width: 98%;
+        max-height: 98vh;
+        border-radius: 20px;
+        padding: 1rem;
+    }
+
+    /* Modal de registro específico para móvil */
+    #registerModal .modal-content {
+        max-height: 98vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #b89a7e #f1f1f1;
+    }
+
+    /* Estilo de scrollbar para webkit en móvil */
+    #registerModal .modal-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #registerModal .modal-content::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    #registerModal .modal-content::-webkit-scrollbar-thumb {
+        background: #b89a7e;
+        border-radius: 3px;
+    }
+
+    #registerModal .modal-content::-webkit-scrollbar-thumb:hover {
+        background: #a08568;
+    }
+
+    /* Botones de formulario optimizados para móvil */
+    .form-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .form-buttons .btn-primary,
+    .form-buttons .btn-secondary {
+        width: 100%;
+        min-height: 50px;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .form-buttons .btn-primary:active,
+    .form-buttons .btn-secondary:active {
+        transform: scale(0.98);
+    }
+
+    /* Close button optimizado para móvil */
+    .close {
+        font-size: 32px;
+        right: 1.5rem;
+        top: 1.5rem;
+        padding: 0.5rem;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .close:active {
+        color: #b89a7e;
+        transform: scale(0.9);
+    }
+
+    /* Modal header optimizado */
+    .modal-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #2c3e50;
+        padding-right: 3rem;
+    }
+
+    /* Links en modales optimizados */
+    .modal-content p a {
+        color: #b89a7e;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .modal-content p a:active {
+        background: rgba(184, 154, 126, 0.1);
+        transform: scale(0.98);
     }
     
     /* Modal de registro en móviles */
@@ -1009,4 +1209,45 @@ textarea::-moz-error-message {
         color: #b89a7e;
         padding-left: 0;
     }
+}
+
+/* Password Toggle Styles */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 45px !important;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #b89a7e;
+}
+
+.toggle-password.fa-eye-slash {
+    color: #b89a7e;
+}
+
+/* Prevenir iconos duplicados */
+.password-input-wrapper .toggle-password:nth-child(n+2) {
+    display: none !important;
+}
+
+/* Asegurar que solo haya un icono por wrapper */
+.password-input-wrapper i.toggle-password:not(:first-child) {
+    display: none !important;
 }

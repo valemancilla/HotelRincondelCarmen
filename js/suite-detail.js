@@ -1,95 +1,98 @@
-// Suite Detail Page JavaScript
-// Carousel functionality for suite images
+// Carrusel de imagenes de suites
+var suiteIndex = 1;
 
-let currentSlideIndex = 1;
-const slides = document.querySelectorAll('.carousel-slide');
-const thumbnails = document.querySelectorAll('.thumbnail');
-
-function showSlide(index) {
-    // Hide all slides
-    slides.forEach(slide => slide.classList.remove('active'));
-    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+function showSuiteSlide(num) {
+    var slides = document.querySelectorAll('.main-carousel .carousel-slide');
+    var thumbs = document.querySelectorAll('.carousel-thumbnails .thumbnail');
     
-    // Show current slide
-    if (index > slides.length) currentSlideIndex = 1;
-    if (index < 1) currentSlideIndex = slides.length;
+    if (slides.length === 0) return;
     
-    slides[currentSlideIndex - 1].classList.add('active');
-    thumbnails[currentSlideIndex - 1].classList.add('active');
+    // Ocultar todas
+    for (var i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+    }
+    for (var i = 0; i < thumbs.length; i++) {
+        thumbs[i].classList.remove('active');
+    }
+    
+    // Ajustar indice
+    if (num > slides.length) {
+        suiteIndex = 1;
+    } else if (num < 1) {
+        suiteIndex = slides.length;
+    } else {
+        suiteIndex = num;
+    }
+    
+    // Mostrar actual
+    slides[suiteIndex - 1].classList.add('active');
+    if (thumbs.length > 0) {
+        thumbs[suiteIndex - 1].classList.add('active');
+    }
 }
 
-function changeSlide(direction) {
-    currentSlideIndex += direction;
-    showSlide(currentSlideIndex);
+function changeSuiteSlide(dir) {
+    suiteIndex = suiteIndex + dir;
+    showSuiteSlide(suiteIndex);
 }
 
-function currentSlide(index) {
-    currentSlideIndex = index;
-    showSlide(currentSlideIndex);
+function currentSuiteSlide(num) {
+    suiteIndex = num;
+    showSuiteSlide(suiteIndex);
 }
 
-// Fullscreen functionality for carousel images
+function initSuiteCarousel() {
+    var thumbs = document.querySelectorAll('.carousel-thumbnails .thumbnail');
+    for (var i = 0; i < thumbs.length; i++) {
+        thumbs[i].onclick = function() {
+            var index = Array.prototype.indexOf.call(this.parentNode.children, this);
+            currentSuiteSlide(index + 1);
+        };
+    }
+}
+
 function initFullscreen() {
-    const fullscreenBtn = document.querySelector('.fullscreen-btn');
-    if (fullscreenBtn) {
-        fullscreenBtn.addEventListener('click', function() {
-            const activeSlide = document.querySelector('.carousel-slide.active');
-            const img = activeSlide.querySelector('img');
+    var btn = document.querySelector('.fullscreen-btn');
+    if (btn) {
+        btn.onclick = function() {
+            var active = document.querySelector('.carousel-slide.active');
+            if (!active) return;
             
-            // Create fullscreen overlay
-            const fullscreenOverlay = document.createElement('div');
-            fullscreenOverlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.9);
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-            `;
+            var img = active.querySelector('img');
+            if (!img) return;
             
-            const fullscreenImg = document.createElement('img');
-            fullscreenImg.src = img.src;
-            fullscreenImg.style.cssText = `
-                max-width: 90%;
-                max-height: 90%;
-                object-fit: contain;
-            `;
+            var overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer';
             
-            fullscreenOverlay.appendChild(fullscreenImg);
-            document.body.appendChild(fullscreenOverlay);
+            var newImg = document.createElement('img');
+            newImg.src = img.src;
+            newImg.style.cssText = 'max-width:90%;max-height:90%;object-fit:contain';
             
-            // Close on click
-            fullscreenOverlay.addEventListener('click', function() {
-                document.body.removeChild(fullscreenOverlay);
-            });
-        });
+            overlay.appendChild(newImg);
+            document.body.appendChild(overlay);
+            
+            overlay.onclick = function() {
+                document.body.removeChild(overlay);
+            };
+        };
     }
 }
 
-// Check availability button functionality
 function initBookingButton() {
-    const checkAvailabilityBtn = document.querySelector('.check-availability-btn');
-    if (checkAvailabilityBtn) {
-        checkAvailabilityBtn.addEventListener('click', function() {
-            alert('Redirigiendo a la página de reservas...');
-            // window.location.href = 'reservas.html';
-        });
+    var btn = document.querySelector('.check-availability-btn');
+    if (btn) {
+        btn.onclick = function() {
+            window.location.href = 'reservas.html';
+        };
     }
 }
 
-// Similar rooms functionality - Los botones redirigen directamente desde el HTML
+window.changeSuiteSlide = changeSuiteSlide;
+window.currentSuiteSlide = currentSuiteSlide;
 
-// Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    initSuiteCarousel();
+    showSuiteSlide(1);
     initFullscreen();
     initBookingButton();
 });
-
-// Make functions globally available for onclick handlers
-window.changeSlide = changeSlide;
-window.currentSlide = currentSlide;

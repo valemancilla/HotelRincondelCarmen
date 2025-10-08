@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Hotel el Rincón del Carmen</title>
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/localStorage.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/contacto.js" defer></script>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/contacto.css">
@@ -41,14 +46,17 @@
                 <li class="nav-item">
                     <a href="reservas.html" class="nav-link">Reservar ahora</a>
                 </li>
+                <li class="nav-item" id="userGreeting" style="display: none;">
+                    <span class="nav-link user-greeting"><span id="userName"></span></span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="loginBtn">Iniciar Sesión</a>
                 </li>
-                <li class="nav-item" id="logoutBtnItem" style="display: none;">
-                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" id="adminBtn" style="display: none;">Panel Admin</a>
+                </li>
+                <li class="nav-item" id="logoutBtnItem" style="display: none;">
+                    <a href="#" class="nav-link" id="logoutBtn">Cerrar Sesión</a>
                 </li>
             </ul>
             <div class="hamburger">
@@ -205,7 +213,10 @@
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña:</label>
-                    <input type="password" id="loginPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="loginPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Iniciar Sesión</button>
             </form>
@@ -240,81 +251,15 @@
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Contraseña:</label>
-                    <input type="password" id="regPassword" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="regPassword" required>
+                        <i class="fas fa-eye toggle-password" data-target="regPassword"></i>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary">Registrarse</button>
             </form>
             <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
         </div>
     </div>
-
-    <script src="../js/localStorage.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/main.js"></script>
-    <script>
-        // Contact form validation
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('contactName').value.trim();
-            const email = document.getElementById('contactEmail').value.trim();
-            const subject = document.getElementById('contactSubject').value.trim();
-            const message = document.getElementById('contactMessage').value.trim();
-            
-            let hasErrors = false;
-            
-            // Clear previous errors
-            document.getElementById('generalError').style.display = 'none';
-            
-            // Validate required fields only (message is optional)
-            if (!name || !email || !subject) {
-                document.getElementById('generalError').style.display = 'block';
-                hasErrors = true;
-            }
-            
-            // If no errors, show success message
-            if (!hasErrors) {
-                // Save form data using the storage manager
-                const messageData = {
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message || 'Sin mensaje adicional'
-                };
-                
-                // Use the storage manager to save the message
-                storageManager.addContactMessage(messageData);
-                
-                document.getElementById('successMessage').style.display = 'block';
-                this.reset();
-                
-                // Hide success message after 5 seconds
-                setTimeout(function() {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 5000);
-            }
-        });
-        
-        // Hide error and success messages when user starts typing in any field
-        document.getElementById('contactName').addEventListener('input', function() {
-            document.getElementById('generalError').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        });
-        
-        document.getElementById('contactEmail').addEventListener('input', function() {
-            document.getElementById('generalError').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        });
-        
-        document.getElementById('contactSubject').addEventListener('input', function() {
-            document.getElementById('generalError').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        });
-        
-        document.getElementById('contactMessage').addEventListener('input', function() {
-            document.getElementById('generalError').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
-        });
-    </script>
 </body>
 </html>

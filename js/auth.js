@@ -1,782 +1,541 @@
-/**
- * Sistema de autenticación para el Hotel el Rincón del Carmen
- * Maneja el login, registro y gestión de sesiones de usuarios
- */
+// Sistema de autenticacion
 
-class AuthManager {
-    constructor() {
-        this.currentUser = null;
-        this.init();
+var currentUser = null;
+
+function initAuth() {
+    var savedUser = localStorage.getItem('current_user');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateAuthUI();
     }
+    bindAuthEvents();
+    cleanupDuplicateIcons();
+}
 
-    /**
-     * Inicializa el sistema de autenticación
-     */
-    init() {
-        // Verificar si hay una sesión activa
-        const savedUser = localStorage.getItem('current_user');
-        if (savedUser) {
-            this.currentUser = JSON.parse(savedUser);
-            this.updateUI();
-        }
+function cleanupDuplicateIcons() {
+    // Limpiar iconos duplicados de contraseña
+    var passwordWrappers = document.querySelectorAll('.password-input-wrapper');
+    for (var i = 0; i < passwordWrappers.length; i++) {
+        var wrapper = passwordWrappers[i];
+        var icons = wrapper.querySelectorAll('.toggle-password');
         
-        this.bindEvents();
-    }
-
-    /**
-     * Vincula los eventos de autenticación
-     */
-    bindEvents() {
-        // Eventos de login
-        const loginBtn = document.getElementById('loginBtn');
-        if (loginBtn) {
-            loginBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.showLoginModal();
-            });
-        }
-
-        // Eventos de registro
-        const showRegister = document.getElementById('showRegister');
-        if (showRegister) {
-            showRegister.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.showRegisterModal();
-            });
-        }
-
-        const showLogin = document.getElementById('showLogin');
-        if (showLogin) {
-            showLogin.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.showLoginModal();
-            });
-        }
-
-        // Eventos de formularios
-        const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleLogin();
-            });
-        }
-
-        const registerForm = document.getElementById('registerForm');
-        if (registerForm) {
-            registerForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                this.handleRegister();
-            });
-        }
-
-        // Eventos de logout
-        const logoutBtn = document.getElementById('logoutBtn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.logout();
-            });
-        }
-
-
-        // Eventos de admin
-        const adminBtn = document.getElementById('adminBtn');
-        if (adminBtn) {
-            adminBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.goToAdmin();
-            });
-        }
-
-        // Cerrar modales
-        this.bindModalEvents();
-    }
-
-    /**
-     * Vincula eventos para cerrar modales
-     */
-    bindModalEvents() {
-        const modals = document.querySelectorAll('.modal');
-        modals.forEach(modal => {
-            const closeBtn = modal.querySelector('.close');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', () => {
-                    this.closeModal(modal);
-                });
-            }
-
-            // Cerrar al hacer clic fuera del modal
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    this.closeModal(modal);
-                }
-            });
-        });
-    }
-
-    /**
-     * Muestra el modal de login
-     */
-    showLoginModal() {
-        const modal = document.getElementById('loginModal');
-        if (modal) {
-            modal.style.display = 'block';
-            document.getElementById('loginEmail').focus();
-        }
-    }
-
-    /**
-     * Muestra el modal de registro
-     */
-    showRegisterModal() {
-        const loginModal = document.getElementById('loginModal');
-        const registerModal = document.getElementById('registerModal');
-        
-        if (loginModal) loginModal.style.display = 'none';
-        if (registerModal) registerModal.style.display = 'block';
-        
-        document.getElementById('regName').focus();
-    }
-
-    /**
-     * Cierra un modal
-     */
-    closeModal(modal) {
-        modal.style.display = 'none';
-        this.clearForms();
-    }
-
-    /**
-     * Limpia los formularios
-     */
-    clearForms() {
-        const forms = document.querySelectorAll('#loginForm, #registerForm');
-        forms.forEach(form => {
-            form.reset();
-            // Limpiar mensajes de error
-            const errorMessages = form.querySelectorAll('.error-message');
-            errorMessages.forEach(msg => msg.remove());
-        });
-    }
-
-    /**
-     * Maneja el proceso de login
-     */
-    async handleLogin() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-
-        if (!email || !password) {
-            this.showError('loginForm', 'Por favor completa todos los campos');
-            return;
-        }
-
-        try {
-            const user = storageManager.getUserByEmail(email);
-            
-            if (!user) {
-                this.showError('loginForm', 'Este usuario no está registrado');
-                return;
-            }
-
-            if (user.password !== password) {
-                this.showError('loginForm', 'Contraseña incorrecta');
-                return;
-            }
-
-            // Login exitoso
-            this.currentUser = user;
-            localStorage.setItem('current_user', JSON.stringify(user));
-            
-            this.closeModal(document.getElementById('loginModal'));
-            this.updateUI();
-            this.showSuccess('Inicio de sesión exitoso');
-            
-            // Recargar la página para actualizar la interfaz
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-
-        } catch (error) {
-            console.error('Error en login:', error);
-            this.showError('loginForm', 'Error al iniciar sesión');
-        }
-    }
-
-    /**
-     * Maneja el proceso de registro
-     */
-    async handleRegister() {
-        const formData = {
-            identification: document.getElementById('regId').value,
-            name: document.getElementById('regName').value,
-            nationality: document.getElementById('regNationality').value,
-            email: document.getElementById('regEmail').value,
-            phone: document.getElementById('regPhone').value,
-            password: document.getElementById('regPassword').value
-        };
-
-        // Validaciones
-        if (!this.validateRegistration(formData)) {
-            return;
-        }
-
-        try {
-            // Verificar si el email ya existe
-            const existingUser = storageManager.getUserByEmail(formData.email);
-            if (existingUser) {
-                this.showError('registerForm', 'Este email ya está registrado');
-                return;
-            }
-
-            // Verificar si la identificación ya existe
-            const users = storageManager.getUsers();
-            const existingId = users.find(user => user.identification === formData.identification);
-            if (existingId) {
-                this.showError('registerForm', 'Este número de identificación ya está registrado');
-                return;
-            }
-
-            // Crear nuevo usuario
-            const newUser = storageManager.addUser(formData);
-            
-            this.closeModal(document.getElementById('registerModal'));
-            this.showSuccess('Registro exitoso. Ahora puedes iniciar sesión.');
-            
-            // Mostrar modal de login
-            setTimeout(() => {
-                this.showLoginModal();
-            }, 1500);
-
-        } catch (error) {
-            console.error('Error en registro:', error);
-            this.showError('registerForm', 'Error al registrarse: ' + error.message);
-        }
-    }
-
-    /**
-     * Valida los datos de registro
-     */
-    validateRegistration(data) {
-        const errors = [];
-
-        if (!data.identification || data.identification.length < 6) {
-            errors.push('El número de identificación debe tener al menos 6 caracteres');
-        }
-
-        if (!data.name || data.name.length < 2) {
-            errors.push('El nombre debe tener al menos 2 caracteres');
-        }
-
-        if (!data.nationality || data.nationality.length < 2) {
-            errors.push('La nacionalidad es requerida');
-        }
-
-        if (!data.email || !this.isValidEmail(data.email)) {
-            errors.push('Ingresa un email válido');
-        }
-
-        if (!data.phone || data.phone.length < 10) {
-            errors.push('El teléfono debe tener al menos 10 caracteres');
-        }
-
-        if (!data.password || data.password.length < 6) {
-            errors.push('La contraseña debe tener al menos 6 caracteres');
-        }
-
-        if (errors.length > 0) {
-            this.showError('registerForm', errors.join('<br>'));
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Valida formato de email
-     */
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    /**
-     * Cierra la sesión del usuario
-     */
-    logout() {
-        this.currentUser = null;
-        localStorage.removeItem('current_user');
-        this.updateUI();
-        this.showSuccess('Sesión cerrada exitosamente');
-        
-        // Redirigir a la página principal
-        setTimeout(() => {
-            const currentPath = window.location.pathname;
-            if (currentPath.includes('html/')) {
-                window.location.href = '../index.html';
-            } else {
-                window.location.href = 'index.html';
-            }
-        }, 1000);
-    }
-
-
-    /**
-     * Actualiza la interfaz de usuario según el estado de autenticación
-     */
-    updateUI() {
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtnItem = document.getElementById('logoutBtnItem');
-        const adminBtn = document.getElementById('adminBtn');
-        const myReservations = document.getElementById('myReservations');
-
-        if (this.currentUser) {
-            // Usuario logueado
-            if (loginBtn) {
-                loginBtn.textContent = `Hola, ${this.currentUser.name.split(' ')[0]}`;
-                // Remover cualquier evento de click y hacer que el botón solo muestre el nombre
-                loginBtn.onclick = null;
-                loginBtn.style.cursor = 'default';
-                loginBtn.removeAttribute('href');
-            }
-
-            // Mostrar botón de cerrar sesión
-            if (logoutBtnItem) {
-                logoutBtnItem.style.display = 'block';
-            }
-
-            if (adminBtn && this.isAdmin()) {
-                adminBtn.style.display = 'block';
-            }
-
-            if (myReservations) {
-                myReservations.style.display = 'block';
-                this.loadUserReservations();
-            }
-        } else {
-            // Usuario no logueado
-            if (loginBtn) {
-                loginBtn.textContent = 'Iniciar Sesión';
-                loginBtn.style.cursor = 'pointer';
-                loginBtn.setAttribute('href', '#');
-                loginBtn.onclick = (e) => {
-                    e.preventDefault();
-                    this.showLoginModal();
-                };
-            }
-
-            // Ocultar botón de cerrar sesión
-            if (logoutBtnItem) {
-                logoutBtnItem.style.display = 'none';
-            }
-
-            if (adminBtn) {
-                adminBtn.style.display = 'none';
-            }
-
-            if (myReservations) {
-                myReservations.style.display = 'none';
+        // Si hay más de un icono, eliminar los duplicados
+        if (icons.length > 1) {
+            for (var j = 1; j < icons.length; j++) {
+                icons[j].remove();
             }
         }
-    }
-
-    /**
-     * Verifica si el usuario actual es administrador
-     */
-    isAdmin() {
-        return this.currentUser && this.currentUser.role === 'admin';
-    }
-
-    /**
-     * Redirige al panel de administración
-     */
-    goToAdmin() {
-        if (this.isAdmin()) {
-            window.location.href = 'html/admin.html';
-        } else {
-            this.showError('', 'No tienes permisos de administrador');
-        }
-    }
-
-    /**
-     * Verifica si el usuario está autenticado
-     */
-    isAuthenticated() {
-        return this.currentUser !== null;
-    }
-
-    /**
-     * Obtiene el usuario actual
-     */
-    getCurrentUser() {
-        return this.currentUser;
-    }
-
-    /**
-     * Carga las reservas del usuario actual
-     */
-    loadUserReservations() {
-        if (!this.currentUser) return;
-
-        const allReservations = storageManager.getReservationsByUser(this.currentUser.id);
-        const reservationsList = document.getElementById('reservationsList');
-        
-        if (!reservationsList) return;
-
-        // Mostrar TODAS las reservas (activas y canceladas)
-        const reservations = allReservations;
-        const activeCount = reservations.filter(r => r.status !== 'cancelled').length;
-        const cancelledCount = reservations.filter(r => r.status === 'cancelled').length;
-
-        if (reservations.length === 0) {
-            reservationsList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-calendar-times"></i>
-                    <h3>No tienes reservas</h3>
-                    <p>¡Haz tu primera reserva ahora!</p>
-                    <a href="${this.getReservasUrl()}" class="btn-suites">VER HABITACIONES</a>
-                </div>
-            `;
-            return;
-        }
-
-        reservationsList.innerHTML = reservations.map(reservation => {
-            const room = storageManager.getRoomById(reservation.roomId);
-            const checkIn = new Date(reservation.checkIn).toLocaleDateString('es-CO');
-            const checkOut = new Date(reservation.checkOut).toLocaleDateString('es-CO');
-            const bookingDate = reservation.createdAt ? new Date(reservation.createdAt).toLocaleDateString('es-CO', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }) : 'No disponible';
-            const totalNights = Math.ceil((new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
-            const totalPrice = totalNights * room.pricePerNight;
-            const roomImage = room.images && room.images[0] ? room.images[0] : 'https://via.placeholder.com/400x300?text=Sin+Imagen';
-
-            return `
-                <div class="reservation-card-vertical ${reservation.status === 'cancelled' ? 'cancelled-reservation' : ''}">
-                    <div class="reservation-image-top">
-                        <img src="${roomImage}" alt="${room.name}">
-                        <div class="status-overlay status-${reservation.status}">
-                            <i class="fas fa-${reservation.status === 'pending' ? 'clock' : reservation.status === 'confirmed' ? 'check-circle' : reservation.status === 'cancelled' ? 'times-circle' : 'circle'}"></i>
-                            ${this.getStatusText(reservation.status)}
-                        </div>
-                        ${reservation.status === 'cancelled' ? '<div class="cancelled-overlay">CANCELADA</div>' : ''}
-                    </div>
-                    
-                    <div class="reservation-content-vertical">
-                        <h3 class="room-name-vertical">${room.name}</h3>
-                        <span class="room-type-badge">${this.getRoomTypeName(room.type)}</span>
-                        
-                        <div class="booking-date-info">
-                            <i class="fas fa-calendar-check"></i>
-                            <span><strong>Reservado:</strong> ${bookingDate}</span>
-                        </div>
-                        
-                        <div class="dates-section">
-                            <div class="date-box">
-                                <i class="fas fa-sign-in-alt"></i>
-                                <div>
-                                    <small>Check-in</small>
-                                    <strong>${checkIn}</strong>
-                                </div>
-                            </div>
-                            <div class="nights-indicator">
-                                <i class="fas fa-moon"></i>
-                                ${totalNights} ${totalNights === 1 ? 'noche' : 'noches'}
-                            </div>
-                            <div class="date-box">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <div>
-                                    <small>Check-out</small>
-                                    <strong>${checkOut}</strong>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="guests-info">
-                            <i class="fas fa-users"></i>
-                            <span>${reservation.guests} huéspedes</span>
-                        </div>
-                        
-                        <div class="price-box ${reservation.status === 'cancelled' ? 'cancelled-price' : ''}">
-                            <div class="price-detail">COP $${room.pricePerNight.toLocaleString('es-CO')} × ${totalNights}</div>
-                            <div class="price-total">COP $${totalPrice.toLocaleString('es-CO')}</div>
-                        </div>
-                        
-                        ${reservation.status === 'cancelled' ? `
-                            <div class="cancellation-notice">
-                                <i class="fas fa-info-circle"></i>
-                                <span>Esta reserva fue cancelada</span>
-                            </div>
-                        ` : `
-                            <div class="action-buttons">
-                                <button class="btn-modify" onclick="authManager.modifyReservation(${reservation.id})">
-                                    <i class="fas fa-edit"></i> Modificar
-                                </button>
-                                <button class="btn-delete" onclick="authManager.cancelReservation(${reservation.id})">
-                                    <i class="fas fa-trash-alt"></i> Cancelar
-                                </button>
-                            </div>
-                        `}
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    /**
-     * Modifica una reserva
-     */
-    modifyReservation(reservationId) {
-        const reservations = storageManager.getReservationsByUser(this.currentUser.id);
-        const reservation = reservations.find(r => r.id === reservationId);
-        
-        if (!reservation) {
-            this.showError('Reserva no encontrada');
-            return;
-        }
-
-        const room = storageManager.getRoomById(reservation.roomId);
-        
-        // Crear modal de edición
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.style.display = 'block';
-        modal.id = 'editReservationModal';
-        
-        modal.innerHTML = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Modificar Reserva</h2>
-                <h3>${room.name}</h3>
-                <form id="editReservationForm">
-                    <div class="form-group">
-                        <label for="editCheckIn">Fecha de entrada:</label>
-                        <input type="date" id="editCheckIn" value="${reservation.checkIn}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editCheckOut">Fecha de salida:</label>
-                        <input type="date" id="editCheckOut" value="${reservation.checkOut}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editGuests">Número de Huéspedes:</label>
-                        <select id="editGuests" required>
-                            ${[1,2,3,4].map(n => 
-                                `<option value="${n}" ${reservation.guests === n ? 'selected' : ''}>${n} ${n === 1 ? 'huésped' : 'huéspedes'}</option>`
-                            ).join('')}
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-primary">Guardar Cambios</button>
-                    <button type="button" class="btn-outline" onclick="document.getElementById('editReservationModal').remove()">Cancelar</button>
-                </form>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        // Cerrar modal
-        modal.querySelector('.close').onclick = () => modal.remove();
-        modal.onclick = (e) => {
-            if (e.target === modal) modal.remove();
-        };
-        
-        // Configurar fechas mínimas
-        const today = new Date().toISOString().split('T')[0];
-        const editCheckIn = document.getElementById('editCheckIn');
-        const editCheckOut = document.getElementById('editCheckOut');
-        
-        editCheckIn.min = today;
-        editCheckOut.min = today;
-        
-        // Actualizar fecha mínima de salida cuando cambie la entrada
-        editCheckIn.addEventListener('change', () => {
-            const checkInDate = new Date(editCheckIn.value);
-            const nextDay = new Date(checkInDate);
-            nextDay.setDate(nextDay.getDate() + 1);
-            editCheckOut.min = nextDay.toISOString().split('T')[0];
-            
-            if (editCheckOut.value && new Date(editCheckOut.value) <= checkInDate) {
-                editCheckOut.value = '';
-            }
-        });
-        
-        // Manejar envío del formulario
-        document.getElementById('editReservationForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const newCheckIn = document.getElementById('editCheckIn').value;
-            const newCheckOut = document.getElementById('editCheckOut').value;
-            const newGuests = parseInt(document.getElementById('editGuests').value);
-            
-            // Validar fechas
-            if (new Date(newCheckOut) <= new Date(newCheckIn)) {
-                alert('La fecha de salida debe ser posterior a la fecha de entrada');
-                return;
-            }
-            
-            // Calcular noches automáticamente
-            const newNights = Math.ceil((new Date(newCheckOut) - new Date(newCheckIn)) / (1000 * 60 * 60 * 24));
-            
-            // Actualizar reserva
-            const updatedData = {
-                checkIn: newCheckIn,
-                checkOut: newCheckOut,
-                nights: newNights,
-                guests: newGuests
-            };
-            
-            try {
-                storageManager.updateReservation(reservationId, updatedData);
-                modal.remove();
-                this.loadUserReservations();
-                this.showSuccess('Reserva modificada exitosamente');
-            } catch (error) {
-                console.error('Error al modificar reserva:', error);
-                this.showError('Error al modificar la reserva: ' + error.message);
-            }
-        });
-    }
-
-    /**
-     * Cancela una reserva
-     */
-    cancelReservation(reservationId) {
-        try {
-            storageManager.updateReservationStatus(reservationId, 'cancelled');
-            this.loadUserReservations();
-            this.showSuccess('Reserva cancelada exitosamente');
-        } catch (error) {
-            console.error('Error al cancelar reserva:', error);
-            this.showError('Error al cancelar la reserva');
-        }
-    }
-
-    /**
-     * Elimina todas las reservas canceladas del usuario actual
-     */
-    deleteAllCancelledReservations() {
-        if (!this.currentUser) return;
-
-        try {
-            const allReservations = storageManager.getAllReservations();
-            const userCancelledReservations = allReservations.filter(r => 
-                r.userId === this.currentUser.id && r.status === 'cancelled'
-            );
-            
-            userCancelledReservations.forEach(r => {
-                storageManager.deleteReservation(r.id);
-            });
-            
-            this.loadUserReservations();
-            this.showSuccess(`${userCancelledReservations.length} reserva(s) cancelada(s) eliminada(s) exitosamente`);
-        } catch (error) {
-            console.error('Error al eliminar reservas:', error);
-            this.showError('Error al eliminar las reservas');
-        }
-    }
-
-    /**
-     * Obtiene el nombre del tipo de habitación
-     */
-    getRoomTypeName(type) {
-        const types = {
-            'standard': 'Estándar',
-            'deluxe': 'Deluxe',
-            'suite': 'Suite',
-            'presidential': 'Presidencial'
-        };
-        return types[type] || type;
-    }
-
-    /**
-     * Obtiene el texto del estado
-     */
-    getStatusText(status) {
-        const statuses = {
-            'active': 'Activa',
-            'pending': 'Pendiente',
-            'confirmed': 'Confirmada',
-            'cancelled': 'Cancelada'
-        };
-        return statuses[status] || status;
-    }
-
-    /**
-     * Obtiene la URL correcta para reservas dependiendo de la ubicación actual
-     */
-    getReservasUrl() {
-        const currentPath = window.location.pathname;
-        if (currentPath.includes('html/')) {
-            return 'reservas.html';
-        } else {
-            return 'html/reservas.html';
-        }
-    }
-
-    /**
-     * Muestra un mensaje de error
-     */
-    showError(formId, message) {
-        const form = document.getElementById(formId);
-        if (!form) return;
-
-        // Remover mensajes de error anteriores
-        const existingError = form.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-
-        // Crear nuevo mensaje de error
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'alert alert-error error-message';
-        errorDiv.innerHTML = message;
-        
-        form.insertBefore(errorDiv, form.firstChild);
-        
-        // Auto-remover después de 5 segundos
-        setTimeout(() => {
-            if (errorDiv.parentNode) {
-                errorDiv.remove();
-            }
-        }, 5000);
-    }
-
-    /**
-     * Muestra un mensaje de éxito
-     */
-    showSuccess(message) {
-        // Crear notificación de éxito
-        const notification = document.createElement('div');
-        notification.className = 'alert alert-success';
-        notification.style.cssText = `
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 3000;
-            max-width: 300px;
-            animation: slideInRight 0.3s ease;
-        `;
-        notification.innerHTML = `
-            <i class="fas fa-check-circle"></i> ${message}
-        `;
-        
-        document.body.appendChild(notification);
-        
-        // Auto-remover después de 3 segundos
-        setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 300);
-        }, 3000);
     }
 }
 
-// Crear instancia global del gestor de autenticación
-window.authManager = new AuthManager();
+function bindAuthEvents() {
+    // Use event delegation for better reliability with dynamic elements
+    document.body.addEventListener('click', function(e) {
+        var target = e.target;
+        
+        // Login button
+        if (target.id === 'loginBtn' || target.closest('#loginBtn')) {
+            e.preventDefault();
+            showLoginModal();
+            return;
+        }
+        
+        // Logout button
+        if (target.id === 'logoutBtn' || target.closest('#logoutBtn')) {
+            e.preventDefault();
+            logout();
+            return;
+        }
+        
+        // Admin button
+        if (target.id === 'adminBtn' || target.closest('#adminBtn')) {
+            e.preventDefault();
+            var currentPath = window.location.pathname;
+            if (currentPath.includes('html/')) {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'html/admin.html';
+            }
+            return;
+        }
+        
+        // Show register link
+        if (target.id === 'showRegister' || target.closest('#showRegister')) {
+            e.preventDefault();
+            showRegisterModal();
+            return;
+        }
+        
+        // Show login link
+        if (target.id === 'showLogin' || target.closest('#showLogin')) {
+            e.preventDefault();
+            showLoginModal();
+            return;
+        }
+    });
+
+    var loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+    }
+
+    var registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleRegister();
+        });
+    }
+
+    bindModalEvents();
+}
+
+// Variable global para evitar duplicar event listeners
+var modalEventsBound = false;
+
+function bindModalEvents() {
+    // Si ya se ejecutó, no hacer nada
+    if (modalEventsBound) return;
+    modalEventsBound = true;
+    
+    // Usar event delegation para evitar duplicar listeners
+    document.body.addEventListener('click', function(e) {
+        var target = e.target;
+        
+        // Cerrar modal al hacer clic fuera
+        if (target.classList.contains('modal')) {
+            target.style.display = 'none';
+        }
+        
+        // Cerrar modal con botón X
+        if (target.classList.contains('close')) {
+            var modal = target.closest('.modal');
+            if (modal) modal.style.display = 'none';
+        }
+        
+        // Toggle password visibility
+        if (target.classList.contains('toggle-password')) {
+            var targetId = target.getAttribute('data-target');
+            var input = document.getElementById(targetId);
+            if (input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    target.classList.remove('fa-eye');
+                    target.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    target.classList.remove('fa-eye-slash');
+                    target.classList.add('fa-eye');
+                }
+            }
+        }
+    });
+}
+
+function showLoginModal() {
+    var modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'block';
+        var registerModal = document.getElementById('registerModal');
+        if (registerModal) registerModal.style.display = 'none';
+        cleanupDuplicateIcons();
+    }
+}
+
+function showRegisterModal() {
+    var modal = document.getElementById('registerModal');
+    if (modal) {
+        modal.style.display = 'block';
+        var loginModal = document.getElementById('loginModal');
+        if (loginModal) loginModal.style.display = 'none';
+        cleanupDuplicateIcons();
+    }
+}
+
+function handleLogin() {
+    var email = document.getElementById('loginEmail').value;
+    var password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) {
+        showNotification('Por favor completa todos los campos', 'error');
+        return;
+    }
+
+    var user = storageManager.getUserByEmail(email);
+    
+    if (!user || user.password !== password) {
+        showNotification('Email o contraseña incorrectos', 'error');
+        return;
+    }
+
+    currentUser = user;
+    localStorage.setItem('current_user', JSON.stringify(user));
+    
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('loginForm').reset();
+    
+    updateAuthUI();
+    showNotification('¡Bienvenido ' + user.name + '!', 'success');
+}
+
+function handleRegister() {
+    var formData = {
+        identification: document.getElementById('regId').value,
+        name: document.getElementById('regName').value,
+        nationality: document.getElementById('regNationality').value,
+        email: document.getElementById('regEmail').value,
+        phone: document.getElementById('regPhone').value,
+        password: document.getElementById('regPassword').value
+    };
+
+    if (!validateRegistration(formData)) {
+        return;
+    }
+
+    var existingUser = storageManager.getUserByEmail(formData.email);
+    if (existingUser) {
+        showNotification('Este email ya está registrado', 'error');
+        return;
+    }
+
+    var users = storageManager.getUsers();
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].identification === formData.identification) {
+            showNotification('Este número de identificación ya está registrado', 'error');
+            return;
+        }
+    }
+
+    storageManager.addUser(formData);
+    
+    document.getElementById('registerModal').style.display = 'none';
+    showNotification('Registro exitoso. Ahora puedes iniciar sesión', 'success');
+    
+    setTimeout(function() {
+        showLoginModal();
+    }, 1500);
+}
+
+function validateRegistration(data) {
+    if (!data.identification || data.identification.length < 6) {
+        showNotification('El número de identificación debe tener al menos 6 caracteres', 'error');
+        return false;
+    }
+
+    if (!data.name || data.name.length < 2) {
+        showNotification('El nombre debe tener al menos 2 caracteres', 'error');
+        return false;
+    }
+
+    if (!data.nationality || data.nationality.length < 2) {
+        showNotification('La nacionalidad es requerida', 'error');
+        return false;
+    }
+
+    if (!data.email || !isValidEmail(data.email)) {
+        showNotification('Ingresa un email válido', 'error');
+        return false;
+    }
+
+    if (!data.phone || data.phone.length < 10) {
+        showNotification('El teléfono debe tener al menos 10 caracteres', 'error');
+        return false;
+    }
+
+    if (!data.password || data.password.length < 6) {
+        showNotification('La contraseña debe tener al menos 6 caracteres', 'error');
+        return false;
+    }
+
+    return true;
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('current_user');
+    updateAuthUI();
+    showNotification('Has cerrado sesión exitosamente', 'success');
+    
+    setTimeout(function() {
+        window.location.href = window.location.pathname.includes('html/') ? '../index.html' : 'index.html';
+    }, 1000);
+}
+
+function updateAuthUI() {
+    var loginBtn = document.getElementById('loginBtn');
+    var logoutBtnItem = document.getElementById('logoutBtnItem');
+    var adminBtn = document.getElementById('adminBtn');
+    var userGreeting = document.getElementById('userGreeting');
+    var userName = document.getElementById('userName');
+
+    if (currentUser) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (logoutBtnItem) logoutBtnItem.style.display = 'block';
+        if (adminBtn && currentUser.role === 'admin') adminBtn.style.display = 'block';
+        
+        // Show user greeting
+        if (userGreeting && userName) {
+            userGreeting.style.display = 'block';
+            if (currentUser.role === 'admin') {
+                userName.textContent = 'Admin';
+            } else {
+                userName.textContent = 'Hola, ' + currentUser.name;
+            }
+        }
+        
+        loadUserReservations();
+    } else {
+        if (loginBtn) loginBtn.style.display = 'block';
+        if (logoutBtnItem) logoutBtnItem.style.display = 'none';
+        if (adminBtn) adminBtn.style.display = 'none';
+        
+        // Hide user greeting
+        if (userGreeting) {
+            userGreeting.style.display = 'none';
+        }
+    }
+}
+
+function isAuthenticated() {
+    return currentUser !== null;
+}
+
+function getCurrentUser() {
+    return currentUser;
+}
+
+function loadUserReservations() {
+    if (!currentUser) {
+        var myReservationsSection = document.getElementById('myReservations');
+        if (myReservationsSection) {
+            myReservationsSection.style.display = 'none';
+        }
+        return;
+    }
+
+    var allReservations = storageManager.getReservationsByUser(currentUser.id);
+    var reservationsList = document.getElementById('reservationsList');
+    var myReservationsSection = document.getElementById('myReservations');
+    
+    if (!reservationsList) return;
+
+    if (myReservationsSection) {
+        myReservationsSection.style.display = 'block';
+    }
+
+    if (allReservations.length === 0) {
+        var url = window.location.pathname.includes('html/') ? 'reservas.html' : 'html/reservas.html';
+        reservationsList.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><h3>No tienes reservas</h3><p>¡Haz tu primera reserva ahora!</p><a href="' + url + '" class="btn-suites">VER HABITACIONES</a></div>';
+        return;
+    }
+
+    var html = '';
+    for (var i = 0; i < allReservations.length; i++) {
+        var reservation = allReservations[i];
+        var room = storageManager.getRoomById(reservation.roomId);
+        var checkIn = new Date(reservation.checkIn).toLocaleDateString('es-CO');
+        var checkOut = new Date(reservation.checkOut).toLocaleDateString('es-CO');
+        var totalNights = Math.ceil((new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
+        // Usar el precio total guardado en la reserva o calcular si no existe
+        var totalPrice = reservation.totalPrice || (totalNights * room.pricePerNight);
+        var roomImage = room.images && room.images[0] ? room.images[0] : 'https://via.placeholder.com/400x300?text=Sin+Imagen';
+        var statusClass = reservation.status === 'cancelled' ? 'cancelled-reservation' : '';
+        var statusIcon = reservation.status === 'pending' ? 'clock' : reservation.status === 'confirmed' ? 'check-circle' : reservation.status === 'cancelled' ? 'times-circle' : 'circle';
+        var statusText = getStatusText(reservation.status);
+        var cancelledOverlay = reservation.status === 'cancelled' ? '<div class="cancelled-overlay">CANCELADA</div>' : '';
+        var nightsText = totalNights === 1 ? 'noche' : 'noches';
+        var guestsText = reservation.guests === 1 ? 'huésped' : 'huéspedes';
+        var priceClass = reservation.status === 'cancelled' ? 'cancelled-price' : '';
+        
+        html += '<div class="reservation-card-vertical ' + statusClass + '">';
+        html += '<div class="reservation-image-top">';
+        html += '<img src="' + roomImage + '" alt="' + room.name + '">';
+        html += '<div class="status-overlay status-' + reservation.status + '"><i class="fas fa-' + statusIcon + '"></i> ' + statusText + '</div>';
+        html += cancelledOverlay;
+        html += '</div>';
+        html += '<div class="reservation-content-vertical">';
+        html += '<h3 class="room-name-vertical">' + room.name + '</h3>';
+        html += '<div class="dates-section">';
+        html += '<div class="date-box"><i class="fas fa-sign-in-alt"></i><div><small>Check-in</small><strong>' + checkIn + '</strong></div></div>';
+        html += '<div class="nights-indicator"><i class="fas fa-moon"></i> ' + totalNights + ' ' + nightsText + '</div>';
+        html += '<div class="date-box"><i class="fas fa-sign-out-alt"></i><div><small>Check-out</small><strong>' + checkOut + '</strong></div></div>';
+        html += '</div>';
+        html += '<div class="guests-info"><i class="fas fa-users"></i><span>' + reservation.guests + ' ' + guestsText + '</span></div>';
+        html += '<div class="price-box ' + priceClass + '"><div class="price-total">Total: COP $' + totalPrice.toLocaleString('es-CO') + '</div></div>';
+        
+        if (reservation.status !== 'cancelled') {
+            html += '<div class="reservation-actions-vertical">';
+            html += '<button class="btn-outline" onclick="authManager.modifyReservation(' + reservation.id + ')"><i class="fas fa-edit"></i> Modificar</button>';
+            html += '<button class="btn-danger" onclick="authManager.cancelReservation(' + reservation.id + ')"><i class="fas fa-times"></i> Cancelar</button>';
+            html += '</div>';
+        }
+        
+        html += '</div></div>';
+    }
+    
+    reservationsList.innerHTML = html;
+}
+
+function getStatusText(status) {
+    var statuses = {
+        'pending': 'Pendiente',
+        'confirmed': 'Confirmada',
+        'cancelled': 'Cancelada',
+        'completed': 'Completada'
+    };
+    return statuses[status] || status;
+}
+
+function getRoomTypeName(type) {
+    var types = {
+        'standard': 'Estándar',
+        'deluxe': 'Deluxe',
+        'suite': 'Suite',
+        'presidential': 'Presidencial',
+        'villa': 'Villa'
+    };
+    return types[type] || type;
+}
+
+function modifyReservation(reservationId) {
+    var reservations = storageManager.getAllReservations();
+    var reservation = null;
+    
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].id === reservationId) {
+            reservation = reservations[i];
+            break;
+        }
+    }
+    
+    if (!reservation) return;
+    
+    var room = storageManager.getRoomById(reservation.roomId);
+    
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'editReservationModal';
+    modal.style.display = 'block';
+    
+    var guestOptions = '';
+    for (var i = 1; i <= 4; i++) {
+        var selected = reservation.guests === i ? 'selected' : '';
+        var text = i === 1 ? 'huésped' : 'huéspedes';
+        guestOptions += '<option value="' + i + '" ' + selected + '>' + i + ' ' + text + '</option>';
+    }
+    
+    modal.innerHTML = '<div class="modal-content"><span class="close">&times;</span><h2>Modificar Reserva</h2><p><strong>Habitación:</strong> ' + room.name + '</p><form id="editReservationForm"><div class="form-group"><label for="editCheckIn">Fecha de entrada:</label><input type="date" id="editCheckIn" value="' + reservation.checkIn + '" required></div><div class="form-group"><label for="editCheckOut">Fecha de salida:</label><input type="date" id="editCheckOut" value="' + reservation.checkOut + '" required></div><div class="form-group"><label for="editGuests">Número de Huéspedes:</label><select id="editGuests" required>' + guestOptions + '</select></div><div class="form-buttons"><button type="submit" class="btn-primary">Guardar Cambios</button><button type="button" class="btn-outline" onclick="document.getElementById(\'editReservationModal\').remove()">Cancelar</button></div></form></div>';
+    
+    document.body.appendChild(modal);
+    
+    modal.querySelector('.close').onclick = function() {
+        modal.remove();
+    };
+    
+    modal.onclick = function(e) {
+        if (e.target === modal) modal.remove();
+    };
+    
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    var dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    var dayAfterTomorrowStr = dayAfterTomorrow.toISOString().split('T')[0];
+    
+    var editCheckIn = document.getElementById('editCheckIn');
+    var editCheckOut = document.getElementById('editCheckOut');
+    
+    editCheckIn.min = tomorrowStr;
+    editCheckOut.min = dayAfterTomorrowStr;
+    
+    editCheckIn.onchange = function() {
+        var checkInDate = new Date(editCheckIn.value);
+        var nextDay = new Date(checkInDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        editCheckOut.min = nextDay.toISOString().split('T')[0];
+        
+        if (editCheckOut.value && new Date(editCheckOut.value) <= checkInDate) {
+            editCheckOut.value = '';
+        }
+    };
+    
+    document.getElementById('editReservationForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        var newCheckIn = document.getElementById('editCheckIn').value;
+        var newCheckOut = document.getElementById('editCheckOut').value;
+        var newGuests = parseInt(document.getElementById('editGuests').value);
+        
+        if (new Date(newCheckOut) <= new Date(newCheckIn)) {
+            alert('La fecha de salida debe ser posterior a la fecha de entrada');
+            return;
+        }
+        
+        var newNights = Math.ceil((new Date(newCheckOut) - new Date(newCheckIn)) / (1000 * 60 * 60 * 24));
+        
+        var updatedData = {
+            checkIn: newCheckIn,
+            checkOut: newCheckOut,
+            nights: newNights,
+            guests: newGuests
+        };
+        
+        storageManager.updateReservation(reservationId, updatedData);
+        modal.remove();
+        loadUserReservations();
+        showNotification('Reserva modificada exitosamente', 'success');
+    };
+}
+
+function cancelReservation(reservationId) {
+    // Obtener información de la reserva antes de cancelarla
+    var reservations = storageManager.getData('reservations') || [];
+    var reservation = null;
+    var room = null;
+    
+    for (var i = 0; i < reservations.length; i++) {
+        if (reservations[i].id === reservationId) {
+            reservation = reservations[i];
+            room = storageManager.getRoomById(reservation.roomId);
+            break;
+        }
+    }
+    
+    // Cancelar la reserva
+    storageManager.updateReservationStatus(reservationId, 'cancelled');
+    loadUserReservations();
+    
+    // Mostrar mensaje específico sobre la disponibilidad
+    var roomName = room ? room.name : 'Habitación';
+    showNotification('Reserva cancelada exitosamente. La ' + roomName + ' vuelve a estar disponible.', 'success');
+    
+    // Refrescar búsqueda si hay fechas seleccionadas
+    var checkInInput = document.getElementById('checkIn');
+    var checkOutInput = document.getElementById('checkOut');
+    
+    if (checkInInput && checkOutInput && checkInInput.value && checkOutInput.value) {
+        if (window.reservationManager && window.reservationManager.refreshSearch) {
+            window.reservationManager.refreshSearch();
+        }
+    }
+}
+
+var authManager = {
+    isAuthenticated: isAuthenticated,
+    getCurrentUser: getCurrentUser,
+    showLoginModal: showLoginModal,
+    loadUserReservations: loadUserReservations,
+    modifyReservation: modifyReservation,
+    cancelReservation: cancelReservation
+};
+
+window.authManager = authManager;
+
+document.addEventListener('DOMContentLoaded', function() {
+    initAuth();
+});

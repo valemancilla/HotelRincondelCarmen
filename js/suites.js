@@ -1,8 +1,6 @@
-// Suites Page JavaScript
-// Suite modal functionality and navigation
+// Datos de suites
 
-// Suite details data
-const suiteDetails = {
+var suiteDetails = {
     'iconica': {
         name: 'Suite Icónica con Terraza Privada y Vista a la Caldera',
         image: 'https://www.saintsuitesoia.com/wp-content/uploads/2020/02/HighRes-35-600x400.jpg',
@@ -55,10 +53,9 @@ const suiteDetails = {
 };
 
 function viewSuite(suiteType) {
-    const suite = suiteDetails[suiteType];
+    var suite = suiteDetails[suiteType];
     if (suite) {
-        // Redirect to specific suite pages
-        const suitePages = {
+        var suitePages = {
             'iconica': 'suite-detail.html',
             'mitica': 'suite-mitica.html',
             'epica': 'suite-epica.html',
@@ -68,7 +65,7 @@ function viewSuite(suiteType) {
             'royal': 'suite-villa-santo.html'
         };
         
-        const targetPage = suitePages[suiteType];
+        var targetPage = suitePages[suiteType];
         if (targetPage) {
             window.location.href = targetPage;
         } else {
@@ -77,97 +74,17 @@ function viewSuite(suiteType) {
     }
 }
 
-function showSuiteModal(suite) {
-    // Create overlay
-    const overlay = document.createElement('div');
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    `;
-
-    // Create modal
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-        background: white;
-        border-radius: 8px;
-        max-width: 800px;
-        width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        position: relative;
-    `;
-
-    modal.innerHTML = `
-        <div style="position: relative;">
-            <img src="${suite.image}" alt="${suite.name}" style="width: 100%; height: 400px; object-fit: cover; border-radius: 8px 8px 0 0;">
-            <button onclick="closeModal()" style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.5rem;">×</button>
-        </div>
-        <div style="padding: 2rem;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #2c3e50; margin-bottom: 1rem;">${suite.name}</h2>
-            <p style="font-family: 'Open Sans', sans-serif; color: #666; margin-bottom: 2rem; line-height: 1.6;">${suite.description}</p>
-            
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-family: 'Playfair Display', serif; color: #2c3e50; margin-bottom: 1rem;">Comodidades:</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    ${suite.features.map(feature => `
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="color: #b89a7e;">✓</span>
-                            <span style="font-family: 'Open Sans', sans-serif; color: #2c3e50;">${feature}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #b89a7e; font-weight: 700;">
-                    ${suite.price}
-                </div>
-                <button onclick="reserveSuite('${suite.name}')" style="background: #b89a7e; color: white; border: none; padding: 1rem 2rem; font-family: 'Open Sans', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: all 0.3s ease;">
-                    RESERVAR AHORA
-                </button>
-            </div>
-        </div>
-    `;
-
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-
-    // Close modal when clicking on overlay
-    overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-            closeModal();
-        }
-    });
-}
-
 function closeModal() {
-    const overlay = document.querySelector('div[style*="position: fixed"]');
+    var overlay = document.querySelector('div[style*="position: fixed"]');
     if (overlay) {
-        overlay.remove();
+        overlay.parentNode.removeChild(overlay);
     }
 }
 
 function reserveSuite(suiteName) {
-    alert(`Redirigiendo a la página de reservas para: ${suiteName}`);
-    // Here you can redirect to reservations page
-    // window.location.href = '../html/reservas.html';
+    alert('Redirigiendo a la página de reservas para: ' + suiteName);
 }
 
-// Initialize functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Any initialization code can go here
-});
-
-// Make functions globally available for onclick handlers
 window.viewSuite = viewSuite;
 window.closeModal = closeModal;
 window.reserveSuite = reserveSuite;

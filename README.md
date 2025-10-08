@@ -20,16 +20,19 @@ La plataforma está construida con tecnologías web modernas utilizando arquitec
   - Búsqueda avanzada por fechas, número de huéspedes y tipo de suite
   - Cálculo automático de precios totales con impuestos incluidos
   - Validación de disponibilidad en tiempo real
+  - **Sistema inteligente de disponibilidad**: Las reservas canceladas NO bloquean la disponibilidad
+  - **Refresco automático**: Al cancelar una reserva, la búsqueda se actualiza automáticamente
+  - Validación de fechas: No permite reservas para el mismo día, solo días futuros
   - Badges especiales para suites premium (Desayuno, Transporte, Cancelación Gratuita)
 
 - **7 Suites de Lujo**
   - Suite Icónica - 2 huéspedes, 1 cama - $4,786,092/noche
-  - Suite Mítica - 2 huéspedes, 1 cama - $5,612,571/noche
-  - Suite Épica - 2 huéspedes, 1 cama - $6,276,413/noche
-  - Suite Majestic - 2 huéspedes, 1 cama - $6,931,716/noche
-  - Suite Elementos - 4 huéspedes, 2 camas - $7,256,618/noche
-  - The Saint Suite - 4 huéspedes, 2 camas - $8,579,778/noche
-  - The One Suite - 2 huéspedes, 1 cama - $13,192,353/noche
+  - Suite Mítica - 2 huéspedes, 1 cama - $5,612,572/noche
+  - Suite Épica - 2 huéspedes, 1 cama - $6,276,414/noche
+  - Suite Majestic - 2 huéspedes, 1 cama - $7,002,894/noche
+  - Suite Element - 4 huéspedes, 2 camas - $8,103,339/noche
+  - La Suite Santa - 4 huéspedes, 2 camas - $8,861,911/noche
+  - Villa One Saint - 2 huéspedes, 1 cama - $12,967,440/noche
 
 - **6 Experiencias Exclusivas**
   - Sacred Spa: Tratamientos de relajación y bienestar
@@ -42,8 +45,10 @@ La plataforma está construida con tecnologías web modernas utilizando arquitec
 - **Sistema de Usuarios**
   - Registro completo con validación de datos
   - Login con autenticación segura
-  - Gestión de reservas personales
-  - Historial de reservas (activas y canceladas)
+  - Gestión de reservas personales con modificación y cancelación instantánea
+  - Historial completo de reservas (activas y canceladas) con estados visuales diferenciados
+  - Precio total directo sin desglose para mayor claridad
+  - Modal mejorado para modificar reservas con botones separados y bien organizados
 
 ### Para Administradores
 
@@ -88,7 +93,7 @@ El objetivo principal de este proyecto es proporcionar una **plataforma integral
 - **HTML5**: Estructura semántica y accesible
 - **CSS3**: Diseño responsive con Grid y Flexbox
 - **JavaScript ES6+**: Lógica de negocio y manipulación del DOM
-- **Font Awesome 6.4.0**: Iconografía profesional
+- **Font Awesome 6.0.0**: Iconografía profesional
 - **Google Fonts**: Tipografías (Playfair Display, Open Sans)
 
 ### Arquitectura y Patrones
@@ -125,9 +130,9 @@ Hotel el Rincón del Carmen/
 │   ├── suite-mitica.html           # Suite Mítica (detalles)
 │   ├── suite-epica.html            # Suite Épica (detalles)
 │   ├── suite-majestic.html         # Suite Majestic (detalles)
-│   ├── suite-elementos.html        # Suite Elementos (detalles)
-│   ├── suite-santa.html            # The Saint Suite (detalles)
-│   ├── suite-villa-santo.html      # The One Suite (detalles)
+│   ├── suite-elementos.html        # Suite Element (detalles)
+│   ├── suite-santa.html            # La Suite Santa (detalles)
+│   ├── suite-villa-santo.html      # Villa One Saint (detalles)
 │   │
 │   ├── sacred-spa.html             # Experiencia: Spa
 │   ├── trinity-restaurant.html     # Experiencia: Restaurante
@@ -139,6 +144,7 @@ Hotel el Rincón del Carmen/
 ├── css/                            # Estilos del proyecto
 │   ├── main.css                    # Estilos globales y layout
 │   ├── components.css              # Modales, alertas, botones
+│   ├── admin.css                   # Estilos del panel administrativo
 │   ├── reservas.css                # Página de reservas
 │   ├── contacto.css                # Página de contacto
 │   ├── mis-reservas.css            # Gestión de reservas del usuario
@@ -158,7 +164,10 @@ Hotel el Rincón del Carmen/
 │   ├── rooms.js                    # Gestión de habitaciones
 │   ├── suite-detail.js             # Detalles de suites
 │   ├── suites.js                   # Catálogo de suites
-│   └── index.js                    # Lógica de la landing page
+│   ├── index.js                    # Lógica de la landing page
+│   ├── admin.js                    # Panel de administración
+│   ├── contacto.js                 # Formulario de contacto
+│   └── utils.js                    # Funciones utilitarias
 │
 ├── image/                          # Imágenes del hotel
 │   ├── principal.jpg               # Imagen hero
@@ -190,7 +199,7 @@ Panel de control administrativo con dashboard de KPIs, gestión de habitaciones 
 Formulario de contacto con campos de nombre, email, teléfono y mensaje. Incluye validación en tiempo real y almacenamiento de mensajes.
 
 #### **html/suite-[nombre].html** (7 archivos)
-Páginas de detalle de cada suite (Icónica, Mítica, Épica, Majestic, Elementos, Santa, Villa Santo). Cada una incluye galería de imágenes, descripción completa, lista de amenidades, especificaciones (huéspedes, camas, tamaño), botón de reserva directo y modales de login/registro.
+Páginas de detalle de cada suite (Icónica, Mítica, Épica, Majestic, Element, Santa, Villa Santo). Cada una incluye galería de imágenes, descripción completa, lista de amenidades, especificaciones (huéspedes, camas, tamaño), botón de reserva directo y modales de login/registro.
 
 #### **html/[experiencia].html** (6 archivos)
 Páginas de experiencias exclusivas (Sacred Spa, Trinity Restaurant, Sky Bar, Saint Gym, Saint Yachting, VIP Transfers). Incluyen descripción del servicio, horarios, precios, galería de imágenes y call-to-action de reserva.
@@ -217,10 +226,21 @@ Estilos globales del proyecto completo:
 Componentes reutilizables en todo el sitio:
 - Modales (login, registro) con animaciones
 - Botones (.btn-primary, .btn-danger, .btn-outline)
+- **Nuevo**: `.form-buttons` - Contenedor flexbox para botones de formulario con separación uniforme
+- Botones de formulario con tamaño fijo (180px) y padding consistente (12px 20px)
 - Sistema de alertas (.alert-error, .alert-success)
 - Formularios con validación visual
 - Cards de habitaciones con hover effects
 - Sistema de badges premium
+
+#### **css/admin.css** (525 líneas)
+Estilos específicos del panel de administración:
+- Tablas de datos con diseño profesional
+- Botones de acción compactos (.btn-sm)
+- Formularios de gestión de suites
+- Dashboard con KPIs y estadísticas
+- Responsive design para dispositivos móviles
+- Estilos para modales de administración
 
 #### **css/reservas.css**
 Estilos específicos de la página de reservas:
@@ -251,7 +271,7 @@ Estilos únicos para cada experiencia (spa, restaurant, bar, gym, yachting, tran
 
 ### JavaScript - Lógica
 
-#### **js/localStorage.js** (632 líneas)
+#### **js/localStorage.js** (722 líneas)
 **Núcleo del sistema de datos** - Gestiona toda la persistencia de información:
 
 **Funciones principales:**
@@ -273,8 +293,14 @@ Estilos únicos para cada experiencia (spa, restaurant, bar, gym, yachting, tran
 **Lógica de disponibilidad:**
 Implementa filtrado inteligente por capacidad: si buscan 1-2 huéspedes muestra suites hasta 4 personas, si buscan 3+ muestra con capacidad flexible (huéspedes + 2).
 
-#### **js/auth.js**
-Sistema de autenticación completo:
+**Sistema mejorado de cancelaciones:**
+- Solo las reservas con estado `confirmed` o `pending` bloquean la disponibilidad
+- Las reservas `cancelled` NO bloquean suites, haciéndolas disponibles inmediatamente
+- Filtrado automático de reservas activas vs canceladas
+- Logs detallados para debugging del sistema de disponibilidad
+
+#### **js/auth.js** (526 líneas)
+Sistema de autenticación y gestión de reservas personales:
 - `showLoginModal()`: Muestra modal de inicio de sesión
 - `showRegisterModal()`: Muestra modal de registro
 - `handleLogin()`: Procesa credenciales y crea sesión
@@ -282,6 +308,9 @@ Sistema de autenticación completo:
 - `logout()`: Cierra sesión y limpia estado
 - `isLoggedIn()`: Verifica si hay sesión activa
 - `getCurrentUser()`: Obtiene datos del usuario actual
+- `loadUserReservations()`: Carga todas las reservas del usuario (activas y canceladas)
+- `modifyReservation()`: Abre modal con formulario mejorado para modificar reserva
+- `cancelReservation()`: Cancela reserva instantáneamente y refresca la búsqueda automáticamente
 
 **Validaciones implementadas:**
 - Email único en el sistema
@@ -290,44 +319,85 @@ Sistema de autenticación completo:
 - Identificación única por usuario
 - Todos los campos requeridos
 
-#### **js/reservations.js** (566 líneas)
+**Mejoras en UI de reservas:**
+- Modal de modificación con botones del mismo tamaño y bien separados (180px cada uno)
+- Cancelación instantánea sin prompt de confirmación
+- Visualización diferenciada de reservas canceladas con overlay "CANCELADA"
+- Precio total sin desglose por noche
+- Refresco automático de búsqueda al cancelar si hay fechas seleccionadas
+
+#### **js/reservations.js** (582 líneas)
 **Motor de reservas** - Gestiona todo el proceso de búsqueda y reserva:
 
 **Funciones clave:**
-- `searchAvailableRooms()`: Busca suites disponibles según criterios
+- `searchAvailableRooms()`: Busca suites disponibles según criterios con logs detallados
 - `displayAvailableRooms()`: Genera HTML dinámico de resultados
 - `handleReservation()`: Procesa y guarda reserva
-- `validateDates()`: Valida fechas de entrada y salida
+- `validateDates()`: Valida fechas de entrada y salida con nueva regla: NO permite reservas para hoy
 - `calculateTotalPrice()`: Calcula precio total con noches e impuestos
 - `showError() / showSuccess()`: Muestra notificaciones al usuario
 - `getSuiteUrl()`: Mapea nombre de suite a URL de detalle
+- `refreshSearch()`: **NUEVA** - Refresca la búsqueda actual con fechas existentes
+- `setupDateInputs()`: Configura campos de fecha con mínimo en mañana (no permite seleccionar hoy)
 
 **Características:**
 - Generación dinámica de HTML para cards de suites
 - Badges premium condicionales (desayuno, transporte, cancelación)
-- Validación de disponibilidad en tiempo real
+- Validación de disponibilidad en tiempo real excluyendo reservas canceladas
 - Cálculo automático de número de noches
 - Mapeo correcto a páginas de detalle de cada suite
+- **Validación estricta**: No permite reservas para el mismo día (solo desde mañana)
+- **Fechas mínimas automáticas**: Check-in desde mañana, Check-out desde pasado mañana
+- Mensaje de error mejorado: "La fecha de entrada no puede ser hoy ni anterior"
 
-#### **js/rooms.js**
+#### **js/rooms.js** (527 líneas)
 Gestión de habitaciones:
 - `displayRooms()`: Muestra catálogo completo de suites
 - `filterRooms()`: Filtra suites por criterios específicos
 - `processReservation()`: Inicia proceso de reserva de una suite
+- `showRoomDetails()`: Muestra modal con detalles completos de la suite
+- `checkRoomAvailability()`: Verifica disponibilidad de una suite específica
 
-#### **js/suite-detail.js**
+#### **js/suite-detail.js** (99 líneas)
 Lógica de páginas de detalle de suites:
 - Carga información específica de cada suite
 - Carrusel de imágenes interactivo
-- Botón de reserva con validación de sesión
+- Botón de reserva con redirección a reservas.html
 - Integración con modales de login/registro
+- Funciones de navegación entre slides
 
-#### **js/main.js**
+#### **js/admin.js** (607 líneas)
+Panel de administración completo:
+- `loadAdminStats()`: Carga estadísticas del hotel
+- `loadRooms()`: Gestiona CRUD de suites
+- `loadReservations()`: Administra todas las reservas
+- `loadUsers()`: Lista usuarios registrados
+- `loadContactMessages()`: Muestra mensajes de contacto
+- `modifyReservationAdmin()`: Modifica reservas desde el panel admin
+- Validaciones y notificaciones específicas para administradores
+
+#### **js/contacto.js** (47 líneas)
+Formulario de contacto:
+- Validación en tiempo real de campos
+- Envío y almacenamiento de mensajes
+- Manejo de errores y mensajes de éxito
+- Integración con storageManager
+
+#### **js/utils.js** (68 líneas)
+Funciones utilitarias compartidas:
+- `isValidEmail()`: Validación de formato de email
+- `formatCurrency()`: Formateo de moneda colombiana
+- `formatDate()`: Formateo de fechas en español
+- `calculateNights()`: Cálculo de noches entre fechas
+- `getTomorrow()`: Obtiene fecha de mañana
+- `showNotification()`: Sistema de notificaciones
+
+#### **js/main.js** (67 líneas)
 Funcionalidad global compartida en todas las páginas:
-- `loadAdminStats()`: Carga estadísticas para dashboard de administrador
-- `loadContactMessages()`: Obtiene mensajes del formulario de contacto
-- `updateUserInterface()`: Actualiza UI según estado de sesión (login/logout)
-- `handleGlobalErrors()`: Manejo centralizado de errores
+- `initMobileNav()`: Navegación móvil con hamburger menu
+- `initScrollEffects()`: Efectos de scroll y animaciones
+- `initModalEscape()`: Cierre de modales con tecla Escape
+- `addAnimationStyles()`: Estilos de animación dinámicos
 
 #### **js/index.js**
 Lógica específica de la landing page:
@@ -346,5 +416,4 @@ Catálogo de suites:
 
 ## 👨‍💻 Autor
 
-**Vale Mancilla**
-
+**Valentina Mancilla**
