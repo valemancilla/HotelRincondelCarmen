@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+/* Estilos base y reset del sistema */
 * {
     margin: 0;
     padding: 0;
@@ -23,13 +23,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Contenedor principal del sitio */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Typography */
+/* Tipografía del sitio */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
     margin-bottom: 1rem;

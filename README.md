@@ -71,6 +71,8 @@ La plataforma está construida con tecnologías web modernas utilizando arquitec
 - Galerías de imágenes en detalles de suites
 - Sistema de notificaciones y alertas
 - Navegación intuitiva con hover effects
+- **Fondo gris claro consistente**: Secciones de título con estilo uniforme (#f1f3f4)
+- **Iconos SVG optimizados**: Mejor rendimiento y compatibilidad con Netlify
 
 ---
 
@@ -93,7 +95,8 @@ El objetivo principal de este proyecto es proporcionar una **plataforma integral
 - **HTML5**: Estructura semántica y accesible
 - **CSS3**: Diseño responsive con Grid y Flexbox
 - **JavaScript ES6+**: Lógica de negocio y manipulación del DOM
-- **Font Awesome 6.0.0**: Iconografía profesional
+- **Font Awesome 6.0.0**: Iconografía profesional (contacto y navegación)
+- **SVG Inline**: Iconos de contraseña optimizados para Netlify
 - **Google Fonts**: Tipografías (Playfair Display, Open Sans)
 
 ### Arquitectura y Patrones
@@ -110,6 +113,27 @@ El objetivo principal de este proyecto es proporcionar una **plataforma integral
 - Sin dependencias externas: Vanilla JavaScript puro
 - Progressive Enhancement: Mejora gradual de funcionalidades
 - Optimizado para performance y carga rápida
+- **Iconos SVG inline**: Optimizado para despliegue en Netlify
+- **Sistema de contraseñas mejorado**: Toggle de visibilidad con SVG
+- **Fondo gris claro**: Secciones de título con estilo consistente
+
+---
+
+## 🔐 Credenciales de Administrador
+
+Para acceder al panel de administración del hotel, utiliza las siguientes credenciales:
+
+### **Panel de Administración**
+- **Email:** `admin@hotel.com`
+- **Contraseña:** `admin2708`
+
+### **Funcionalidades del Panel Admin**
+- 📊 Dashboard con estadísticas del hotel
+- 🏨 Gestión completa de suites (CRUD)
+- 📋 Administración de reservas
+- 👥 Lista de usuarios registrados
+- 📧 Bandeja de mensajes de contacto
+- 📈 KPIs de ocupación y rendimiento
 
 ---
 
@@ -271,7 +295,7 @@ Estilos únicos para cada experiencia (spa, restaurant, bar, gym, yachting, tran
 
 ### JavaScript - Lógica
 
-#### **js/localStorage.js** (722 líneas)
+#### **js/localStorage.js** (916 líneas)
 **Núcleo del sistema de datos** - Gestiona toda la persistencia de información:
 
 **Funciones principales:**
@@ -299,6 +323,11 @@ Implementa filtrado inteligente por capacidad: si buscan 1-2 huéspedes muestra 
 - Filtrado automático de reservas activas vs canceladas
 - Logs detallados para debugging del sistema de disponibilidad
 
+**Mejoras recientes implementadas:**
+- **Actualización automática de contraseña de administrador**: Sistema que actualiza la contraseña del admin a `admin2708` automáticamente
+- **Función de limpieza de localStorage**: `clearAllData()` para reinicializar datos
+- **Iconos SVG inline**: Reemplazo de Font Awesome por SVG para iconos de contraseña (compatible con Netlify)
+
 #### **js/auth.js** (526 líneas)
 Sistema de autenticación y gestión de reservas personales:
 - `showLoginModal()`: Muestra modal de inicio de sesión
@@ -325,6 +354,11 @@ Sistema de autenticación y gestión de reservas personales:
 - Visualización diferenciada de reservas canceladas con overlay "CANCELADA"
 - Precio total sin desglose por noche
 - Refresco automático de búsqueda al cancelar si hay fechas seleccionadas
+
+**Mejoras en sistema de autenticación:**
+- **Iconos SVG para contraseñas**: Reemplazo de Font Awesome por SVG inline para mejor compatibilidad
+- **Toggle de visibilidad mejorado**: Cambio dinámico entre icono de ojo abierto y tachado
+- **Sistema de cambio de contraseña**: Modal dedicado para cambiar contraseñas de usuarios
 
 #### **js/reservations.js** (582 líneas)
 **Motor de reservas** - Gestiona todo el proceso de búsqueda y reserva:
