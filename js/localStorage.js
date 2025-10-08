@@ -293,17 +293,6 @@ function initializeData() {
                 password: 'admin123',
                 role: 'admin',
                 createdAt: new Date().toISOString()
-            },
-            {
-                id: 2,
-                identification: '1234567890',
-                name: 'Juan Manuel',
-                nationality: 'Colombiana',
-                email: 'juanman42@gmail.com',
-                phone: '+57 300 987 6543',
-                password: 'vale2007',
-                role: 'user',
-                createdAt: new Date().toISOString()
             }
         ]);
     }
@@ -584,6 +573,13 @@ function clearAllData() {
     localStorage.removeItem('reservations');
     localStorage.removeItem('contactMessages');
     localStorage.removeItem('services');
+    localStorage.removeItem('current_user');
+    initializeData();
+}
+
+function clearUserData() {
+    localStorage.removeItem('users');
+    localStorage.removeItem('current_user');
     initializeData();
 }
 
@@ -706,6 +702,7 @@ var storageManager = {
     testLocalStorage: testLocalStorage,
     clearReservations: clearReservations,
     clearAllData: clearAllData,
+    clearUserData: clearUserData,
     exportData: exportData,
     generateId: generateId,
     updateRoomsData: function() { setData('rooms', roomsData); },
