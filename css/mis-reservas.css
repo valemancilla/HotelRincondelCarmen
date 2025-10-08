@@ -265,6 +265,68 @@
     font-weight: 700;
 }
 
+/* Mensaje de contacto con el hotel */
+.contact-hotel-notice {
+    background: linear-gradient(135deg, #f0f7ff, #e3f2fd);
+    border: 2px solid #b89a7e;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.contact-hotel-notice > i {
+    color: #b89a7e;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.contact-hotel-notice .notice-content {
+    flex: 1;
+}
+
+.contact-hotel-notice strong {
+    display: block;
+    color: #2c3e50;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-hotel-notice p {
+    color: #555;
+    font-size: 0.9rem;
+    margin: 0 0 0.8rem 0;
+    line-height: 1.5;
+}
+
+.contact-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.contact-options a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #b89a7e;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    word-break: break-all;
+    line-height: 1.3;
+}
+
+.contact-options a i {
+    font-size: 1rem;
+    color: #b89a7e;
+}
+
 /* Botones de acción - Diseño mejorado */
 .reservation-actions-vertical {
     display: grid;
@@ -461,6 +523,29 @@
     .cancelled-overlay {
         font-size: 1rem;
         padding: 8px 20px;
+    }
+    
+    .contact-hotel-notice {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .contact-hotel-notice > i {
+        font-size: 1.3rem;
+    }
+    
+    .contact-hotel-notice strong {
+        font-size: 0.95rem;
+    }
+    
+    .contact-hotel-notice p {
+        font-size: 0.85rem;
+    }
+    
+    .contact-options a {
+        font-size: 0.8rem;
+        word-break: break-all;
     }
 }
 

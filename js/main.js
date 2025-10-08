@@ -20,12 +20,15 @@ function initMobileNav() {
             navMenu.classList.toggle('active');
         };
 
-        // Cerrar el menú cuando se hace clic en cualquier enlace
+        // Cerrar el menú cuando se hace clic en cualquier enlace (excepto los que abren modales)
         var links = document.querySelectorAll('.nav-link');
         for (var i = 0; i < links.length; i++) {
-            links[i].onclick = function() {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+            links[i].onclick = function(e) {
+                // Solo cerrar el menú si no es un enlace que abre un modal
+                if (!this.id || (this.id !== 'loginBtn' && this.id !== 'adminBtn' && this.id !== 'logoutBtn')) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
             };
         }
     }
