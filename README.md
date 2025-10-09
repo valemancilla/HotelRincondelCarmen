@@ -451,7 +451,5 @@ Catálogo de suites:
 https://magenta-praline-83c533.netlify.app/
 
 ## 👨‍💻 Autor
-
-
 **Valentina Mancilla**
 
