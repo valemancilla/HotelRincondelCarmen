@@ -1,6 +1,16 @@
-/* Estilos para la página de reservas con diseño moderno */
+/**
+ * ESTILOS DE LA PÁGINA DE RESERVAS
+ * 
+ * Este archivo contiene todos los estilos específicos para la página de reservas,
+ * incluyendo el formulario de búsqueda, resultados de habitaciones disponibles,
+ * tarjetas de habitaciones y diseño responsive.
+ */
 
-/* Sección de búsqueda con fondo de imagen */
+/* ==========================================
+   SECCIÓN DE BÚSQUEDA DE DISPONIBILIDAD
+   ========================================== */
+
+/* Contenedor principal de la sección de búsqueda con imagen de fondo */
 .search-section {
     position: relative;
     min-height: 100vh;

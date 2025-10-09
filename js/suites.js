@@ -1,5 +1,14 @@
-// Datos de suites
+/**
+ * GESTIÓN DE SUITES DEL HOTEL
+ * 
+ * Este archivo contiene la información detallada de todas las suites del hotel
+ * y las funciones para visualizar y reservar cada una de ellas.
+ */
 
+/**
+ * Objeto que contiene la información detallada de todas las suites del hotel
+ * Cada suite incluye nombre, imagen, descripción, precio y características
+ */
 var suiteDetails = {
     'iconica': {
         name: 'Suite Icónica con Terraza Privada y Vista a la Caldera',
@@ -52,9 +61,15 @@ var suiteDetails = {
     }
 };
 
+/**
+ * Función para ver los detalles de una suite específica
+ * Redirige al usuario a la página de detalles de la suite seleccionada
+ * @param {string} suiteType - Tipo de suite (iconica, mitica, epica, deluxe, premium, master, royal)
+ */
 function viewSuite(suiteType) {
     var suite = suiteDetails[suiteType];
     if (suite) {
+        // Mapeo de tipos de suite a sus respectivas páginas de detalle
         var suitePages = {
             'iconica': 'suite-detail.html',
             'mitica': 'suite-mitica.html',
@@ -65,15 +80,22 @@ function viewSuite(suiteType) {
             'royal': 'suite-villa-santo.html'
         };
         
+        // Obtener la página de destino para la suite seleccionada
         var targetPage = suitePages[suiteType];
         if (targetPage) {
+            // Redirigir a la página específica de la suite
             window.location.href = targetPage;
         } else {
+            // Redirigir a una página genérica si no se encuentra la específica
             window.location.href = 'suite-detail.html';
         }
     }
 }
 
+/**
+ * Función para cerrar modales o overlays abiertos
+ * Busca elementos con position: fixed y los elimina del DOM
+ */
 function closeModal() {
     var overlay = document.querySelector('div[style*="position: fixed"]');
     if (overlay) {
@@ -81,10 +103,16 @@ function closeModal() {
     }
 }
 
+/**
+ * Función para iniciar el proceso de reserva de una suite
+ * Muestra una alerta informativa al usuario (implementación básica)
+ * @param {string} suiteName - Nombre de la suite a reservar
+ */
 function reserveSuite(suiteName) {
     alert('Redirigiendo a la página de reservas para: ' + suiteName);
 }
 
+// Exponer funciones globalmente para uso desde el HTML
 window.viewSuite = viewSuite;
 window.closeModal = closeModal;
 window.reserveSuite = reserveSuite;

@@ -1,4 +1,15 @@
-/* Modal Styles */
+/**
+ * ESTILOS DE COMPONENTES REUTILIZABLES
+ * 
+ * Este archivo contiene los estilos para componentes que se usan en múltiples páginas,
+ * incluyendo modales, formularios, botones, tarjetas, alertas y otros elementos comunes.
+ */
+
+/* ==========================================
+   MODALES
+   ========================================== */
+
+/* Contenedor principal del modal - overlay que cubre toda la pantalla */
 .modal {
     display: none;
     position: fixed;

@@ -1,8 +1,16 @@
-/* ========================================
-   SAINT YACHTING - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE SAINT YACHTING
+ * 
+ * Este archivo contiene todos los estilos específicos para la página del servicio de yates,
+ * incluyendo secciones de título, galería de yates, paquetes de experiencias y diseño general.
+ * Usa un diseño elegante y exclusivo acorde con experiencias náuticas de lujo.
+ */
 
-/* Yachting Page Base Styles */
+/* ==========================================
+   SAINT YACHTING - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página del servicio de yates */
 .yachting-page {
     background-color: #ffffff;
     color: #2c2c2c;

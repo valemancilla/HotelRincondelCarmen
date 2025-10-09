@@ -1,35 +1,58 @@
-// Panel de administracion
+/**
+ * PANEL DE ADMINISTRACIÓN DEL HOTEL
+ * 
+ * Este archivo gestiona todas las funcionalidades del panel de administración,
+ * incluyendo la gestión de habitaciones, reservas y configuración del sistema.
+ * Solo los usuarios con rol 'admin' pueden acceder a estas funcionalidades.
+ */
 
+/**
+ * Inicialización del panel de administración
+ * Verifica permisos del usuario y carga los datos iniciales
+ */
 document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el usuario actual desde localStorage
     var currentUser = JSON.parse(localStorage.getItem('current_user'));
+    
+    // Verificar que el usuario esté autenticado y tenga rol de administrador
     if (!currentUser || currentUser.role !== 'admin') {
         alert('No tienes permisos para acceder a esta página');
         window.location.href = '../index.html';
         return;
     }
 
+    // Cargar la lista de habitaciones al iniciar
     loadRooms();
 
+    // Configurar el formulario de agregar habitación
     var roomForm = document.getElementById('roomForm');
     if (roomForm) {
         roomForm.onsubmit = handleRoomSubmit;
     }
 });
 
+/**
+ * Función para cambiar entre las diferentes pestañas del panel de administración
+ * @param {string} tabName - Nombre de la pestaña a mostrar (rooms, reservations, etc.)
+ */
 function showTab(tabName) {
+    // Ocultar todos los contenidos de las pestañas
     var tabs = document.querySelectorAll('.tab-content');
     for (var i = 0; i < tabs.length; i++) {
         tabs[i].classList.remove('active');
     }
     
+    // Desactivar todas las pestañas de navegación
     var adminTabs = document.querySelectorAll('.admin-tab');
     for (var i = 0; i < adminTabs.length; i++) {
         adminTabs[i].classList.remove('active');
     }
     
+    // Activar la pestaña seleccionada
     document.getElementById(tabName + '-tab').classList.add('active');
     event.target.classList.add('active');
     
+    // Cargar datos específicos según la pestaña seleccionada
     if (tabName === 'rooms') {
         loadRooms();
     } else if (tabName === 'reservations') {
@@ -37,9 +60,16 @@ function showTab(tabName) {
     }
 }
 
+/**
+ * Manejador del envío del formulario para agregar una nueva habitación
+ * Valida los datos y crea la habitación en el sistema
+ * @param {Event} e - Evento de submit del formulario
+ */
 function handleRoomSubmit(e) {
+    // Prevenir el comportamiento por defecto del formulario
     e.preventDefault();
     
+    // Recopilar todos los datos del formulario
     var roomData = {
         name: document.getElementById('roomName').value,
         type: document.getElementById('roomType').value,
@@ -51,7 +81,10 @@ function handleRoomSubmit(e) {
         services: getSelectedServices()
     };
     
+    // Obtener habitaciones existentes
     var rooms = storageManager.getData('rooms') || [];
+    
+    // Crear objeto de la nueva habitación con formato estandarizado
     var newRoom = {
         id: storageManager.generateId(rooms),
         name: roomData.name,
@@ -63,16 +96,29 @@ function handleRoomSubmit(e) {
         available: roomData.available,
         description: roomData.description,
         services: roomData.services,
-        images: []
+        images: [] // Inicializar array de imágenes vacío
     };
+    
+    // Agregar la nueva habitación al array
     rooms.push(newRoom);
+    
+    // Guardar los datos actualizados en localStorage
     storageManager.setData('rooms', rooms);
     
+    // Limpiar el formulario
     e.target.reset();
+    
+    // Recargar la lista de habitaciones en la interfaz
     loadRooms();
+    
+    // Mostrar mensaje de éxito
     showNotification('Habitación agregada exitosamente', 'success');
 }
 
+/**
+ * Función para obtener los servicios seleccionados en los checkboxes
+ * @returns {Array} - Array con los valores de los servicios seleccionados
+ */
 function getSelectedServices() {
     var services = [];
     var checkboxes = document.querySelectorAll('.services-checkboxes input[type="checkbox"]:checked');
@@ -82,13 +128,20 @@ function getSelectedServices() {
     return services;
 }
 
+/**
+ * Función para cargar y mostrar todas las habitaciones en la tabla
+ * Genera el HTML dinámicamente y lo inserta en el DOM
+ */
 function loadRooms() {
     var rooms = storageManager.getData('rooms') || [];
     var tbody = document.getElementById('roomsTableBody');
     
+    // Si no existe el elemento tbody, salir
     if (!tbody) return;
     
     var html = '';
+    
+    // Generar una fila de tabla para cada habitación
     for (var i = 0; i < rooms.length; i++) {
         var room = rooms[i];
         var price = room.pricePerNight || room.price;
@@ -109,30 +162,49 @@ function loadRooms() {
         html += '</tr>';
     }
     
+    // Insertar el HTML generado en la tabla
     tbody.innerHTML = html;
 }
 
+/**
+ * Función para eliminar una habitación del sistema
+ * Solicita confirmación antes de proceder con la eliminación
+ * @param {number} roomId - ID de la habitación a eliminar
+ */
 function deleteRoom(roomId) {
+    // Solicitar confirmación al usuario
     if (confirm('¿Estás seguro de que quieres eliminar esta habitación?')) {
         var rooms = storageManager.getData('rooms') || [];
         var updatedRooms = [];
         
+        // Filtrar todas las habitaciones excepto la que se va a eliminar
         for (var i = 0; i < rooms.length; i++) {
             if (rooms[i].id !== roomId) {
                 updatedRooms.push(rooms[i]);
             }
         }
         
+        // Guardar la lista actualizada
         storageManager.setData('rooms', updatedRooms);
+        
+        // Recargar la lista de habitaciones
         loadRooms();
+        
+        // Mostrar mensaje de éxito
         showNotification('Habitación eliminada exitosamente', 'success');
     }
 }
 
+/**
+ * Función para editar una habitación existente
+ * Crea un modal dinámico con el formulario de edición precargado con los datos actuales
+ * @param {number} roomId - ID de la habitación a editar
+ */
 function editRoom(roomId) {
     var rooms = storageManager.getData('rooms') || [];
     var room = null;
     
+    // Buscar la habitación por ID
     for (var i = 0; i < rooms.length; i++) {
         if (rooms[i].id === roomId) {
             room = rooms[i];
@@ -140,26 +212,30 @@ function editRoom(roomId) {
         }
     }
     
+    // Si no se encuentra la habitación, mostrar error
     if (!room) {
         showNotification('Habitación no encontrada', 'error');
         return;
     }
     
-    // Crear modal de edición
+    // Crear modal de edición dinámicamente
     var modal = document.createElement('div');
     modal.className = 'modal';
     modal.id = 'editRoomModal';
     modal.style.display = 'block';
     
-    // Generar checkboxes de servicios
+    // Generar checkboxes de servicios con los valores actuales
     var servicesHtml = '';
     var availableServices = ['wifi', 'minibar', 'jacuzzi', 'tv', 'ac', 'balcony', 'room-service', 'safe', 'pool', 'terrace'];
     var roomServices = room.services || [];
     
+    // Crear un checkbox para cada servicio disponible
     for (var i = 0; i < availableServices.length; i++) {
         var service = availableServices[i];
         var checked = roomServices.includes(service) ? 'checked' : '';
         var label = service.charAt(0).toUpperCase() + service.slice(1);
+        
+        // Traducir etiquetas de servicios al español
         if (service === 'wifi') label = 'WiFi Gratuito';
         if (service === 'tv') label = 'TV';
         if (service === 'ac') label = 'Aire Acondicionado';
@@ -177,6 +253,7 @@ function editRoom(roomId) {
         `;
     }
     
+    // Crear el contenido HTML del modal con el formulario de edición
     modal.innerHTML = `
         <div class="modal-content large">
             <span class="close">&times;</span>
@@ -237,24 +314,30 @@ function editRoom(roomId) {
         </div>
     `;
     
+    // Agregar el modal al DOM
     document.body.appendChild(modal);
     
-    // Configurar eventos
+    // Configurar evento para cerrar el modal con el botón X
     var closeBtn = modal.querySelector('.close');
     closeBtn.onclick = function() {
         modal.remove();
     };
     
+    // Configurar evento para cerrar el modal al hacer clic fuera del contenido
     modal.onclick = function(e) {
         if (e.target === modal) {
             modal.remove();
         }
     };
     
-    // Manejar envío del formulario
+    /**
+     * Manejador del envío del formulario de edición de habitación
+     * Actualiza los datos de la habitación en el sistema
+     */
     document.getElementById('editRoomForm').onsubmit = function(e) {
         e.preventDefault();
         
+        // Recopilar los datos actualizados del formulario
         var updatedRoom = {
             id: roomId,
             name: document.getElementById('editRoomName').value,
@@ -278,14 +361,22 @@ function editRoom(roomId) {
             }
         }
         
+        // Guardar los datos actualizados
         storageManager.setData('rooms', rooms);
         
+        // Mostrar mensaje de éxito y cerrar modal
         showNotification('Habitación actualizada exitosamente', 'success');
         modal.remove();
+        
+        // Recargar la lista de habitaciones
         loadRooms();
     };
 }
 
+/**
+ * Función para obtener los servicios seleccionados en el formulario de edición
+ * @returns {Array} - Array con los valores de los servicios seleccionados
+ */
 function getSelectedEditServices() {
     var services = [];
     var checkboxes = document.querySelectorAll('#editRoomModal .services-checkboxes input[type="checkbox"]:checked');
@@ -295,6 +386,9 @@ function getSelectedEditServices() {
     return services;
 }
 
+/**
+ * Función para cerrar el modal de edición de habitación
+ */
 function closeEditRoomModal() {
     var modal = document.getElementById('editRoomModal');
     if (modal) {
@@ -302,20 +396,28 @@ function closeEditRoomModal() {
     }
 }
 
+/**
+ * Función para cargar y mostrar todas las reservas en la tabla
+ * Genera el HTML dinámicamente con información completa de usuarios y habitaciones
+ */
 function loadReservations() {
     var reservations = storageManager.getData('reservations') || [];
     var users = storageManager.getData('users') || [];
     var rooms = storageManager.getData('rooms') || [];
     var tbody = document.getElementById('reservationsTableBody');
     
+    // Si no existe el elemento tbody, salir
     if (!tbody) return;
     
     var html = '';
+    
+    // Generar una fila de tabla para cada reserva
     for (var i = 0; i < reservations.length; i++) {
         var reservation = reservations[i];
         var user = null;
         var room = null;
         
+        // Buscar el usuario asociado a la reserva
         for (var j = 0; j < users.length; j++) {
             if (users[j].id === reservation.userId) {
                 user = users[j];
@@ -323,6 +425,7 @@ function loadReservations() {
             }
         }
         
+        // Buscar la habitación asociada a la reserva
         for (var j = 0; j < rooms.length; j++) {
             if (rooms[j].id === reservation.roomId) {
                 room = rooms[j];
@@ -330,8 +433,11 @@ function loadReservations() {
             }
         }
         
+        // Obtener nombres o mensajes por defecto si no se encuentran
         var userName = user ? user.name : 'Usuario no encontrado';
         var roomName = room ? room.name : 'Habitación no encontrada';
+        
+        // Generar HTML de la fila de reserva
         html += '<tr>';
         html += '<td>' + reservation.id + '</td>';
         html += '<td>' + userName + '</td>';
@@ -347,18 +453,36 @@ function loadReservations() {
         html += '</tr>';
     }
     
+    // Insertar el HTML generado en la tabla
     tbody.innerHTML = html;
 }
 
+/**
+ * Función para actualizar el estado de una reserva
+ * Solicita confirmación antes de proceder con el cambio
+ * @param {number} reservationId - ID de la reserva a actualizar
+ * @param {string} newStatus - Nuevo estado de la reserva (confirmed, cancelled, etc.)
+ */
 function updateReservationStatus(reservationId, newStatus) {
     var action = newStatus === 'confirmed' ? 'confirmar' : 'cancelar';
+    
+    // Solicitar confirmación al usuario
     if (confirm('¿Estás seguro de que quieres ' + action + ' esta reserva?')) {
         storageManager.updateReservationStatus(reservationId, newStatus);
+        
+        // Recargar la lista de reservas
         loadReservations();
+        
+        // Mostrar mensaje de éxito
         showNotification('Reserva ' + action + 'da exitosamente', 'success');
     }
 }
 
+/**
+ * Función para modificar una reserva existente
+ * Crea un modal dinámico con el formulario de edición precargado con los datos actuales
+ * @param {number} reservationId - ID de la reserva a modificar
+ */
 function modifyReservationAdmin(reservationId) {
     // Obtener la reserva actual
     var reservations = storageManager.getData('reservations') || [];
@@ -366,6 +490,7 @@ function modifyReservationAdmin(reservationId) {
     var room = null;
     var user = null;
     
+    // Buscar la reserva por ID
     for (var i = 0; i < reservations.length; i++) {
         if (reservations[i].id === reservationId) {
             reservation = reservations[i];
@@ -373,6 +498,7 @@ function modifyReservationAdmin(reservationId) {
         }
     }
     
+    // Si no se encuentra la reserva, mostrar error
     if (!reservation) {
         showNotification('Reserva no encontrada', 'error');
         return;
@@ -382,6 +508,7 @@ function modifyReservationAdmin(reservationId) {
     var rooms = storageManager.getData('rooms') || [];
     var users = storageManager.getData('users') || [];
     
+    // Buscar la habitación asociada
     for (var i = 0; i < rooms.length; i++) {
         if (rooms[i].id === reservation.roomId) {
             room = rooms[i];
@@ -389,6 +516,7 @@ function modifyReservationAdmin(reservationId) {
         }
     }
     
+    // Buscar el usuario asociado
     for (var i = 0; i < users.length; i++) {
         if (users[i].id === reservation.userId) {
             user = users[i];
@@ -399,7 +527,7 @@ function modifyReservationAdmin(reservationId) {
     var roomName = room ? room.name : 'Habitación no encontrada';
     var userName = user ? user.name : 'Usuario no encontrado';
     
-    // Crear modal de modificación
+    // Crear modal de modificación dinámicamente
     var modal = document.createElement('div');
     modal.className = 'modal';
     modal.id = 'modifyReservationModal';
@@ -420,6 +548,7 @@ function modifyReservationAdmin(reservationId) {
         guestOptions += '<option value="' + i + '" ' + selected + '>' + i + ' ' + text + '</option>';
     }
     
+    // Crear el contenido HTML del modal con el formulario de modificación
     modal.innerHTML = `
         <div class="modal-content large">
             <span class="close">&times;</span>
@@ -475,21 +604,23 @@ function modifyReservationAdmin(reservationId) {
         </div>
     `;
     
+    // Agregar el modal al DOM
     document.body.appendChild(modal);
     
-    // Configurar eventos
+    // Configurar evento para cerrar el modal con el botón X
     var closeBtn = modal.querySelector('.close');
     closeBtn.onclick = function() {
         modal.remove();
     };
     
+    // Configurar evento para cerrar el modal al hacer clic fuera del contenido
     modal.onclick = function(e) {
         if (e.target === modal) {
             modal.remove();
         }
     };
     
-    // Configurar fechas mínimas
+    // Configurar fechas mínimas para los campos de fecha
     var checkInInput = document.getElementById('modifyCheckIn');
     var checkOutInput = document.getElementById('modifyCheckOut');
     
@@ -502,22 +633,27 @@ function modifyReservationAdmin(reservationId) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     checkOutInput.min = tomorrow.toISOString().split('T')[0];
     
-    // Validar fechas
+    // Validar fechas cuando cambia el check-in
     checkInInput.onchange = function() {
         var checkInDate = new Date(checkInInput.value);
         var nextDay = new Date(checkInDate);
         nextDay.setDate(nextDay.getDate() + 1);
         checkOutInput.min = nextDay.toISOString().split('T')[0];
         
+        // Si la fecha de check-out actual es inválida, limpiarla
         if (checkOutInput.value && new Date(checkOutInput.value) <= checkInDate) {
             checkOutInput.value = '';
         }
     };
     
-    // Manejar envío del formulario
+    /**
+     * Manejador del envío del formulario de modificación de reserva
+     * Valida los datos y actualiza la reserva en el sistema
+     */
     document.getElementById('modifyReservationForm').onsubmit = function(e) {
         e.preventDefault();
         
+        // Recopilar los nuevos datos del formulario
         var newRoomId = parseInt(document.getElementById('modifyRoomId').value);
         var newCheckIn = document.getElementById('modifyCheckIn').value;
         var newCheckOut = document.getElementById('modifyCheckOut').value;
@@ -525,12 +661,13 @@ function modifyReservationAdmin(reservationId) {
         var newStatus = document.getElementById('modifyStatus').value;
         var newNotes = document.getElementById('modifyNotes').value;
         
-        // Validaciones
+        // Validar que la fecha de salida sea posterior a la de entrada
         if (new Date(newCheckOut) <= new Date(newCheckIn)) {
             showNotification('La fecha de salida debe ser posterior a la fecha de entrada', 'error');
             return;
         }
         
+        // Validar que la fecha de entrada no sea en el pasado
         if (new Date(newCheckIn) < new Date().setHours(0, 0, 0, 0)) {
             showNotification('La fecha de entrada no puede ser anterior a hoy', 'error');
             return;
@@ -574,7 +711,7 @@ function modifyReservationAdmin(reservationId) {
         var newNights = Math.ceil((new Date(newCheckOut) - new Date(newCheckIn)) / (1000 * 60 * 60 * 24));
         var newTotalPrice = newNights * selectedRoom.pricePerNight;
         
-        // Actualizar la reserva
+        // Crear objeto con los datos actualizados
         var updatedData = {
             roomId: newRoomId,
             checkIn: newCheckIn,
@@ -587,6 +724,7 @@ function modifyReservationAdmin(reservationId) {
             updatedAt: new Date().toISOString()
         };
         
+        // Actualizar la reserva en el sistema
         var success = storageManager.updateReservation(reservationId, updatedData);
         
         if (success) {
@@ -606,6 +744,9 @@ function modifyReservationAdmin(reservationId) {
     };
 }
 
+/**
+ * Función para cerrar el modal de modificación de reserva
+ */
 function closeModifyModal() {
     var modal = document.getElementById('modifyReservationModal');
     if (modal) {
@@ -613,8 +754,13 @@ function closeModifyModal() {
     }
 }
 
+/**
+ * Función para eliminar permanentemente una reserva del sistema
+ * Esta acción no solicita confirmación y elimina la reserva inmediatamente
+ * @param {number} reservationId - ID de la reserva a eliminar
+ */
 function deleteReservationAdmin(reservationId) {
-    // Obtener información de la reserva
+    // Obtener información de la reserva antes de eliminarla
     var reservations = storageManager.getData('reservations') || [];
     var rooms = storageManager.getData('rooms') || [];
     var users = storageManager.getData('users') || [];
@@ -623,6 +769,7 @@ function deleteReservationAdmin(reservationId) {
     var room = null;
     var user = null;
     
+    // Buscar la reserva por ID
     for (var i = 0; i < reservations.length; i++) {
         if (reservations[i].id === reservationId) {
             reservation = reservations[i];
@@ -630,12 +777,13 @@ function deleteReservationAdmin(reservationId) {
         }
     }
     
+    // Si no se encuentra la reserva, mostrar error
     if (!reservation) {
         showNotification('Reserva no encontrada', 'error');
         return;
     }
     
-    // Obtener información de la habitación y usuario
+    // Obtener información de la habitación
     for (var i = 0; i < rooms.length; i++) {
         if (rooms[i].id === reservation.roomId) {
             room = rooms[i];
@@ -643,6 +791,7 @@ function deleteReservationAdmin(reservationId) {
         }
     }
     
+    // Obtener información del usuario
     for (var i = 0; i < users.length; i++) {
         if (users[i].id === reservation.userId) {
             user = users[i];
@@ -653,15 +802,17 @@ function deleteReservationAdmin(reservationId) {
     var roomName = room ? room.name : 'Habitación no encontrada';
     var userName = user ? user.name : 'Usuario no encontrado';
     
-    // Eliminar directamente sin confirmación
-    
-    // Eliminar la reserva
+    // Eliminar la reserva del array
     var updatedReservations = reservations.filter(function(res) {
         return res.id !== reservationId;
     });
     
+    // Guardar la lista actualizada
     storageManager.setData('reservations', updatedReservations);
     
+    // Mostrar mensaje de éxito
     showNotification('Reserva eliminada permanentemente', 'success');
+    
+    // Recargar la lista de reservas
     loadReservations();
 }

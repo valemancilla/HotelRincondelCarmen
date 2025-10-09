@@ -1,8 +1,16 @@
-/* ========================================
-   SKY BAR - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE SKY BAR
+ * 
+ * Este archivo contiene todos los estilos específicos para la página del Sky Bar,
+ * incluyendo secciones de título, menú de cócteles, galería de ambiente y diseño general.
+ * Usa un diseño sofisticado y nocturno acorde con la experiencia del bar en la azotea.
+ */
 
-/* Sky Bar Page Base Styles */
+/* ==========================================
+   SKY BAR - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página del Sky Bar */
 .sky-bar-page {
     background-color: #ffffff;
     color: #2c2c2c;

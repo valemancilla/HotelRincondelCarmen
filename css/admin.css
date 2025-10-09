@@ -1,6 +1,15 @@
-/* Estilos del panel de administración */
+/**
+ * ESTILOS DEL PANEL DE ADMINISTRACIÓN
+ * 
+ * Este archivo contiene todos los estilos para el panel de administración del hotel,
+ * incluyendo tablas de datos, formularios de gestión, pestañas y botones de acción.
+ */
 
-/* Estilos para botones de acción en tablas */
+/* ==========================================
+   BOTONES DE ACCIÓN EN TABLAS
+   ========================================== */
+
+/* Estilos para la celda de acciones en las tablas */
 .actions-cell {
     width: 150px;
     min-width: 150px;

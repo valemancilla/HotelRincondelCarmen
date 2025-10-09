@@ -1,8 +1,16 @@
-/* ========================================
-   SAINT GYM - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE SAINT GYM
+ * 
+ * Este archivo contiene todos los estilos específicos para la página del gimnasio del hotel,
+ * incluyendo secciones de título, equipamiento, horarios, servicios y diseño general.
+ * Usa un diseño moderno y energético acorde con un centro de fitness de lujo.
+ */
 
-/* Gym Page Base Styles */
+/* ==========================================
+   SAINT GYM - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página del gimnasio */
 .gym-page {
     background-color: #ffffff;
     color: #2c2c2c;

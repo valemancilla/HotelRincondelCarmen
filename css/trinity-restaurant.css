@@ -1,8 +1,16 @@
-/* ========================================
-   TRINITY RESTAURANT - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE TRINITY RESTAURANT
+ * 
+ * Este archivo contiene todos los estilos específicos para la página del restaurante Trinity,
+ * incluyendo secciones de título, menú gastronómico, galería de platos y diseño general.
+ * Usa un diseño sofisticado y elegante acorde con la experiencia culinaria.
+ */
 
-/* Trinity Page Base Styles */
+/* ==========================================
+   TRINITY RESTAURANT - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página del restaurante Trinity */
 .trinity-page {
     background-color: #ffffff;
     color: #2c2c2c;

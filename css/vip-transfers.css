@@ -1,8 +1,16 @@
-/* ========================================
-   VIP TRANSFERS - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE VIP TRANSFERS
+ * 
+ * Este archivo contiene todos los estilos específicos para la página de traslados VIP,
+ * incluyendo secciones de título, flota de vehículos, servicios de transporte y diseño general.
+ * Usa un diseño premium y exclusivo acorde con el servicio de transporte de lujo.
+ */
 
-/* VIP Transfers Page Base Styles */
+/* ==========================================
+   VIP TRANSFERS - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página de traslados VIP */
 .vip-transfers-page {
     background-color: #ffffff;
     color: #2c2c2c;

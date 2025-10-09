@@ -1,6 +1,16 @@
-/* Estilos para Habitaciones Disponibles - Diseño Compacto y Elegante */
+/**
+ * ESTILOS PARA HABITACIONES DISPONIBLES
+ * 
+ * Este archivo contiene los estilos para la visualización de habitaciones disponibles,
+ * incluyendo tarjetas de habitaciones, badges, información de precios y diseño responsive.
+ * Utiliza un diseño compacto y elegante para mostrar la información de manera clara.
+ */
 
-/* Sección de resultados */
+/* ==========================================
+   SECCIÓN DE RESULTADOS
+   ========================================== */
+
+/* Contenedor de la sección de resultados de habitaciones disponibles */
 .results-section {
     background: #ffffff;
     padding: 3rem 0 4rem;

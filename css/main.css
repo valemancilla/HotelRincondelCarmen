@@ -1,4 +1,16 @@
-/* Estilos base y reset del sistema */
+/**
+ * ESTILOS PRINCIPALES DEL SITIO WEB
+ * 
+ * Este archivo contiene todos los estilos base y generales del sitio web del hotel,
+ * incluyendo reset de CSS, tipografía, navegación, secciones principales y elementos comunes.
+ * Es el archivo CSS principal que se carga en todas las páginas.
+ */
+
+/* ==========================================
+   RESET Y ESTILOS BASE
+   ========================================== */
+
+/* Reset de márgenes y paddings, y configuración de box-sizing para todos los elementos */
 * {
     margin: 0;
     padding: 0;

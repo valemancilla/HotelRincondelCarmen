@@ -1,5 +1,16 @@
-/* Estilos para Mis Reservas - Tarjetas Verticales */
+/**
+ * ESTILOS PARA MIS RESERVAS
+ * 
+ * Este archivo contiene los estilos para la visualización de las reservas del usuario,
+ * utilizando tarjetas verticales con información completa de cada reserva,
+ * estados visuales, fechas y opciones de gestión.
+ */
 
+/* ==========================================
+   SECCIÓN DE MIS RESERVAS
+   ========================================== */
+
+/* Contenedor principal de la sección de mis reservas */
 .my-reservations {
     padding: 4rem 0;
     background: #f8f9fa;

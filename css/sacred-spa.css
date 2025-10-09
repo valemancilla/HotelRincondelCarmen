@@ -1,8 +1,16 @@
-/* ========================================
-   THE SACRED SPA - INDEPENDENT STYLES
-   ======================================== */
+/**
+ * ESTILOS DE THE SACRED SPA
+ * 
+ * Este archivo contiene todos los estilos específicos para la página del spa del hotel,
+ * incluyendo secciones de título, menú de tratamientos, tarjetas de servicios y diseño general.
+ * Usa un diseño elegante y relajante acorde con la experiencia del spa.
+ */
 
-/* Spa Page Base Styles */
+/* ==========================================
+   THE SACRED SPA - ESTILOS INDEPENDIENTES
+   ========================================== */
+
+/* Estilos base de la página del spa */
 .spa-page {
     background-color: #ffffff;
     color: #2c2c2c;
