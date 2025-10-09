@@ -448,7 +448,7 @@ Catálogo de suites:
 
 ---
 ## NETLIFY
-https://serene-seahorse-1c3968.netlify.app/
+https://magenta-praline-83c533.netlify.app/
 
 ## 👨‍💻 Autor
 
