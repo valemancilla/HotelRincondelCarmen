@@ -448,7 +448,7 @@ Catálogo de suites:
 
 ---
 ## NETLIFY
-https://lambent-empanada-0b07b9.netlify.app/
+https://serene-seahorse-1c3968.netlify.app/
 
 ## 👨‍💻 Autor
 
