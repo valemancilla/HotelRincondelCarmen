@@ -21,7 +21,6 @@ La plataforma está construida con tecnologías web modernas utilizando arquitec
   - Cálculo automático de precios totales con impuestos incluidos
   - Validación de disponibilidad en tiempo real
   - **Sistema inteligente de disponibilidad**: Las reservas canceladas NO bloquean la disponibilidad
-  - **Refresco automático**: Al cancelar una reserva, la búsqueda se actualiza automáticamente
   - Validación de fechas: No permite reservas para el mismo día, solo días futuros
   - Badges especiales para suites premium (Desayuno, Transporte, Cancelación Gratuita)
 
@@ -45,10 +44,10 @@ La plataforma está construida con tecnologías web modernas utilizando arquitec
 - **Sistema de Usuarios**
   - Registro completo con validación de datos
   - Login con autenticación segura
-  - Gestión de reservas personales con modificación y cancelación instantánea
-  - Historial completo de reservas (activas y canceladas) con estados visuales diferenciados
-  - Precio total directo sin desglose para mayor claridad
-  - Modal mejorado para modificar reservas con botones separados y bien organizados
+  - Gestión de reservas personales (visualización de reservas activas y canceladas)
+  - Historial completo de reservas con estados visuales diferenciados
+  - Los usuarios deben contactar al hotel para modificar o cancelar reservas
+  - Mensaje informativo con datos de contacto del hotel
 
 ### Para Administradores
 
@@ -193,13 +192,20 @@ Hotel el Rincón del Carmen/
 │   ├── contacto.js                 # Formulario de contacto
 │   └── utils.js                    # Funciones utilitarias
 │
-├── image/                          # Imágenes del hotel
-│   ├── principal.jpg               # Imagen hero
-│   ├── habitacion [1-6].jpg        # Fotos de habitaciones
-│   ├── suite mitica.jpg            # Suite mítica
-│   ├── piscina.jpg                 # Piscina
-│   ├── restaurante.jpg             # Restaurante
-│   └── spa.jpg                     # Spa
+├── image/                          # Imágenes del hotel (13 archivos)
+│   ├── habitacion 1 imagen grande.jpg
+│   ├── habitacion 1.jpg
+│   ├── habitacion 1.3.jpg
+│   ├── habitacion 1.4.jpg
+│   ├── habitacion 2 imagen grande.jpg
+│   ├── habitacion 2.1.jpg
+│   ├── habitacion 2.2.jpg
+│   ├── habitacion 2.3.jpg
+│   ├── habitacion 2.4.jpg
+│   ├── habiatacion 2.5.jpg
+│   ├── habiatcion 3 .3.jpg
+│   ├── habitacion 3.4.jpg
+│   └── suite mitica.jpg
 │
 └── README.md                       # Este archivo
 ```
@@ -279,7 +285,7 @@ Estilos específicos de la página de reservas:
 Estilos del formulario de contacto con layout optimizado, mensajes de error en color dorado y animaciones de validación.
 
 #### **css/mis-reservas.css**
-Gestión de reservas del usuario con lista de reservas, estados visuales (activa, cancelada), botones de acción y cards responsive.
+Gestión de reservas del usuario con lista de reservas, estados visuales (activa, cancelada), mensaje informativo de contacto y cards responsive.
 
 #### **css/habitaciones-disponibles.css**
 Grid especializado para mostrar suites disponibles con diseño compacto y elegante.
@@ -328,7 +334,7 @@ Implementa filtrado inteligente por capacidad: si buscan 1-2 huéspedes muestra 
 - **Función de limpieza de localStorage**: `clearAllData()` para reinicializar datos
 - **Iconos SVG inline**: Reemplazo de Font Awesome por SVG para iconos de contraseña (compatible con Netlify)
 
-#### **js/auth.js** (526 líneas)
+#### **js/auth.js** (867 líneas)
 Sistema de autenticación y gestión de reservas personales:
 - `showLoginModal()`: Muestra modal de inicio de sesión
 - `showRegisterModal()`: Muestra modal de registro
@@ -338,8 +344,6 @@ Sistema de autenticación y gestión de reservas personales:
 - `isLoggedIn()`: Verifica si hay sesión activa
 - `getCurrentUser()`: Obtiene datos del usuario actual
 - `loadUserReservations()`: Carga todas las reservas del usuario (activas y canceladas)
-- `modifyReservation()`: Abre modal con formulario mejorado para modificar reserva
-- `cancelReservation()`: Cancela reserva instantáneamente y refresca la búsqueda automáticamente
 
 **Validaciones implementadas:**
 - Email único en el sistema
@@ -349,11 +353,9 @@ Sistema de autenticación y gestión de reservas personales:
 - Todos los campos requeridos
 
 **Mejoras en UI de reservas:**
-- Modal de modificación con botones del mismo tamaño y bien separados (180px cada uno)
-- Cancelación instantánea sin prompt de confirmación
 - Visualización diferenciada de reservas canceladas con overlay "CANCELADA"
-- Precio total sin desglose por noche
-- Refresco automático de búsqueda al cancelar si hay fechas seleccionadas
+- Mensaje informativo para contactar al hotel para modificaciones o cancelaciones
+- Precio total directo sin desglose para mayor claridad
 
 **Mejoras en sistema de autenticación:**
 - **Iconos SVG para contraseñas**: Reemplazo de Font Awesome por SVG inline para mejor compatibilidad
@@ -367,11 +369,10 @@ Sistema de autenticación y gestión de reservas personales:
 - `searchAvailableRooms()`: Busca suites disponibles según criterios con logs detallados
 - `displayAvailableRooms()`: Genera HTML dinámico de resultados
 - `handleReservation()`: Procesa y guarda reserva
-- `validateDates()`: Valida fechas de entrada y salida con nueva regla: NO permite reservas para hoy
+- `validateDates()`: Valida fechas de entrada y salida
 - `calculateTotalPrice()`: Calcula precio total con noches e impuestos
 - `showError() / showSuccess()`: Muestra notificaciones al usuario
 - `getSuiteUrl()`: Mapea nombre de suite a URL de detalle
-- `refreshSearch()`: **NUEVA** - Refresca la búsqueda actual con fechas existentes
 - `setupDateInputs()`: Configura campos de fecha con mínimo en mañana (no permite seleccionar hoy)
 
 **Características:**
@@ -380,9 +381,8 @@ Sistema de autenticación y gestión de reservas personales:
 - Validación de disponibilidad en tiempo real excluyendo reservas canceladas
 - Cálculo automático de número de noches
 - Mapeo correcto a páginas de detalle de cada suite
-- **Validación estricta**: No permite reservas para el mismo día (solo desde mañana)
-- **Fechas mínimas automáticas**: Check-in desde mañana, Check-out desde pasado mañana
-- Mensaje de error mejorado: "La fecha de entrada no puede ser hoy ni anterior"
+- Validación estricta: No permite reservas para el mismo día (solo desde mañana)
+- Fechas mínimas automáticas: Check-in desde mañana, Check-out desde pasado mañana
 
 #### **js/rooms.js** (527 líneas)
 Gestión de habitaciones:
@@ -453,5 +453,4 @@ https://lambent-empanada-0b07b9.netlify.app/
 ## 👨‍💻 Autor
 
 **Valentina Mancilla**
-
 

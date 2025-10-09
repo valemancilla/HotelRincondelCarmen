@@ -265,6 +265,47 @@
     font-weight: 700;
 }
 
+/* Mensaje informativo sobre modificaciones y cancelaciones */
+.reservation-info-message {
+    background: linear-gradient(135deg, #fff8f0, #ffeee0);
+    border: 2px solid #b89a7e;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.reservation-info-message i.fa-info-circle {
+    color: #b89a7e;
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+.reservation-info-message p {
+    color: #2c3e50;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.reservation-info-message .contact-details {
+    color: #b89a7e;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.reservation-info-message .contact-details i {
+    color: #b89a7e;
+    margin: 0 0.2rem;
+}
+
 /* Mensaje de contacto con el hotel */
 .contact-hotel-notice {
     background: linear-gradient(135deg, #f0f7ff, #e3f2fd);
@@ -546,6 +587,24 @@
     .contact-options a {
         font-size: 0.8rem;
         word-break: break-all;
+    }
+    
+    .reservation-info-message {
+        padding: 1rem;
+    }
+    
+    .reservation-info-message i.fa-info-circle {
+        font-size: 1.5rem;
+    }
+    
+    .reservation-info-message p {
+        font-size: 0.85rem;
+    }
+    
+    .reservation-info-message .contact-details {
+        font-size: 0.8rem;
+        flex-direction: column;
+        gap: 0.3rem;
     }
 }
 

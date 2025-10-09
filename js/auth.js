@@ -634,11 +634,15 @@ function loadUserReservations() {
         // Precio total
         html += '<div class="price-box ' + priceClass + '"><div class="price-total">Total: COP $' + totalPrice.toLocaleString('es-CO') + '</div></div>';
         
-        // Botones de acción (solo si la reserva no está cancelada)
+        // Mensaje informativo sobre modificaciones y cancelaciones
         if (reservation.status !== 'cancelled') {
-            html += '<div class="reservation-actions-vertical">';
-            html += '<button class="btn-outline" onclick="authManager.modifyReservation(' + reservation.id + ')"><i class="fas fa-edit"></i> Modificar</button>';
-            html += '<button class="btn-danger" onclick="authManager.cancelReservation(' + reservation.id + ')"><i class="fas fa-times"></i> Cancelar</button>';
+            html += '<div class="reservation-info-message">';
+            html += '<i class="fas fa-info-circle"></i>';
+            html += '<p>Para modificar o cancelar su reserva, por favor contacte con el hotel:</p>';
+            html += '<p class="contact-details">';
+            html += '<i class="fas fa-phone"></i> +57 3137713137 | ';
+            html += '<i class="fas fa-envelope"></i> reservations@saintsuitesoia.com';
+            html += '</p>';
             html += '</div>';
         }
         
@@ -681,10 +685,12 @@ function getRoomTypeName(type) {
 }
 
 /**
- * Función para modificar una reserva existente
- * Crea un modal dinámico con el formulario de edición
- * @param {number} reservationId - ID de la reserva a modificar
+ * FUNCIONES DESHABILITADAS: Los usuarios ya no pueden modificar ni cancelar reservas directamente.
+ * Deben contactar al hotel para realizar cualquier cambio.
+ * Estas funciones se mantienen comentadas para futura referencia.
  */
+
+/*
 function modifyReservation(reservationId) {
     // Buscar la reserva por ID
     var reservations = storageManager.getAllReservations();
@@ -798,11 +804,6 @@ function modifyReservation(reservationId) {
     };
 }
 
-/**
- * Función para cancelar una reserva existente
- * Cambia el estado de la reserva a 'cancelled' y actualiza la interfaz
- * @param {number} reservationId - ID de la reserva a cancelar
- */
 function cancelReservation(reservationId) {
     // Obtener información de la reserva antes de cancelarla
     var reservations = storageManager.getData('reservations') || [];
@@ -838,6 +839,7 @@ function cancelReservation(reservationId) {
         }
     }
 }
+*/
 
 /**
  * Objeto que expone las funciones principales del sistema de autenticación
@@ -847,9 +849,9 @@ var authManager = {
     isAuthenticated: isAuthenticated,
     getCurrentUser: getCurrentUser,
     showLoginModal: showLoginModal,
-    loadUserReservations: loadUserReservations,
-    modifyReservation: modifyReservation,
-    cancelReservation: cancelReservation
+    loadUserReservations: loadUserReservations
+    // modifyReservation y cancelReservation han sido deshabilitados
+    // Los usuarios deben contactar al hotel para modificar o cancelar reservas
 };
 
 // Hacer el objeto authManager disponible globalmente
