@@ -59,13 +59,19 @@ function getTomorrow() {
 
 /**
  * Función para mostrar notificaciones al usuario
+ * Utiliza Web Components si están disponibles, sino fallback al método tradicional
  * @param {string} message - Mensaje a mostrar
  * @param {string} type - Tipo de notificación ('success', 'error', 'warning', 'info')
  */
 function showNotification(message, type) {
     if (!type) type = 'success';
     
-    // Crear elemento de notificación
+    // Intentar usar Web Components si están disponibles
+    if (window.WebComponentsUtils && window.WebComponentsUtils.showNotification) {
+        return window.WebComponentsUtils.showNotification(message, type);
+    }
+    
+    // Fallback al método tradicional
     var notification = document.createElement('div');
     notification.className = 'alert alert-' + type;
     notification.style.cssText = 'position:fixed;top:100px;right:20px;z-index:3000;max-width:300px;animation:slideInRight 0.3s ease';

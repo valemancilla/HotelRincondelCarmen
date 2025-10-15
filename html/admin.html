@@ -80,6 +80,9 @@
             <button class="admin-tab" onclick="showTab('reservations')">
                 <i class="fas fa-calendar-check"></i> Gestionar Reservas
             </button>
+            <button class="admin-tab" onclick="showTab('complaints')">
+                <i class="fas fa-exclamation-triangle"></i> Quejas y Reclamos
+            </button>
         </div>
         
         <div class="admin-content">
@@ -214,6 +217,71 @@
                     </tbody>
                 </table>
             </div>
+            
+            
+            <!-- Tab: Quejas y Reclamos -->
+            <div id="complaints-tab" class="tab-content">
+                <h2 class="section-title">Gestionar Quejas y Reclamos</h2>
+                
+                <!-- Estadísticas de quejas y reclamos -->
+                <div class="complaints-stats">
+                    <div class="stat-card">
+                        <h3>Total de Quejas/Reclamos</h3>
+                        <span id="totalComplaints" class="stat-number">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pendientes</h3>
+                        <span id="pendingComplaints" class="stat-number">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Resueltas</h3>
+                        <span id="resolvedComplaints" class="stat-number">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Rechazadas</h3>
+                        <span id="rejectedComplaints" class="stat-number">0</span>
+                    </div>
+                </div>
+                
+                <!-- Filtros -->
+                <div class="complaints-filters">
+                    <div class="filter-group">
+                        <label for="statusFilter">Filtrar por estado:</label>
+                        <select id="statusFilter" onchange="filterComplaints()">
+                            <option value="">Todos</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="resolved">Resueltas</option>
+                            <option value="rejected">Rechazadas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="typeFilter">Filtrar por tipo:</label>
+                        <select id="typeFilter" onchange="filterComplaints()">
+                            <option value="">Todos</option>
+                            <option value="queja">Quejas</option>
+                            <option value="reclamo">Reclamos</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Tabla de quejas y reclamos -->
+                <table class="data-table" id="complaintsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Tipo</th>
+                            <th>Asunto</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTableBody">
+                        <!-- Las quejas se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -314,5 +382,16 @@
             <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
         </div>
     </div>
+
+    <!-- Modal para gestionar queja/reclamo -->
+    <div id="complaintModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="complaintModalContent">
+                <!-- El contenido se cargará aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

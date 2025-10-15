@@ -9,6 +9,7 @@
     <!-- Scripts JavaScript necesarios para la funcionalidad de reservas -->
     <script src="../js/utils.js" defer></script>
     <script src="../js/localStorage.js" defer></script>
+    <script src="../js/web-components.js" defer></script>
     <script src="../js/auth.js" defer></script>
     <script src="../js/rooms.js" defer></script>
     <script src="../js/reservations.js" defer></script>
@@ -17,6 +18,7 @@
     <!-- Hojas de estilo CSS para reservas -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/web-components.css">
     <link rel="stylesheet" href="../css/reservas.css">
     <link rel="stylesheet" href="../css/mis-reservas.css">
     <link rel="stylesheet" href="../css/habitaciones-disponibles.css">
@@ -64,6 +66,13 @@
                 <!-- Enlace a contacto -->
                 <li class="nav-item">
                     <a href="contacto.html" class="nav-link">Contacto</a>
+                </li>
+                
+                <!-- Enlace a reseñas -->
+                
+                <!-- Enlace a quejas y reclamos -->
+                <li class="nav-item">
+                    <a href="quejas-reclamos.html" class="nav-link">Quejas y Reclamos</a>
                 </li>
                 
                 <!-- Enlace activo a reservas -->
@@ -409,5 +418,8 @@
             </div>
         </div>
     </footer>
+
+    <!-- Sistema de notificaciones usando Web Components -->
+    <notification-system></notification-system>
 </body>
 </html>

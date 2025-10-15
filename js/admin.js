@@ -57,6 +57,8 @@ function showTab(tabName) {
         loadRooms();
     } else if (tabName === 'reservations') {
         loadReservations();
+    } else if (tabName === 'complaints') {
+        loadComplaints();
     }
 }
 
@@ -816,3 +818,348 @@ function deleteReservationAdmin(reservationId) {
     // Recargar la lista de reservas
     loadReservations();
 }
+
+
+/**
+ * ==========================================
+ * FUNCIONES PARA GESTIÓN DE QUEJAS Y RECLAMOS
+ * ==========================================
+ */
+
+/**
+ * Carga y muestra todas las quejas y reclamos en la tabla del panel de administración
+ */
+function loadComplaints() {
+    console.log('Cargando quejas y reclamos en admin...');
+    
+    // Usar localStorage directamente
+    var complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+    console.log('Quejas obtenidas del localStorage:', complaints);
+    
+    var tbody = document.getElementById('complaintsTableBody');
+    
+    if (!tbody) {
+        console.error('No se encontró el elemento complaintsTableBody');
+        return;
+    }
+    
+    // Actualizar estadísticas
+    updateComplaintStats(complaints);
+    
+    // Aplicar filtros
+    var filteredComplaints = applyComplaintFilters(complaints);
+    
+    var html = '';
+    
+    if (filteredComplaints.length === 0) {
+        html = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #666;">No hay quejas o reclamos disponibles</td></tr>';
+        console.log('No hay quejas para mostrar');
+    } else {
+        for (var i = 0; i < filteredComplaints.length; i++) {
+            var complaint = filteredComplaints[i];
+            var statusClass = complaint.status || 'pending';
+            var statusText = getComplaintStatusText(statusClass);
+            var typeText = complaint.type === 'queja' ? 'Queja' : 'Reclamo';
+            var date = formatDate(complaint.date);
+            
+            html += '<tr>';
+            html += '<td>' + complaint.id + '</td>';
+            html += '<td>' + (complaint.userName || 'Usuario desconocido') + '</td>';
+            html += '<td><span class="complaint-type-badge ' + complaint.type + '">' + typeText + '</span></td>';
+            html += '<td>' + (complaint.subject || 'Sin asunto') + '</td>';
+            html += '<td>' + date + '</td>';
+            html += '<td><span class="complaint-status ' + statusClass + '">' + statusText + '</span></td>';
+            html += '<td class="actions-cell"><div class="action-buttons complaint-actions">';
+            html += '<button class="btn-sm btn-view" onclick="viewComplaintDetail(' + complaint.id + ')"><i class="fas fa-eye"></i> Ver</button>';
+            if (statusClass === 'pending') {
+                html += '<button class="btn-sm btn-primary" onclick="manageComplaint(' + complaint.id + ')"><i class="fas fa-edit"></i> Gestionar</button>';
+            }
+            html += '</div></td>';
+            html += '</tr>';
+        }
+    }
+    
+    tbody.innerHTML = html;
+}
+
+/**
+ * Actualiza las estadísticas de quejas y reclamos
+ */
+function updateComplaintStats(complaints) {
+    var totalComplaints = complaints.length;
+    var pendingComplaints = complaints.filter(function(complaint) {
+        return (complaint.status || 'pending') === 'pending';
+    }).length;
+    
+    var resolvedComplaints = complaints.filter(function(complaint) {
+        return complaint.status === 'resolved';
+    }).length;
+    
+    var rejectedComplaints = complaints.filter(function(complaint) {
+        return complaint.status === 'rejected';
+    }).length;
+    
+    document.getElementById('totalComplaints').textContent = totalComplaints;
+    document.getElementById('pendingComplaints').textContent = pendingComplaints;
+    document.getElementById('resolvedComplaints').textContent = resolvedComplaints;
+    document.getElementById('rejectedComplaints').textContent = rejectedComplaints;
+}
+
+/**
+ * Obtiene el texto del estado de una queja/reclamo
+ */
+function getComplaintStatusText(status) {
+    switch(status) {
+        case 'pending': return 'Pendiente';
+        case 'resolved': return 'Resuelto';
+        case 'rejected': return 'Rechazado';
+        default: return 'Desconocido';
+    }
+}
+
+/**
+ * Aplica filtros a las quejas y reclamos
+ */
+function applyComplaintFilters(complaints) {
+    var statusFilter = document.getElementById('statusFilter').value;
+    var typeFilter = document.getElementById('typeFilter').value;
+    
+    return complaints.filter(function(complaint) {
+        var matchesStatus = !statusFilter || complaint.status === statusFilter;
+        var matchesType = !typeFilter || complaint.type === typeFilter;
+        return matchesStatus && matchesType;
+    });
+}
+
+/**
+ * Función para filtrar quejas y reclamos
+ */
+function filterComplaints() {
+    loadComplaints();
+}
+
+/**
+ * Ver queja/reclamo completa en modal
+ */
+function viewComplaintDetail(complaintId) {
+    var complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+    var complaint = complaints.find(function(c) { return c.id == complaintId; });
+    
+    if (!complaint) {
+        showNotification('No se encontró la queja/reclamo', 'error');
+        return;
+    }
+    
+    // Obtener información adicional
+    var reservations = JSON.parse(localStorage.getItem('reservations')) || [];
+    var reservation = reservations.find(function(r) { return r.id === complaint.reservationId; });
+    
+    var rooms = JSON.parse(localStorage.getItem('rooms')) || [];
+    var room = reservation ? rooms.find(function(r) { return r.id === reservation.roomId; }) : null;
+    var roomName = room ? room.name : 'Habitación';
+    
+    var date = formatDate(complaint.date);
+    var typeText = complaint.type === 'queja' ? 'Queja' : 'Reclamo';
+    
+    var modalContent = `
+        <div class="complaint-detail-content">
+            <h3>Detalle de ${typeText}</h3>
+            
+            <div class="detail-section">
+                <h4>Información General</h4>
+                <p><strong>ID:</strong> ${complaint.id}</p>
+                <p><strong>Tipo:</strong> ${typeText}</p>
+                <p><strong>Estado:</strong> ${getComplaintStatusText(complaint.status)}</p>
+                <p><strong>Fecha:</strong> ${date}</p>
+                <p><strong>Usuario:</strong> ${complaint.userName}</p>
+                <p><strong>Email:</strong> ${complaint.userEmail}</p>
+            </div>
+            
+            <div class="detail-section">
+                <h4>Información de Reserva</h4>
+                <p><strong>Habitación:</strong> ${roomName}</p>
+                ${reservation ? `
+                    <p><strong>Check-in:</strong> ${formatDate(reservation.checkIn)}</p>
+                    <p><strong>Check-out:</strong> ${formatDate(reservation.checkOut)}</p>
+                    <p><strong>Huéspedes:</strong> ${reservation.guests}</p>
+                ` : '<p>Información de reserva no disponible</p>'}
+            </div>
+            
+            <div class="detail-section">
+                <h4>Asunto</h4>
+                <p>${complaint.subject}</p>
+            </div>
+            
+            <div class="detail-section">
+                <h4>Descripción</h4>
+                <p>${complaint.description}</p>
+            </div>
+            
+            ${complaint.adminResponse ? `
+                <div class="detail-section">
+                    <h4>Respuesta del Administrador</h4>
+                    <p>${complaint.adminResponse}</p>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Mostrar modal
+    var modal = document.getElementById('complaintModal');
+    var modalContentElement = document.getElementById('complaintModalContent');
+    
+    modalContentElement.innerHTML = modalContent;
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Configurar botón de cerrar
+    var closeBtn = modal.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+    }
+    
+    // Cerrar modal al hacer clic fuera
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+}
+
+/**
+ * Gestionar queja/reclamo (responder y cambiar estado)
+ */
+function manageComplaint(complaintId) {
+    var complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+    var complaint = complaints.find(function(c) { return c.id == complaintId; });
+    
+    if (!complaint) {
+        showNotification('No se encontró la queja/reclamo', 'error');
+        return;
+    }
+    
+    var typeText = complaint.type === 'queja' ? 'Queja' : 'Reclamo';
+    
+    var modalContent = `
+        <div class="complaint-management-content">
+            <h3>Gestionar ${typeText}</h3>
+            
+            <div class="complaint-info">
+                <p><strong>Usuario:</strong> ${complaint.userName}</p>
+                <p><strong>Asunto:</strong> ${complaint.subject}</p>
+                <p><strong>Fecha:</strong> ${formatDate(complaint.date)}</p>
+            </div>
+            
+            <div class="detail-section">
+                <h4>Descripción</h4>
+                <p>${complaint.description}</p>
+            </div>
+            
+            <form id="complaintManagementForm">
+                <div class="form-group">
+                    <label for="complaintResponse">Respuesta del Administrador:</label>
+                    <textarea id="complaintResponse" name="response" rows="4" placeholder="Escribe tu respuesta aquí..." required>${complaint.adminResponse || ''}</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="complaintStatus">Nuevo Estado:</label>
+                    <select id="complaintStatus" name="status" required>
+                        <option value="pending" ${complaint.status === 'pending' ? 'selected' : ''}>Pendiente</option>
+                        <option value="resolved" ${complaint.status === 'resolved' ? 'selected' : ''}>Resuelto</option>
+                        <option value="rejected" ${complaint.status === 'rejected' ? 'selected' : ''}>Rechazado</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeComplaintModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    `;
+    
+    // Mostrar modal
+    var modal = document.getElementById('complaintModal');
+    var modalContentElement = document.getElementById('complaintModalContent');
+    
+    modalContentElement.innerHTML = modalContent;
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Configurar formulario
+    var form = document.getElementById('complaintManagementForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        saveComplaintManagement(complaintId);
+    });
+    
+    // Configurar botón de cerrar
+    var closeBtn = modal.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+    }
+    
+    // Cerrar modal al hacer clic fuera
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
+}
+
+/**
+ * Guarda los cambios de gestión de queja/reclamo
+ */
+function saveComplaintManagement(complaintId) {
+    var response = document.getElementById('complaintResponse').value.trim();
+    var status = document.getElementById('complaintStatus').value;
+    
+    if (!response) {
+        showNotification('Por favor escribe una respuesta', 'error');
+        return;
+    }
+    
+    var complaints = JSON.parse(localStorage.getItem('complaints')) || [];
+    var complaintIndex = complaints.findIndex(function(c) { return c.id == complaintId; });
+    
+    if (complaintIndex === -1) {
+        showNotification('No se encontró la queja/reclamo', 'error');
+        return;
+    }
+    
+    // Actualizar queja
+    complaints[complaintIndex].adminResponse = response;
+    complaints[complaintIndex].status = status;
+    complaints[complaintIndex].resolvedDate = new Date().toISOString();
+    
+    // Guardar en localStorage
+    localStorage.setItem('complaints', JSON.stringify(complaints));
+    
+    // Mostrar mensaje de éxito
+    var statusText = getComplaintStatusText(status);
+    showNotification('Queja/reclamo actualizado exitosamente. Estado: ' + statusText, 'success');
+    
+    // Cerrar modal
+    document.getElementById('complaintModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    // Recargar listado
+    loadComplaints();
+}
+
+/**
+ * Cierra el modal de gestión de quejas
+ */
+function closeComplaintModal() {
+    document.getElementById('complaintModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+

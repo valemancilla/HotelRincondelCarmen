@@ -1,0 +1,625 @@
+/**
+ * ESTILOS PARA WEB COMPONENTS
+ * 
+ * Este archivo contiene estilos específicos para los componentes web
+ * reutilizables del sistema del hotel.
+ */
+
+/* ==========================================
+   ESTILOS BASE PARA WEB COMPONENTS
+   ========================================== */
+
+/* Asegurar que los Web Components hereden estilos correctamente */
+hotel-card, reservation-card, notification-system, modal-component {
+    display: block;
+    width: 100%;
+}
+
+/* ==========================================
+   COMPONENTE: HOTEL CARD
+   ========================================== */
+
+hotel-card .room-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+hotel-card .room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+hotel-card .room-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+hotel-card .room-card:hover .room-image {
+    transform: scale(1.05);
+}
+
+hotel-card .room-content {
+    padding: 20px;
+}
+
+hotel-card .room-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+}
+
+hotel-card .room-price {
+    font-size: 1.2rem;
+    color: #b89a7e;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+hotel-card .room-total-price {
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #b89a7e;
+}
+
+hotel-card .room-features {
+    list-style: none;
+    margin-bottom: 15px;
+}
+
+hotel-card .room-features li {
+    padding: 5px 0;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+
+hotel-card .room-features li:before {
+    content: "✓";
+    color: #b89a7e;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+hotel-card .room-services {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+hotel-card .room-services i {
+    font-size: 1.2rem;
+    color: #b89a7e;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+hotel-card .room-services i:hover {
+    background: #b89a7e;
+    color: white;
+    transform: scale(1.1);
+}
+
+hotel-card .room-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+hotel-card .room-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+hotel-card .btn-outline,
+hotel-card .btn-primary {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+hotel-card .btn-outline {
+    background: transparent;
+    color: #b89a7e;
+    border: 2px solid #b89a7e;
+}
+
+hotel-card .btn-outline:hover {
+    background: #b89a7e;
+    color: white;
+}
+
+hotel-card .btn-primary {
+    background: #b89a7e;
+    color: white;
+}
+
+hotel-card .btn-primary:hover {
+    background: #a07a6b;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   COMPONENTE: RESERVATION CARD
+   ========================================== */
+
+reservation-card .reservation-card-vertical {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+reservation-card .reservation-card-vertical:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+reservation-card .reservation-card-vertical.cancelled-reservation {
+    opacity: 0.7;
+    filter: grayscale(50%);
+}
+
+reservation-card .reservation-image-top {
+    position: relative;
+    overflow: hidden;
+}
+
+reservation-card .reservation-image-top img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+reservation-card .status-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+reservation-card .status-overlay.status-pending {
+    color: #ffc107;
+}
+
+reservation-card .status-overlay.status-confirmed {
+    color: #28a745;
+}
+
+reservation-card .status-overlay.status-cancelled {
+    color: #dc3545;
+}
+
+reservation-card .cancelled-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+reservation-card .reservation-content-vertical {
+    padding: 20px;
+}
+
+reservation-card .room-name-vertical {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+}
+
+reservation-card .dates-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+reservation-card .date-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 120px;
+}
+
+reservation-card .date-box i {
+    color: #b89a7e;
+    font-size: 1.1rem;
+}
+
+reservation-card .date-box small {
+    display: block;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+reservation-card .date-box strong {
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+reservation-card .nights-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #b89a7e;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+reservation-card .nights-indicator i {
+    font-size: 1rem;
+}
+
+reservation-card .guests-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+reservation-card .guests-info i {
+    color: #b89a7e;
+}
+
+reservation-card .price-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+reservation-card .price-box.cancelled-price {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+reservation-card .price-total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+reservation-card .reservation-info-message {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #2196f3;
+}
+
+reservation-card .reservation-info-message i {
+    color: #2196f3;
+    margin-right: 8px;
+}
+
+reservation-card .reservation-info-message p {
+    margin: 5px 0;
+    color: #1565c0;
+    font-size: 0.9rem;
+}
+
+reservation-card .contact-details {
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+reservation-card .contact-details i {
+    margin-right: 5px;
+}
+
+/* ==========================================
+   COMPONENTE: NOTIFICATION SYSTEM
+   ========================================== */
+
+notification-system {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 3000;
+    pointer-events: none;
+}
+
+notification-system .notification {
+    pointer-events: auto;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    animation: slideInRight 0.3s ease;
+}
+
+notification-system .notification i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* ==========================================
+   COMPONENTE: MODAL COMPONENT
+   ========================================== */
+
+modal-component .modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+modal-component .modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+modal-component .modal-title {
+    padding: 20px 25px 0;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+
+modal-component .modal-body {
+    padding: 20px 25px 25px;
+}
+
+modal-component .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+modal-component .close:hover {
+    color: #b89a7e;
+}
+
+/* ==========================================
+   ANIMACIONES PARA WEB COMPONENTS
+   ========================================== */
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN PARA WEB COMPONENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+    /* Hotel Card Mobile */
+    hotel-card .room-actions {
+        flex-direction: column;
+    }
+    
+    hotel-card .btn-outline,
+    hotel-card .btn-primary {
+        width: 100%;
+    }
+    
+    /* Reservation Card Mobile */
+    reservation-card .dates-section {
+        flex-direction: column;
+    }
+    
+    reservation-card .date-box {
+        min-width: auto;
+    }
+    
+    reservation-card .nights-indicator {
+        align-self: center;
+    }
+    
+    /* Notification System Mobile */
+    notification-system {
+        left: 10px;
+        right: 10px;
+        top: 10px;
+    }
+    
+    notification-system .notification {
+        margin-bottom: 8px;
+        padding: 12px 15px;
+    }
+    
+    /* Modal Component Mobile */
+    modal-component .modal-content {
+        margin: 10% auto;
+        width: 95%;
+    }
+    
+    modal-component .modal-title {
+        font-size: 1.5rem;
+        padding: 15px 20px 0;
+    }
+    
+    modal-component .modal-body {
+        padding: 15px 20px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    hotel-card .room-content {
+        padding: 15px;
+    }
+    
+    hotel-card .room-title {
+        font-size: 1.3rem;
+    }
+    
+    reservation-card .reservation-content-vertical {
+        padding: 15px;
+    }
+    
+    reservation-card .room-name-vertical {
+        font-size: 1.2rem;
+    }
+    
+    notification-system .notification {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    modal-component .modal-content {
+        margin: 15% auto;
+        width: 98%;
+    }
+}
+
+/* ==========================================
+   ESTADOS ESPECIALES PARA WEB COMPONENTS
+   ========================================== */
+
+/* Estado de carga */
+hotel-card.loading,
+reservation-card.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Estado de error */
+hotel-card.error,
+reservation-card.error {
+    border: 2px solid #dc3545;
+    background: #f8d7da;
+}
+
+/* Estado vacío */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: #b89a7e;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.empty-state .btn-suites {
+    background: #b89a7e;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.empty-state .btn-suites:hover {
+    background: #a07a6b;
+    transform: translateY(-2px);
+}

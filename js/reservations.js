@@ -566,20 +566,43 @@ class ReservationManager {
      */
     showSuccess(message) {
         const notification = document.createElement('div');
-        notification.className = 'alert alert-success';
+        notification.className = 'success-notification';
         notification.style.cssText = `
             position: fixed;
             top: 100px;
             right: 20px;
             z-index: 3000;
-            max-width: 300px;
-            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-left: 4px solid #28a745;
+            color: #155724;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInFromTop 0.5s ease-out;
+            transition: all 0.3s ease;
         `;
         notification.innerHTML = `
-            <i class="fas fa-check-circle"></i> ${message}
+            <i class="fas fa-check-circle" style="color: #28a745; font-size: 1.3rem; flex-shrink: 0;"></i>
+            <span style="flex: 1; line-height: 1.5;">${message}</span>
         `;
         
         document.body.appendChild(notification);
+        
+        // Efecto hover
+        notification.addEventListener('mouseenter', () => {
+            notification.style.transform = 'translateY(-2px)';
+            notification.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+        });
+        
+        notification.addEventListener('mouseleave', () => {
+            notification.style.transform = 'translateY(0)';
+            notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        });
         
         setTimeout(() => {
             notification.style.animation = 'slideOutRight 0.3s ease';
@@ -588,7 +611,7 @@ class ReservationManager {
                     notification.remove();
                 }
             }, 300);
-        }, 3000);
+        }, 4000);
     }
 
     /**

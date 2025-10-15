@@ -649,7 +649,13 @@ function loadUserReservations() {
         html += '</div></div>';
     }
     
-    // Insertar todo el HTML generado en el contenedor de reservas
+    // Intentar usar Web Components si están disponibles
+    if (window.WebComponentsUtils && window.WebComponentsUtils.renderReservations) {
+        window.WebComponentsUtils.renderReservations(allReservations, 'reservationsList');
+        return;
+    }
+    
+    // Fallback al método tradicional
     reservationsList.innerHTML = html;
 }
 
