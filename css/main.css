@@ -92,12 +92,14 @@ p {
 .nav-logo h2 {
     color: #fff;
     margin: 0;
-    font-size: 1.2rem;
+    margin-right: 2rem;
+    font-size: 1.1rem;
     font-weight: 400;
     letter-spacing: 1px;
     line-height: 1.1;
     font-family: 'Open Sans', sans-serif;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .nav-logo h2 .santorini {
@@ -111,23 +113,25 @@ p {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.2rem;
     align-items: center;
     flex: 1;
     justify-content: center;
+    flex-wrap: nowrap;
 }
 
 .nav-link {
     color: #fff;
     text-decoration: none;
     font-weight: 400;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
     padding: 0.5rem 0;
     text-transform: uppercase;
     font-family: 'Open Sans', sans-serif;
+    white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -151,7 +155,11 @@ p {
     font-weight: 600 !important;
     cursor: default !important;
     text-transform: none !important;
-    font-size: 0.95rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+    max-width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 .search-container {
@@ -1407,6 +1415,27 @@ p {
     margin-top: 1rem;
 }
 
+/* Media query para pantallas medianas donde el header se ve mal */
+@media (max-width: 1200px) and (min-width: 769px) {
+    .nav-menu {
+        gap: 1rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
+    
+    .user-greeting {
+        font-size: 0.75rem !important;
+        max-width: 120px !important;
+    }
+    
+    .nav-logo h2 {
+        font-size: 1rem;
+        margin-right: 1.5rem;
+    }
+}
+
 /* Responsive Design - Mobile Optimized */
 @media (max-width: 768px) {
     .hamburger {
@@ -1499,11 +1528,12 @@ p {
 
     /* User greeting and auth buttons mobile optimization */
     .user-greeting {
-        font-size: 0.9rem !important;
-        padding: 0.5rem 1rem !important;
+        font-size: 0.75rem !important;
+        padding: 0.3rem 0.8rem !important;
         background: rgba(184, 154, 126, 0.1) !important;
-        border-radius: 20px !important;
-        margin: 0.5rem 0 !important;
+        border-radius: 15px !important;
+        margin: 0.2rem 0 !important;
+        max-width: 120px !important;
     }
 
     #loginBtn, #logoutBtn, #adminBtn {
@@ -1968,7 +1998,7 @@ p {
 
 .availability {
     font-family: 'Open Sans', sans-serif;
-    color: #28a745;
+    color: #b89a7e;
     font-size: 0.9rem;
     font-weight: 600;
 }

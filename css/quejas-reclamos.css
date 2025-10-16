@@ -11,7 +11,7 @@
 
 .hero-section {
     background: linear-gradient(135deg, #f2f2f2, #e8e8e8);
-    padding: 120px 0 80px;
+    padding: 200px 0 20px;
     text-align: center;
     border-top: 1px solid #000000;
     position: relative;
@@ -40,17 +40,18 @@
     color: #2c2c2c !important;
     letter-spacing: -0.02em;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 0 0 20px 0;
+    margin: 0 0 30px 0;
     line-height: 1.2;
+    text-align: center;
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    font-weight: 400;
-    margin: 0;
+    font-size: 1.4rem;
+    color: #b89a7e !important;
+    font-weight: 500;
+    margin: 20px auto 0;
     max-width: 600px;
-    margin: 0 auto;
+    line-height: 1.4;
 }
 
 /* ==========================================
@@ -271,6 +272,37 @@
     transform: translateY(0);
 }
 
+/* Mensaje de confirmación */
+.complaint-message {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border-left: 4px solid #28a745;
+    color: #155724;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    animation: slideIn 0.3s ease-out;
+}
+
+.complaint-message i {
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .submit-complaint-btn:disabled {
     background: linear-gradient(135deg, #6c757d, #5a6268);
     cursor: not-allowed;
@@ -479,23 +511,27 @@
 }
 
 .btn-view {
-    background: #17a2b8;
+    background: linear-gradient(135deg, #b89a7e, #a07a6b);
     color: white;
+    box-shadow: 0 3px 8px rgba(184, 154, 126, 0.3);
 }
 
 .btn-view:hover {
-    background: #138496;
+    background: linear-gradient(135deg, #a07a6b, #8b6f5a);
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(184, 154, 126, 0.4);
 }
 
 .btn-delete {
-    background: #dc3545;
+    background: linear-gradient(135deg, #b89a7e, #a07a6b);
     color: white;
+    box-shadow: 0 3px 8px rgba(184, 154, 126, 0.3);
 }
 
 .btn-delete:hover {
-    background: #c82333;
+    background: linear-gradient(135deg, #a07a6b, #8b6f5a);
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(184, 154, 126, 0.4);
 }
 
 .btn-delete:disabled {
@@ -503,6 +539,7 @@
     cursor: not-allowed;
     transform: none;
 }
+
 
 /* ==========================================
    MODAL DE DETALLE

@@ -190,6 +190,7 @@
             
             <!-- Enlaces de navegación -->
             <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+            <p><a href="#" id="showChangePassword" style="color: #b89a7e; font-size: 14px;">¿Olvidaste tu contraseña?</a></p>
         </div>
     </div>
 
@@ -251,6 +252,69 @@
             
             <!-- Enlace para volver al login -->
             <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <!-- Modal para cambiar contraseña de usuario existente -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <!-- Botón para cerrar el modal -->
+            <span class="close">&times;</span>
+            <h2>Cambiar Contraseña</h2>
+            
+            <!-- Formulario para cambio de contraseña -->
+            <form id="changePasswordForm">
+                <!-- Campo de email del usuario -->
+                <div class="form-group">
+                    <label for="changeEmail">Email:</label>
+                    <input type="email" id="changeEmail" required>
+                </div>
+                
+                <!-- Campo de contraseña actual -->
+                <div class="form-group">
+                    <label for="currentPassword">Contraseña Actual:</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="currentPassword" required>
+                        <!-- Icono para alternar visibilidad de la contraseña -->
+                        <svg class="toggle-password" data-target="currentPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Campo de nueva contraseña -->
+                <div class="form-group">
+                    <label for="newPassword">Nueva Contraseña:</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="newPassword" required minlength="6">
+                        <!-- Icono para alternar visibilidad de la contraseña -->
+                        <svg class="toggle-password" data-target="newPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Campo de confirmación de nueva contraseña -->
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Nueva Contraseña:</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="confirmPassword" required minlength="6">
+                        <!-- Icono para alternar visibilidad de la contraseña -->
+                        <svg class="toggle-password" data-target="confirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Botón para enviar el formulario -->
+                <button type="submit" class="btn-primary">Cambiar Contraseña</button>
+            </form>
+            
+            <!-- Enlace para volver al modal de login -->
+            <p><a href="#" id="backToLogin" style="color: #b89a7e; font-size: 14px;">← Volver al inicio de sesión</a></p>
         </div>
     </div>
 

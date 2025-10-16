@@ -869,11 +869,12 @@ function loadComplaints() {
             html += '<td>' + (complaint.subject || 'Sin asunto') + '</td>';
             html += '<td>' + date + '</td>';
             html += '<td><span class="complaint-status ' + statusClass + '">' + statusText + '</span></td>';
-            html += '<td class="actions-cell"><div class="action-buttons complaint-actions">';
+            html += '<td class="actions-cell"><div class="action-buttons complaint-actions" style="display: flex; flex-direction: column; gap: 5px;">';
             html += '<button class="btn-sm btn-view" onclick="viewComplaintDetail(' + complaint.id + ')"><i class="fas fa-eye"></i> Ver</button>';
             if (statusClass === 'pending') {
                 html += '<button class="btn-sm btn-primary" onclick="manageComplaint(' + complaint.id + ')"><i class="fas fa-edit"></i> Gestionar</button>';
             }
+            html += '<button class="btn-sm btn-delete" onclick="deleteComplaintAdmin(' + complaint.id + ')"><i class="fas fa-trash"></i> Eliminar</button>';
             html += '</div></td>';
             html += '</tr>';
         }
@@ -1161,5 +1162,32 @@ function saveComplaintManagement(complaintId) {
 function closeComplaintModal() {
     document.getElementById('complaintModal').style.display = 'none';
     document.body.style.overflow = 'auto';
+}
+
+/**
+ * Elimina una queja o reclamo desde el panel de administración
+ */
+function deleteComplaintAdmin(complaintId) {
+    const complaints = storageManager.getData('complaints') || [];
+    const complaintIndex = complaints.findIndex(c => c.id == complaintId);
+    
+    if (complaintIndex === -1) {
+        showNotification('No se encontró la queja/reclamo', 'error');
+        return;
+    }
+
+    const complaint = complaints[complaintIndex];
+    
+    // Eliminar de la lista
+    complaints.splice(complaintIndex, 1);
+    
+    // Guardar lista actualizada usando storageManager
+    storageManager.setData('complaints', complaints);
+    
+    // Mostrar mensaje de éxito
+    showNotification('Queja/reclamo eliminado exitosamente', 'success');
+    
+    // Recargar la lista de quejas
+    loadComplaints();
 }
 

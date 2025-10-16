@@ -354,6 +354,11 @@ function initializeData() {
             { id: 4, name: 'Saint Gym', type: 'gym', description: 'Gimnasio equipado con tecnología de vanguardia', price: 0, available: true }
         ]);
     }
+
+    // Inicializar quejas y reclamos: crear array vacío si no existe
+    if (!getData('complaints')) {
+        setData('complaints', []);
+    }
 }
 
 /**

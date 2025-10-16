@@ -506,7 +506,9 @@ function updateAuthUI() {
             if (currentUser.role === 'admin') {
                 userName.textContent = 'Admin';
             } else {
-                userName.textContent = 'Hola, ' + currentUser.name;
+                // Usar solo el primer nombre para mantener el header compacto
+                var firstName = currentUser.name.split(' ')[0];
+                userName.textContent = 'Hola, ' + firstName;
             }
         }
         
